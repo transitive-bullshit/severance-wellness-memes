@@ -36,10 +36,9 @@ try {
   const { host, pathname } = new URL(processedUrl)
   if (!twitterDomains.has(host)) return false
 
-  const parts = pathname.split('/')
-  if (parts.length < 2 || !parts[1]) return false
-
-  return true
+  // Check that the pathname has at least one non-empty segment
+  const segments = pathname.split('/').filter((segment) => segment !== '')
+  return segments.length > 0
 } catch {
   return false
 }
@@ -51,11 +50,9 @@ if (!url) return ''
 try {
   // Ensure protocol is present
   const processedUrl = ensureProtocol(url)
-  if (!isTwitterUrl(processedUrl)) return ''
-
-  const { pathname } = new URL(processedUrl)
-  const username = pathname.split('/')[1]
-  return username || ''
+  // Extract the first non-empty segment from the pathname
+  const segments = new URL(processedUrl).pathname.split('/').filter((segment) => segment !== '')
+  return segments[0] || ''
 } catch {
   return ''
 }
@@ -64,12 +61,16 @@ try {
 export function normalizeTwitterProfileUri(uri?: string): string {
 if (!uri) return ''
 
-const username = getTwitterUsername(uri)
-// If a valid username is found, return the normalized URL.
+// Attempt to extract username directly
+let username = getTwitterUsername(uri)
+if (!username) {
+  // If no username found, try converting the uri using uriToUrl
+  const convertedUrl = uriToUrl(uri)
+  username = getTwitterUsername(convertedUrl)
+}
 if (username) {
   return `https://twitter.com/${username}`
 }
-// Otherwise return the original input.
 return uri
 }
 
