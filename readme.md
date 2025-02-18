@@ -2,6 +2,8 @@
 
 > TODO
 
+![Ms Casey](https://pbs.twimg.com/media/Gj7sSsQagAA0uYB?format=jpg&name=medium)
+
 <p>
   <a href="https://github.com/transitive-bullshit/severance-wellness-session/actions/workflows/main.yml"><img alt="Build Status" src="https://github.com/transitive-bullshit/severance-wellness-session/actions/workflows/main.yml/badge.svg" /></a>
   <a href="https://github.com/transitive-bullshit/severance-wellness-session/blob/main/license"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue" /></a>
@@ -14,18 +16,6 @@
 ## Intro
 
 TODO
-
-'Apache-2.0',
-'MIT',
-'AGPL-3.0',
-'NOASSERTION',
-'ISC',
-'Unlicense',
-'BSD-2-Clause',
-'BSD-3-Clause',
-'MPL-2.0',
-'CC0-1.0',
-'0BSD'
 
 ## License
 
