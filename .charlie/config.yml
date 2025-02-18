@@ -8,6 +8,6 @@ ignorePatterns:
   - '**/admin/lib/**'
 
 checkCommands:
-  fix: prettier --write "**/*.{js,ts,tsx}"
-  lint: pnpm lint
-  types: pnpm typecheck
+  fix: pnpm run fix
+  lint: pnpm run test:format && pnpm run test:lint
+  types: pnpm run test:typecheck

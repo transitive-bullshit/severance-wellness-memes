@@ -10,9 +10,17 @@ export type SocialDataTweet = socialdata.Tweet
 export type Tweet = Simplify<
   Omit<
     SocialDataTweet,
-    'id' | 'user' | 'text' | 'quoted_status' | 'retweeted_status'
+    | 'id'
+    | 'user'
+    | 'text'
+    | 'quoted_status'
+    | 'retweeted_status'
+    | 'in_reply_to_status_id'
+    | 'in_reply_to_user_id'
+    | 'quoted_status_id'
   > & {
     user_id_str: string
+    is_retweet?: boolean
   }
 >
 
@@ -29,7 +37,13 @@ export interface ResolvedTwitterUser {
   tweets: Record<string, Tweet>
   users: Record<string, SocialDataTwitterUser>
 
-  // urls: Record<string, LinkMetadata>
+  urls: Record<string, LinkMetadata>
+}
+
+export interface LinkMetadata {
+  title?: string
+  description?: string
+  site?: string
 }
 
 export type AgenticContext = Readonly<{

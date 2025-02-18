@@ -25,7 +25,8 @@ export async function resolveTwitterUser(
     timelineTweetIds: [],
 
     tweets: {},
-    users: {}
+    users: {},
+    urls: {}
   }
 
   const timelineTweets = await getTimelineTweetsByUserId(
@@ -42,10 +43,17 @@ export async function resolveTwitterUser(
   const tweetIds = new Set<string>()
   const userIds = new Set<string>()
 
+  res.users[user.id_str] = user
   userIds.add(user.id_str)
 
   function addTweet(tweet?: types.SocialDataTweet) {
     if (!tweet) return
+
+    if (tweet.user?.id_str && !res.users[tweet.user.id_str]) {
+      res.users[tweet.user.id_str] = tweet.user
+    }
+    userIds.add(tweet.user.id_str)
+
     if (res.tweets[tweet.id_str]) return
 
     res.tweets[tweet.id_str] = {
@@ -58,16 +66,15 @@ export async function resolveTwitterUser(
         'user',
         'text',
         'quoted_status',
-        'retweeted_status'
-      )
-    }
-
-    if (tweet.user?.id_str && !res.users[tweet.user.id_str]) {
-      res.users[tweet.user.id_str] = tweet.user
+        'retweeted_status',
+        'in_reply_to_status_id',
+        'in_reply_to_user_id',
+        'quoted_status_id'
+      ),
+      is_retweet: !!tweet.retweeted_status
     }
 
     tweetIds.add(tweet.id_str)
-    userIds.add(tweet.user.id_str)
 
     if (tweet.retweeted_status) {
       addTweet(tweet.retweeted_status)
