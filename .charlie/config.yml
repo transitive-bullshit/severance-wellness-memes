@@ -1,0 +1,13 @@
+ignorePatterns:
+  - '**/*.lock'
+  - '**/*.lock.json'
+  - '**/*.lockb'
+  - '**/node_modules'
+  - '**/.env'
+  - '**/edgedb/lib/**'
+  - '**/admin/lib/**'
+
+checkCommands:
+  fix: prettier --write "**/*.{js,ts,tsx}"
+  lint: pnpm lint
+  types: pnpm typecheck
