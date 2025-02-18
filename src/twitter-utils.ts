@@ -17,64 +17,34 @@ const twitterDomains = new Set([
   'www.x.com'
 ])
 
-/**
- * Ensures the URL has a protocol. If missing, returns the URL prepended with 'https://'.
- */
-function ensureProtocol(url: string): string {
-  if (!/^https?:\/\//i.test(url)) {
-    return 'https://' + url
-  }
-  return url
-}
-
 export function isTwitterUrl(url?: string): url is string {
   if (!url) return false
 
   try {
-    // Add protocol if missing
-    const processedUrl = ensureProtocol(url)
-    const { host, pathname } = new URL(processedUrl)
+    const { host, pathname } = new URL(url)
     if (!twitterDomains.has(host)) return false
 
-    // Check that the pathname has at least one non-empty segment
-    const segments = pathname.split('/').filter((segment) => segment !== '')
-    return segments.length > 0
+    const parts = pathname.split('/')
+    if (parts.length < 2 || !parts[1]) return false
+
+    return true
   } catch {
     return false
   }
 }
 
-export function getTwitterUsername(url?: string): string {
-  if (!url) return ''
+export function normalizeTwitterProfileUri(uri?: string): string | undefined {
+  const username = getTwitterUsername(uri) ?? getTwitterUsername(uriToUrl(uri))
+  if (!username) return
 
-  try {
-    // Ensure protocol is present
-    const processedUrl = ensureProtocol(url)
-    // Validate that the URL is a valid Twitter URL
-    if (!isTwitterUrl(processedUrl)) return ''
-
-    // Extract the first non-empty segment from the pathname
-    const segments = new URL(processedUrl).pathname.split('/').filter((segment) => segment !== '')
-    return segments[0] || ''
-  } catch {
-    return ''
-  }
+  return `twitter.com/${username}`
 }
 
-export function normalizeTwitterProfileUri(uri?: string): string {
-  if (!uri) return ''
+export function getTwitterUsername(url?: string): string | undefined {
+  if (!isTwitterUrl(url)) return
 
-  // Attempt to extract username directly
-  let username = getTwitterUsername(uri)
-  if (!username) {
-    // If no username found, try converting the uri using uriToUrl
-    const convertedUrl = uriToUrl(uri)
-    username = getTwitterUsername(convertedUrl)
-  }
-  if (username) {
-    return `https://twitter.com/${username}`
-  }
-  return uri
+  const { pathname } = new URL(url)
+  return pathname.split('/')[1]
 }
 
 /**

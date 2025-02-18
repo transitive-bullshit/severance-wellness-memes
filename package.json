@@ -15,12 +15,11 @@
   },
   "type": "module",
   "scripts": {
-    "test": "COREPACK_DISABLE_SIGNATURE_CHECK=1 pnpm exec npm-run-all2 test:*",
-    "test:unit": "bash scripts/run-tests.sh",
+    "test": "run-s test:*",
     "test:format": "prettier --check \"**/*.{js,ts,tsx}\"",
-    "test:lint": "COREPACK_DISABLE_SIGNATURE_CHECK=1 eslint .",
-    "test:typecheck": "COREPACK_DISABLE_SIGNATURE_CHECK=1 tsc --noEmit",
-    "preinstall": "bash scripts/preinstall.sh"
+    "test:lint": "eslint .",
+    "test:typecheck": "tsc --noEmit",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@agentic/core": "^7.2.0",
