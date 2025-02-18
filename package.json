@@ -15,7 +15,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "pnpm exec npm-run-all2 test:*",
+    "test": "COREPACK_DISABLE_SIGNATURE_CHECK=1 pnpm exec npm-run-all2 test:*",
     "test:unit": "bash scripts/run-tests.sh",
     "test:format": "prettier --check \"**/*.{js,ts,tsx}\"",
     "test:lint": "COREPACK_DISABLE_SIGNATURE_CHECK=1 eslint .",
