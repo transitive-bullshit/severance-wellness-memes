@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@agentic/core':
-        specifier: ^7.2.0
-        version: 7.2.0(zod@3.24.2)
+        specifier: ^7.3.1
+        version: 7.3.1(zod@3.24.2)
       '@agentic/social-data':
-        specifier: ^7.2.0
-        version: 7.2.0(zod@3.24.2)
+        specifier: ^7.3.1
+        version: 7.3.1(zod@3.24.2)
       '@dexaai/dexter':
         specifier: ^4.1.1
         version: 4.1.1
@@ -105,13 +105,13 @@ importers:
 
 packages:
 
-  '@agentic/core@7.2.0':
-    resolution: {integrity: sha512-s1yvt9pOhaVGfwoG6aTeXNmkjoMKDC+j+gwgsXPMy28HSHdKEkAWiwoCGoW8DVvEuQgxeOWN+rL6cIAM/JL++w==}
+  '@agentic/core@7.3.1':
+    resolution: {integrity: sha512-/fZAdQc2GZF0HrsNx8eGLJhbE6R62dDP5aYePekHcQF7KgFQD5CF46YQ7BV7twkhOhbGoerrKIMoDwVRJfk3fg==}
     peerDependencies:
       zod: ^3.23.8
 
-  '@agentic/social-data@7.2.0':
-    resolution: {integrity: sha512-GKxc8aB6wSaJVUYEnN8U8ikP01vIa6lC5fBa4rMMGlweNQlAlzPLKyvpvyylyTgpdBdiK77V/lJTl6O+fmBV9A==}
+  '@agentic/social-data@7.3.1':
+    resolution: {integrity: sha512-+IXWnD7cS4LP4u/OXHN64cqyEXglOdkHLJR/IitfqEnk07kkXo04YD+GYMRFgrtq3omIHkt/Ua9Eb5GfKSDdhw==}
     peerDependencies:
       zod: ^3.23.8
 
@@ -1702,6 +1702,10 @@ packages:
     resolution: {integrity: sha512-NCKkOVj6PZa6NiTmfvGilDdf6vO1rFCD3KDnkHko8dTOtkpk4cSR/VTAhhLMG9aiQ7/A9HYgEDNmxzf6hxzR3g==}
     engines: {node: '>=18'}
 
+  p-throttle@7.0.0:
+    resolution: {integrity: sha512-aio0v+S0QVkH1O+9x4dHtD4dgCExACcL+3EtNaGqC01GBudS9ijMuUsmN8OVScyV4OOp0jqdLShZFuSlbL/AsA==}
+    engines: {node: '>=18'}
+
   p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
@@ -2290,7 +2294,7 @@ packages:
 
 snapshots:
 
-  '@agentic/core@7.2.0(zod@3.24.2)':
+  '@agentic/core@7.3.1(zod@3.24.2)':
     dependencies:
       dedent: 1.5.3
       delay: 6.0.0
@@ -2298,18 +2302,18 @@ snapshots:
       ky: 1.7.5
       openai-zod-to-json-schema: 1.0.3(zod@3.24.2)
       p-map: 7.0.3
-      p-throttle: 6.2.0
+      p-throttle: 7.0.0
       type-fest: 4.35.0
       zod: 3.24.2
       zod-validation-error: 3.4.0(zod@3.24.2)
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@agentic/social-data@7.2.0(zod@3.24.2)':
+  '@agentic/social-data@7.3.1(zod@3.24.2)':
     dependencies:
-      '@agentic/core': 7.2.0(zod@3.24.2)
+      '@agentic/core': 7.3.1(zod@3.24.2)
       ky: 1.7.5
-      p-throttle: 6.2.0
+      p-throttle: 7.0.0
       zod: 3.24.2
     transitivePeerDependencies:
       - babel-plugin-macros
@@ -4023,6 +4027,8 @@ snapshots:
       type-fest: 3.13.1
 
   p-throttle@6.2.0: {}
+
+  p-throttle@7.0.0: {}
 
   p-try@2.2.0: {}
 
