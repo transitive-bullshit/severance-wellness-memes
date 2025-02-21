@@ -4,6 +4,8 @@ import type { KyInstance } from 'ky'
 import type { OpenAIClient } from 'openai-fetch'
 import type { Simplify } from 'type-fest'
 
+import type { ScraperClient } from './scraper-client'
+
 export type SocialDataTwitterUser = socialdata.User
 export type SocialDataTweet = socialdata.Tweet
 
@@ -20,6 +22,7 @@ export type Tweet = Simplify<
     | 'quoted_status_id'
   > & {
     user_id_str: string
+    user_screen_name: string
     is_retweet?: boolean
   }
 >
@@ -37,13 +40,21 @@ export interface ResolvedTwitterUser {
   tweets: Record<string, Tweet>
   users: Record<string, SocialDataTwitterUser>
 
-  urls: Record<string, LinkMetadata>
+  urls: Record<string, LinkContent | undefined>
 }
 
-export interface LinkMetadata {
-  title?: string
-  description?: string
-  site?: string
+export interface LinkContent {
+  url: string
+  title: string
+  author: string
+  byline: string
+  description: string
+  imageUrl: string
+  logoUrl: string
+  lang: string
+  publishedTime: string
+  siteName: string
+  textContent: string
 }
 
 export type AgenticContext = Readonly<{
@@ -58,6 +69,7 @@ export type AgenticContext = Readonly<{
 
   // Required Services
   socialData: SocialDataClient
+  scraper: ScraperClient
 
   // OpenAI
   openai: OpenAIClient

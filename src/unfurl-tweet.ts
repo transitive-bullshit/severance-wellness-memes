@@ -135,7 +135,7 @@ export function unfurlUrl(
     (normalizedUrl ? resolvedTwitterUser.urls[normalizedUrl] : undefined)
   if (!metadata) return fallback
 
-  const site = metadata.site?.toLowerCase()
+  const site = metadata.siteName?.toLowerCase()
   if (site === 'github') {
     return metadata.title || fallback
   }
@@ -147,7 +147,7 @@ export function unfurlUrl(
       (t ? t.toString() : '').toLowerCase().includes(site.toLowerCase())
     )
   ) {
-    values = [metadata.site].concat(values)
+    values = [metadata.siteName].concat(values)
   }
 
   const value = Array.from(

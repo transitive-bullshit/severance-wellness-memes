@@ -1,5 +1,8 @@
 import { getEnv } from '@agentic/core'
 import defaultKy, { type KyInstance } from 'ky'
+import pMap from 'p-map'
+import pMemoize from 'p-memoize'
+import QuickLRU from 'quick-lru'
 
 export type ScrapeResult = {
   author: string
@@ -33,6 +36,7 @@ export type ScrapeResult = {
 export class ScraperClient {
   readonly apiBaseUrl: string
   readonly ky: KyInstance
+  readonly _cache: QuickLRU<string, ScrapeResult>
 
   constructor({
     apiBaseUrl = getEnv('SCRAPER_API_BASE_URL'),
@@ -48,9 +52,22 @@ export class ScraperClient {
 
     this.apiBaseUrl = apiBaseUrl
     this.ky = ky.extend({ prefixUrl: this.apiBaseUrl })
+
+    this._cache = new QuickLRU<string, ScrapeResult>({
+      maxSize: 4000
+    })
+
+    this.scrapeUrl = pMemoize(this._scrapeUrl.bind(this), {
+      cache: this._cache
+    })
   }
 
-  async scrapeUrl(
+  readonly scrapeUrl: (
+    url: string,
+    opts?: { timeout?: number }
+  ) => Promise<ScrapeResult>
+
+  protected async _scrapeUrl(
     url: string,
     {
       timeout = 60_000
@@ -64,5 +81,33 @@ export class ScraperClient {
         timeout
       })
       .json()
+  }
+
+  async scrapeUrls(
+    urls: string[],
+    {
+      concurrency = 4
+    }: {
+      concurrency?: number
+    } = {}
+  ): Promise<Record<string, ScrapeResult | undefined>> {
+    return Object.fromEntries(
+      await pMap(
+        urls,
+        async (url) => {
+          try {
+            const scrapedUrl = await this.scrapeUrl(url)
+            if (!scrapedUrl) return [url, undefined]
+
+            return [url, scrapedUrl]
+          } catch {}
+
+          return [url, undefined]
+        },
+        {
+          concurrency
+        }
+      )
+    )
   }
 }

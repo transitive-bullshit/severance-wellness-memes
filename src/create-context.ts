@@ -4,6 +4,7 @@ import defaultKy from 'ky'
 
 import type * as types from './types'
 import { memoizedKy, MemoizedOpenAIClient } from './ky-utils'
+import { ScraperClient } from './scraper-client'
 
 export function createContext(
   overrides: Partial<types.AgenticContext> = {}
@@ -19,8 +20,10 @@ export function createContext(
     dryRun: false,
     noCache: false,
     raw: false,
+
     ky,
     openai,
+
     model: new ChatModel({
       client: openai,
       params: {
@@ -29,8 +32,9 @@ export function createContext(
       debug: !!overrides.debug
     }),
 
-    // Required Services
+    // Required services
     socialData: new SocialDataClient({ ky }),
+    scraper: new ScraperClient({ ky }),
 
     // Allow for overrides
     ...overrides

@@ -12,9 +12,9 @@ export const redisNamespace = getEnv('REDIS_NAMESPACE') ?? 'severance'
 
 export const CACHE_VALUE_MAX_SIZE_BYTES = 1_000_000
 
-export const cacheUrlWhitelist = [
-  // TODO
-].filter(Boolean)
+export const cacheUrlWhitelist = [getEnv('SCRAPER_API_BASE_URL')].filter(
+  Boolean
+)
 
 export const cacheDomainWhitelist = new Set(
   cacheUrlWhitelist.map((url) => new URL(url).host)

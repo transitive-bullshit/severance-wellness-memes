@@ -81,7 +81,7 @@ async function getCacheKeyForRequest(request: Request) {
   //   pruneUndefined({
   //     url: request.url,
   //     normalizedUrl: normalizedUrl === request.url ? undefined : normalizedUrl,
-  //     headers: params.headers
+  //     params
   //   })
   // )
 
@@ -361,8 +361,8 @@ export function mockKy(
 ): KyInstance {
   return ky.extend({
     hooks: {
-      beforeRequest: !beforeRequest ? [] : [beforeRequest],
-      afterResponse: !afterResponse ? [] : [afterResponse]
+      beforeRequest: beforeRequest ? [beforeRequest] : [],
+      afterResponse: afterResponse ? [afterResponse] : []
     }
   })
 }

@@ -1,5 +1,5 @@
 import type { socialdata } from '@agentic/social-data'
-import { omit } from '@agentic/core'
+import { omit, pick } from '@agentic/core'
 import pMap from 'p-map'
 
 import type * as types from './types'
@@ -59,6 +59,7 @@ export async function resolveTwitterUser(
     res.tweets[tweet.id_str] = {
       id_str: tweet.id_str,
       user_id_str: tweet.user.id_str,
+      user_screen_name: tweet.user.screen_name,
       ...omit(
         tweet,
         'id',
@@ -142,6 +143,52 @@ export async function resolveTwitterUser(
         } catch {}
       },
       { concurrency }
+    )
+  }
+
+  const urls = new Set<string>()
+
+  for (const tweet of Object.values(res.tweets)) {
+    for (const urlEntity of tweet.entities?.urls ?? []) {
+      const url: string = urlEntity.expanded_url ?? urlEntity.url
+      if (!url) continue
+      urls.add(url)
+    }
+  }
+
+  // for (const user of Object.values(res.users)) {
+  //   if (user.url) {
+  //     urls.add(user.url)
+  //   }
+  // }
+
+  if (urls.size) {
+    console.log(`\nresolving ${urls.size} urls`)
+
+    const scrapedUrls = await ctx.scraper.scrapeUrls(Array.from(urls))
+
+    res.urls = Object.fromEntries(
+      Object.entries(scrapedUrls).map(([url, scrapedUrl]) => [
+        url,
+        scrapedUrl
+          ? {
+              url,
+              ...pick(
+                scrapedUrl,
+                'title',
+                'description',
+                'author',
+                'byline',
+                'imageUrl',
+                'logoUrl',
+                'lang',
+                'publishedTime',
+                'siteName',
+                'textContent'
+              )
+            }
+          : undefined
+      ])
     )
   }
 
