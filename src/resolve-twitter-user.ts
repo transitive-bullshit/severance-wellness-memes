@@ -10,10 +10,12 @@ export async function resolveTwitterUser(
   ctx: types.AgenticContext,
   {
     concurrency = 8,
-    maxTimelineTweets = 100
+    maxTimelineTweets = 100,
+    resolveUrls = false
   }: {
     concurrency?: number
     maxTimelineTweets?: number
+    resolveUrls?: boolean
   } = {}
 ): Promise<types.ResolvedTwitterUser> {
   const user = await ctx.socialData.getUserByUsername(username)
@@ -146,50 +148,52 @@ export async function resolveTwitterUser(
     )
   }
 
-  const urls = new Set<string>()
+  if (resolveUrls) {
+    const urls = new Set<string>()
 
-  for (const tweet of Object.values(res.tweets)) {
-    for (const urlEntity of tweet.entities?.urls ?? []) {
-      const url: string = urlEntity.expanded_url ?? urlEntity.url
-      if (!url) continue
-      urls.add(url)
+    for (const tweet of Object.values(res.tweets)) {
+      for (const urlEntity of tweet.entities?.urls ?? []) {
+        const url: string = urlEntity.expanded_url ?? urlEntity.url
+        if (!url) continue
+        urls.add(url)
+      }
     }
-  }
 
-  // for (const user of Object.values(res.users)) {
-  //   if (user.url) {
-  //     urls.add(user.url)
-  //   }
-  // }
+    // for (const user of Object.values(res.users)) {
+    //   if (user.url) {
+    //     urls.add(user.url)
+    //   }
+    // }
 
-  if (urls.size) {
-    console.log(`\nresolving ${urls.size} urls`)
+    if (urls.size) {
+      console.log(`\nresolving ${urls.size} urls`)
 
-    const scrapedUrls = await ctx.scraper.scrapeUrls(Array.from(urls))
+      const scrapedUrls = await ctx.scraper.scrapeUrls(Array.from(urls))
 
-    res.urls = Object.fromEntries(
-      Object.entries(scrapedUrls).map(([url, scrapedUrl]) => [
-        url,
-        scrapedUrl
-          ? {
-              url,
-              ...pick(
-                scrapedUrl,
-                'title',
-                'description',
-                'author',
-                'byline',
-                'imageUrl',
-                'logoUrl',
-                'lang',
-                'publishedTime',
-                'siteName',
-                'textContent'
-              )
-            }
-          : undefined
-      ])
-    )
+      res.urls = Object.fromEntries(
+        Object.entries(scrapedUrls).map(([url, scrapedUrl]) => [
+          url,
+          scrapedUrl
+            ? {
+                url,
+                ...pick(
+                  scrapedUrl,
+                  'title',
+                  'description',
+                  'author',
+                  'byline',
+                  'imageUrl',
+                  'logoUrl',
+                  'lang',
+                  'publishedTime',
+                  'siteName',
+                  'textContent'
+                )
+              }
+            : undefined
+        ])
+      )
+    }
   }
 
   return res

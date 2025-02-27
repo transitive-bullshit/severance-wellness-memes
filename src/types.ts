@@ -46,9 +46,9 @@ export interface ResolvedTwitterUser {
 export interface LinkContent {
   url: string
   title: string
+  description: string
   author: string
   byline: string
-  description: string
   imageUrl: string
   logoUrl: string
   lang: string

@@ -159,6 +159,7 @@ export function memoizeKy(ky: KyInstance = defaultKy): KyInstance {
               //     method: request.method,
               //     url: request.url,
               //     cacheKey
+              //     // json: await request.clone().json()
               //   })
               // )
 
