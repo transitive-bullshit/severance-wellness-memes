@@ -10,7 +10,7 @@ export async function resolveTwitterUser(
   ctx: types.AgenticContext,
   {
     concurrency = 8,
-    maxTimelineTweets = 100,
+    maxTimelineTweets = 200,
     resolveUrls = false
   }: {
     concurrency?: number

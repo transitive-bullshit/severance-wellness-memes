@@ -14,10 +14,12 @@ export type WellnessFactsResult = z.infer<typeof WellnessFactsResultSchema>
 
 export async function generateWellnessFacts({
   resolvedTwitterUser,
-  ctx
+  ctx,
+  positive = false
 }: {
   resolvedTwitterUser: types.ResolvedTwitterUser
   ctx: types.AgenticContext
+  positive?: boolean
 }) {
   const tweets = resolvedTwitterUser.timelineTweetIds
     .map((id) => {
@@ -30,19 +32,8 @@ export async function generateWellnessFacts({
     })
   )
 
-  // const user = await resolveTwitterUser('transitive_bs', ctx)
-
-  // // console.log(JSON.stringify(user, null, 2))
-  // await fs.writeFile(
-  //   'out/transitive_bs.json',
-  //   JSON.stringify(user, null, 2),
-  //   'utf8'
-  // )
-
-  const positive = false
-
   const result = await extractObject({
-    name: 'extract_wellness_facts',
+    name: 'generate_wellness_facts',
     chatFn: ctx.model.run.bind(ctx.model),
     schema: WellnessFactsResultSchema,
     injectSchemaIntoSystemMessage: false,
@@ -83,10 +74,10 @@ ${
 `
 }
 - Each wellness fact must start with "Your Outie".
-- Wellness facts should try reference specific aspects from the included user data and tweets in order to to highlight the user's unique qualities and characteristics.
+- Wellness facts should try to reference specific aspects from the included user data and tweets in order to to highlight the user's unique qualities and characteristics.
 - Wellness facts should be short, concise, and easy to understand. They are meant to be shared on Twitter.
-- Users are highly active online twitter and reddit users who love the show Severance and internet memes in general, so feel free to include references to the show or popular internet culture in the wellness facts.
-- Many users are tech-savvy and work in the tech industry, so AI and tech-related jokes or references are also welcome.
+- The user is highly active on twitter and reddit. They love the show Severance and internet memes in general, so feel free to include references to popular internet culture.
+- The user is tech-savvy and likely works in the tech industry, so AI and tech-related jokes are also welcome.
 
 ### Example Wellness Facts
 
@@ -115,13 +106,12 @@ ${
 - Your Outie knows the difference between a font and a typeface.
 - Your Outie got rug-pulled by the Hawk Tuah girl.
 - Your Outie gets investment advice from Jim Cramer.
-- Your Outie sends a weekly, unsolicited email to Elon Musk stating what they got done last week.
+- Your Outie sends a weekly email to Elon Musk stating what they got done last week.
 - Your Outie is a startup founder with 12 LLCs, 37 domains, and not a single paying customer.
 - Your Outie loves creating AI demos that will never be made into real products.
 - Your Outie creates ChatGPT wrappers and calls them startups.
 - Your Outie excels at correcting people's grammar without them asking.
 - Your Outie has strong opinions about TypeScript and shares them without asking.
-- Your Outie does not use automated code formatters like Prettier, because he claims his OCD makes him more productive.
 - Your Outie lost $24,000 on DraftKings last year.
 - Your Outie is obsessed with a variety of mediocre New York sports franchises.
 - Your Outie often explains AI concepts to people who didn’t ask.
@@ -129,7 +119,7 @@ ${
 - Your Outie eats on calls without muting themselves.
 - Your Outie prefers gpt 4.5 over claude 3.7 sonnet because of the "vibes".
 - Your Outie has a collection of rare Pepe memes.
-- Your Outie claims to have diamond hands, but in reality just daytrades shitcoins.
+- Your Outie claims to have diamond hands but really just daytrades shitcoins.
 - Your Outie has an anime profile pic but doesn't know who Hayao Miyazaki is.
 - Your Outie thinks TypeScript is a love language, but fails to express it outside of code.
 - Your Outie hoards every new AI agent library in 37 open browser tabs he’ll never close or come back to.
