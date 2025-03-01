@@ -1,5 +1,9 @@
 {
   "root": true,
-  "extends": ["@fisch0920/eslint-config/node"],
+  "extends": [
+    "@fisch0920/eslint-config/react",
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
   "ignorePatterns": ["dist", "out"]
 }

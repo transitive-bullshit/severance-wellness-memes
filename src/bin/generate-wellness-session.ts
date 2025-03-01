@@ -10,7 +10,7 @@ import {
   generateWellnessFacts,
   logCacheStats,
   type ResolvedTwitterUser
-} from '../src'
+} from '~/lib'
 
 async function main() {
   const ctx = createContext()
