@@ -142,21 +142,18 @@ ${
 - Your Outie often explains AI concepts to people who didn’t ask.
 - Your Outie believes the concept of mansplaining is sexist, and will explain why even if you didn't ask.
 - Your Outie eats on calls without muting themselves.
-- Your Outie prefers the gpt 4.5 over claude 3.7 sonnet because of the "vibes".
-- Your Outie has strong opinions about the Palmer Luckey vs Jason Calacanis feud.
+- Your Outie prefers gpt 4.5 over claude 3.7 sonnet because of the "vibes".
 - Your Outie has a collection of rare Pepe memes.
-- Your Outie still uses Stack Overflow because they believe that LLMs are a fad.
 - Your Outie claims to have diamond hands, but in reality just daytrades shitcoins.
-- Your Outie uses VSCode and believes that AI programming is a fad.
-- Your Outie has an anime profile pic but couldn't tell you who Hayao Miyazaki is.
+- Your Outie has an anime profile pic but doesn't know who Hayao Miyazaki is.
 - Your Outie thinks TypeScript is a love language, but fails to express it outside of code.
-- Your Outie hoards every new AI agent library in 37 open browser tabs he’ll never close.
+- Your Outie hoards every new AI agent library in 37 open browser tabs he’ll never close or come back to.
 - Your Outie genuinely believes that “prompt engineering” is a viable personality trait.
 - Your Outie calls ChatGPT their “cofounder” in investor meetings and thinks that’s a flex.
 - Your Outie has a Notion template for “personal growth KPIs” but still eats cereal straight from the box.
 - Your Outie describes their sleep schedule as “asynchronous” and considers that a flex.
 - Your Outie thinks that rewriting an app in Rust counts as “self-improvement.”
-- Your Outie refers to their Substack audience as a “decentralized knowledge network” when it’s just 42 people and their mom.
+- Your Outie refers to their Substack audience as a “decentralized knowledge network” when it’s really just 42 people and their mom.
 - Your Outie thinks “Web3 social graphs” will change networking but still can’t make eye contact at conferences.
 - Your Outie considers a fresh VS Code theme a form of self-care.
 - Your Outie thinks running a Kubernetes cluster for their personal blog is a reasonable life choice.
@@ -168,11 +165,11 @@ ${
 - Your Outie refers to their sleep schedule as a “floating-point operation” and genuinely believes that sounds normal.
 - Your Outie thinks the true sign of AGI will be when a model independently chooses to shitpost.
 - Your Outie once tweeted “I should build this” about an idea, then got mad when someone else actually built it.
-- Your Outie refers to their dating life as "iterative user testing with high churn rate."
-- Your Outie bought a 49-inch ultrawide monitor to "maximize productivity" but uses it exclusively for Discord, Twitter, Reddit.
-- Your Outie calls their tweet drafts “latent thought embeddings.”
-- Your Outie wrote a “How to Hack AI for Personal Growth” Medium post but still hasn’t showered today.
-- Your Outie says “solving alignment” is their long-term goal, but their short-term goal is making a meme generator.
+- Your Outie refers to their dating life as "iterative user testing with a high churn rate."
+- Your Outie bought a 49-inch ultrawide monitor to "maximize productivity" but uses it exclusively for scrolling Twitter and Reddit.
+- Your Outie calls their tweet drafts "latent thought embeddings."
+- Your Outie wrote a "How to Hack AI for Personal Growth" Medium post but still hasn't showered today.
+- Your Outie says "solving alignment" is their long-term goal, but their short-term goal is making a meme generator.
 `
 }
 
