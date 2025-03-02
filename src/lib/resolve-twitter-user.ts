@@ -1,34 +1,34 @@
+'use server'
+
 import type { socialdata } from '@agentic/social-data'
-import { omit, pick } from '@agentic/core'
+import { omit } from '@agentic/core'
 import pMap from 'p-map'
 
 import type * as types from './types'
 import { tryGetTweetById, tryGetTwitterUserById } from './twitter-utils'
 
-export async function resolveTwitterUser(
-  username: string,
-  ctx: types.AgenticContext,
-  {
-    concurrency = 8,
-    maxTimelineTweets = 200,
-    resolveUrls = false
-  }: {
-    concurrency?: number
-    maxTimelineTweets?: number
-    resolveUrls?: boolean
-  } = {}
-): Promise<types.ResolvedTwitterUser> {
-  const user = await ctx.socialData.getUserByUsername(username)
+export async function resolveTwitterUser({
+  twitterUsername,
+  ctx,
+  concurrency = 8,
+  maxTimelineTweets = 200
+  // resolveUrls = false
+}: {
+  twitterUsername: string
+  ctx: types.AgenticContext
+  concurrency?: number
+  maxTimelineTweets?: number
+  // resolveUrls?: boolean
+}): Promise<types.ResolvedTwitterUser> {
+  const user = await ctx.socialData.getUserByUsername(twitterUsername)
 
   const res: types.ResolvedTwitterUser = {
-    id: user.id_str,
     user,
 
     timelineTweetIds: [],
 
     tweets: {},
-    users: {},
-    urls: {}
+    users: {}
   }
 
   const timelineTweets = await getTimelineTweetsByUserId(
@@ -148,53 +148,53 @@ export async function resolveTwitterUser(
     )
   }
 
-  if (resolveUrls) {
-    const urls = new Set<string>()
+  // if (resolveUrls) {
+  //   const urls = new Set<string>()
 
-    for (const tweet of Object.values(res.tweets)) {
-      for (const urlEntity of tweet.entities?.urls ?? []) {
-        const url: string = urlEntity.expanded_url ?? urlEntity.url
-        if (!url) continue
-        urls.add(url)
-      }
-    }
+  //   for (const tweet of Object.values(res.tweets)) {
+  //     for (const urlEntity of tweet.entities?.urls ?? []) {
+  //       const url: string = urlEntity.expanded_url ?? urlEntity.url
+  //       if (!url) continue
+  //       urls.add(url)
+  //     }
+  //   }
 
-    // for (const user of Object.values(res.users)) {
-    //   if (user.url) {
-    //     urls.add(user.url)
-    //   }
-    // }
+  //   // for (const user of Object.values(res.users)) {
+  //   //   if (user.url) {
+  //   //     urls.add(user.url)
+  //   //   }
+  //   // }
 
-    if (urls.size) {
-      console.log(`\nresolving ${urls.size} urls`)
+  //   if (urls.size) {
+  //     console.log(`\nresolving ${urls.size} urls`)
 
-      const scrapedUrls = await ctx.scraper.scrapeUrls(Array.from(urls))
+  //     const scrapedUrls = await ctx.scraper.scrapeUrls(Array.from(urls))
 
-      res.urls = Object.fromEntries(
-        Object.entries(scrapedUrls).map(([url, scrapedUrl]) => [
-          url,
-          scrapedUrl
-            ? {
-                url,
-                ...pick(
-                  scrapedUrl,
-                  'title',
-                  'description',
-                  'author',
-                  'byline',
-                  'imageUrl',
-                  'logoUrl',
-                  'lang',
-                  'publishedTime',
-                  'siteName',
-                  'textContent'
-                )
-              }
-            : undefined
-        ])
-      )
-    }
-  }
+  //     res.urls = Object.fromEntries(
+  //       Object.entries(scrapedUrls).map(([url, scrapedUrl]) => [
+  //         url,
+  //         scrapedUrl
+  //           ? {
+  //               url,
+  //               ...pick(
+  //                 scrapedUrl,
+  //                 'title',
+  //                 'description',
+  //                 'author',
+  //                 'byline',
+  //                 'imageUrl',
+  //                 'logoUrl',
+  //                 'lang',
+  //                 'publishedTime',
+  //                 'siteName',
+  //                 'textContent'
+  //               )
+  //             }
+  //           : undefined
+  //       ])
+  //     )
+  //   }
+  // }
 
   return res
 }

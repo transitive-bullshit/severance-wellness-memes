@@ -2,9 +2,27 @@ import 'dotenv/config'
 
 import { getEnv } from '@agentic/core'
 
+export const isServer = typeof window === 'undefined'
+export const isSafari =
+  !isServer && /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
+export const title = 'Severance Wellness Session'
+export const description =
+  'Generate custom wellness facts based on your Twitter profile.'
+export const domain = 'severance-wellness-facts.vercel.app'
+
+export const author = 'Travis Fischer'
+export const twitter = 'transitive_bs'
+export const twitterUrl = `https://x.com/${twitter}`
+export const copyright = `Copyright 2025 ${author}`
+export const madeWithLove = 'Made with ❤️ in Bangkok'
+export const githubUrl =
+  'https://github.com/transitive-bullshit/severance-wellness-session'
+
 export const env = getEnv('NODE_ENV') || 'development'
-export const isTest = env === 'test'
 export const ci = getEnv('CI')
+export const isDev = env === 'development'
+export const isTest = env === 'test'
 export const isCI = ci === 'true' || ci === '1'
 export const refreshCache = getEnv('REFRESH_CACHE') === 'true'
 export const redisUrl = getEnv('REDIS_URL')!
@@ -19,3 +37,10 @@ export const cacheUrlWhitelist = [getEnv('SCRAPER_API_BASE_URL')].filter(
 export const cacheDomainWhitelist = new Set(
   cacheUrlWhitelist.map((url) => new URL(url).host)
 )
+
+export const port = getEnv('PORT') || '3000'
+export const prodUrl = `https://${domain}`
+export const url = isDev ? `http://localhost:${port}` : prodUrl
+
+export const apiBaseUrl =
+  isDev || !getEnv('VERCEL_URL') ? url : `https://${getEnv('VERCEL_URL')}`

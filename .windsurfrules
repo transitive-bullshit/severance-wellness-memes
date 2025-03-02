@@ -16,7 +16,7 @@
   - GOOD examples:
     - `import { Foo } from './foo'`
     - `import { type Route } from './types/root'`
-    - `import zod from 'zod'`
+    - `import { z } from 'zod'`
   - BAD examples:
     - `import { Foo } from './foo.js'`
     - `import { type Route } from './types/root.js'`

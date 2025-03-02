@@ -1,0 +1,46 @@
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+}
+
+.headerContent {
+  pointer-events: auto;
+  align-self: center;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.rhs {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  gap: qem;
+}
+
+.logo {
+  width: auto;
+  height: 32px;
+  user-select: none;
+}
+
+.navHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap-w-1);
+
+  max-width: var(--max-width);
+  height: 100%;
+  margin: 0 auto;
+}

@@ -8,7 +8,6 @@ import restoreCursor from 'restore-cursor'
 import {
   createContext,
   generateWellnessFacts,
-  logCacheStats,
   type ResolvedTwitterUser
 } from '~/lib'
 
@@ -25,7 +24,6 @@ async function main() {
   })
 
   console.log(JSON.stringify(result, null, 2))
-  logCacheStats(ctx)
 }
 
 try {

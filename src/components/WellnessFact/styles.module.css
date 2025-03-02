@@ -1,0 +1,7 @@
+.wellnessFact {
+  position: relative;
+  max-width: 1024px;
+  aspect-ratio: 2 / 1;
+  border-radius: 8px;
+  max-width: 100%;
+}

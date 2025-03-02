@@ -1,8 +1,6 @@
 # Severance Wellness Session <!-- omit from toc -->
 
-> TODO
-
-![Ms Casey](https://pbs.twimg.com/media/Gj7sSsQagAA0uYB?format=jpg&name=medium)
+> Generate custom wellness facts based on your Twitter profile.
 
 <p>
   <a href="https://github.com/transitive-bullshit/severance-wellness-session/actions/workflows/main.yml"><img alt="Build Status" src="https://github.com/transitive-bullshit/severance-wellness-session/actions/workflows/main.yml/badge.svg" /></a>

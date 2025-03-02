@@ -6,6 +6,9 @@ import type { Simplify } from 'type-fest'
 
 import type { ScraperClient } from './scraper-client'
 
+export type { WellnessFact, WellnessSession } from './db'
+export type { Simplify } from 'type-fest'
+
 export type SocialDataTwitterUser = socialdata.User
 export type SocialDataTweet = socialdata.Tweet
 
@@ -28,7 +31,6 @@ export type Tweet = Simplify<
 >
 
 export interface ResolvedTwitterUser {
-  id: string
   user: SocialDataTwitterUser
 
   timelineTweetIds: string[]
@@ -40,7 +42,15 @@ export interface ResolvedTwitterUser {
   tweets: Record<string, Tweet>
   users: Record<string, SocialDataTwitterUser>
 
-  urls: Record<string, LinkContent | undefined>
+  // urls: Record<string, LinkContent | undefined>
+}
+
+declare global {
+  namespace PrismaJson {
+    export type TwitterUser = SocialDataTwitterUser
+    export type Tweets = Record<string, Tweet>
+    export type Users = Record<string, SocialDataTwitterUser>
+  }
 }
 
 export interface LinkContent {

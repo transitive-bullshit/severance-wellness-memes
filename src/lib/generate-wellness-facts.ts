@@ -4,23 +4,38 @@ import type * as types from './types'
 import { extractObject } from './ai'
 import { unfurlTweet } from './unfurl-tweet'
 
-export const WellnessFactsResultSchema = z.object({
+export const GeneratedWellnessFactsSchema = z.object({
   // We want `explanation` first to give the model time to reason in CoT.
   explanation: z.string().optional(),
 
   wellnessFacts: z.array(z.string())
 })
-export type WellnessFactsResult = z.infer<typeof WellnessFactsResultSchema>
+export type GeneratedWellnessFacts = z.infer<
+  typeof GeneratedWellnessFactsSchema
+>
+
+export type GenerateWellnessFactsResult = GeneratedWellnessFacts & {
+  model: string
+}
 
 export async function generateWellnessFacts({
   resolvedTwitterUser,
   ctx,
-  positive = false
+  positive = false,
+
+  // meh
+  model = 'gpt-4o-mini'
+  // model = 'gpt-4o',
+  // model = 'o3-mini',
+  // pretty solid
+  // model = 'o1',
+  // model = 'gpt-4.5-preview'
 }: {
   resolvedTwitterUser: types.ResolvedTwitterUser
   ctx: types.AgenticContext
   positive?: boolean
-}) {
+  model?: string
+}): Promise<GenerateWellnessFactsResult> {
   const tweets = resolvedTwitterUser.timelineTweetIds
     .map((id) => {
       return resolvedTwitterUser.tweets[id]
@@ -35,17 +50,10 @@ export async function generateWellnessFacts({
   const result = await extractObject({
     name: 'generate_wellness_facts',
     chatFn: ctx.model.run.bind(ctx.model),
-    schema: WellnessFactsResultSchema,
+    schema: GeneratedWellnessFactsSchema,
     injectSchemaIntoSystemMessage: false,
     params: {
-      // meh
-      // model: 'gpt-4o-mini',
-      // model: 'gpt-4o',
-      // model: 'o3-mini',
-
-      // pretty solid
-      model: 'gpt-4.5-preview',
-      // model: 'o1',
+      model,
       temperature: 1.0,
       messages: [
         {
@@ -182,5 +190,8 @@ ${JSON.stringify(unfurledTweets, null, 2)}
     }
   })
 
-  return result
+  return {
+    ...result,
+    model
+  }
 }
