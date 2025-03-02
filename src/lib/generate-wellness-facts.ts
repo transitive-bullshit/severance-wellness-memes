@@ -49,7 +49,7 @@ export async function generateWellnessFacts({
 
   const result = await extractObject({
     name: 'generate_wellness_facts',
-    chatFn: ctx.model.run.bind(ctx.model),
+    chatFn: ctx.openai.createChatCompletion as any, // TODO
     schema: GeneratedWellnessFactsSchema,
     injectSchemaIntoSystemMessage: false,
     params: {

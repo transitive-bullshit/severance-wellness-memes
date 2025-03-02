@@ -1,6 +1,6 @@
 import { SocialDataClient } from '@agentic/social-data'
-import { ChatModel, createOpenAIClient } from '@dexaai/dexter'
 import defaultKy from 'ky'
+import { OpenAIClient } from 'openai-fetch'
 
 import type * as types from './types'
 import { memoizedKy, MemoizedOpenAIClient } from './ky-utils'
@@ -12,7 +12,7 @@ export function createContext(
   const ky = overrides.ky ?? (overrides.noCache ? defaultKy : memoizedKy)
   const openai =
     (overrides.openai ?? overrides.noCache)
-      ? createOpenAIClient()
+      ? new OpenAIClient()
       : new MemoizedOpenAIClient()
 
   return {
@@ -24,13 +24,13 @@ export function createContext(
     ky,
     openai,
 
-    model: new ChatModel({
-      client: openai,
-      params: {
-        model: 'gpt-4o-mini'
-      },
-      debug: !!overrides.debug
-    }),
+    // model: new ChatModel({
+    //   client: openai,
+    //   params: {
+    //     model: 'gpt-4o-mini'
+    //   },
+    //   debug: !!overrides.debug
+    // }),
 
     // Required services
     socialData: new SocialDataClient({ ky }),

@@ -25,7 +25,7 @@ export async function extractUserFullName({
 
   const result = await extractObject({
     name: 'extract_user_full_name',
-    chatFn: ctx.model.run.bind(ctx.model),
+    chatFn: ctx.openai.createChatCompletion as any, // TODO
     schema: UserFullNameSchema,
     injectSchemaIntoSystemMessage: false,
     params: {

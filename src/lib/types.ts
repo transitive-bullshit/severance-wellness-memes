@@ -1,5 +1,4 @@
 import type { socialdata, SocialDataClient } from '@agentic/social-data'
-import type { ChatModel } from '@dexaai/dexter'
 import type { KyInstance } from 'ky'
 import type { OpenAIClient } from 'openai-fetch'
 import type { Simplify } from 'type-fest'
@@ -83,5 +82,4 @@ export type AgenticContext = Readonly<{
 
   // OpenAI
   openai: OpenAIClient
-  model: ChatModel
 }>

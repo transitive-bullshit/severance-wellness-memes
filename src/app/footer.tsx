@@ -9,7 +9,7 @@ export function Footer() {
       <div className={styles.footerContent}>
         <div className={styles.copyright}>{config.copyright}</div>
 
-        <div className={styles.desc}>Coming summer 2024</div>
+        <div className={styles.desc}>{config.madeWithLove}</div>
 
         <div className={styles.social}>
           <a href={config.twitterUrl} target='_blank' rel='noopener noreferrer'>

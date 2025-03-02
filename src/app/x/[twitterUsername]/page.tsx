@@ -1,41 +1,8 @@
 import { WellnessFactGallery } from '~/components'
-import { generateWellnessSession } from '~/lib'
-import { createContext } from '~/lib/create-context'
-import { prisma, type WellnessSession } from '~/lib/db'
-import { resolveTwitterUser } from '~/lib/resolve-twitter-user'
+import { prisma } from '~/lib/db'
 
+import { getOrGenerateWellnessSession } from './get-or-generate-wellness-session'
 import styles from './styles.module.css'
-
-async function getOrGenerateWellnessSession({
-  twitterUsername
-}: {
-  twitterUsername: string
-}): Promise<WellnessSession> {
-  const wellnessSession = await prisma.wellnessSession.findUnique({
-    where: { twitterUsername },
-    include: {
-      wellnessFacts: true,
-      twitterUser: {
-        select: { user: true }
-      }
-    }
-  })
-
-  if (wellnessSession) {
-    return wellnessSession
-  }
-
-  const ctx = createContext()
-  const resolvedTwitterUser = await resolveTwitterUser({
-    twitterUsername,
-    ctx
-  })
-
-  return generateWellnessSession({
-    resolvedTwitterUser,
-    ctx
-  })
-}
 
 export default async function Page({
   params
@@ -44,9 +11,7 @@ export default async function Page({
 }) {
   const { twitterUsername } = await params
   const { userFullName, wellnessFacts, twitterUser } =
-    await getOrGenerateWellnessSession({
-      twitterUsername
-    })
+    await getOrGenerateWellnessSession({ twitterUsername })
 
   const user = twitterUser!.user
   const userFullNameParts = userFullName
