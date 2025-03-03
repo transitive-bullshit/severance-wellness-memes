@@ -1,12 +1,12 @@
 {
-  "name": "severance-wellness-session",
+  "name": "severance-wellness-memes",
   "private": true,
   "description": "Roast your Twitter profile with AI-generated Severance wellness memes.",
   "author": "Travis Fischer <travis@transitivebullsh.it>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/transitive-bullshit/severance-wellness-session.git"
+    "url": "git+https://github.com/transitive-bullshit/severance-wellness-memes.git"
   },
   "packageManager": "pnpm@9.15.4",
   "engines": {
