@@ -2,7 +2,7 @@ import cs from 'clsx'
 
 import type * as types from '@/lib'
 
-import { WellnessFact } from '../WellnessFact/WellnessFact'
+import { WellnessFact } from '../wellness-fact'
 import styles from './styles.module.css'
 
 export function WellnessFactGallery({

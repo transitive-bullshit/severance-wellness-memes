@@ -10,6 +10,8 @@ export async function getOrGenerateWellnessSession({
 }: {
   twitterUsername: string
 }): Promise<WellnessSession> {
+  // await new Promise((resolve) => setTimeout(resolve, 5_000))
+
   // First check if we already have a session
   const existingSession = await prisma.wellnessSession.findUnique({
     where: { twitterUsername },

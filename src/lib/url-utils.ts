@@ -4,7 +4,7 @@ import normalizeUrlImpl, {
 } from 'normalize-url'
 import QuickLRU from 'quick-lru'
 
-import { hashObject } from './utils'
+import { hashObject } from './server-utils'
 
 const normalizedUrlCache = new QuickLRU<string, string>({
   maxSize: 4000

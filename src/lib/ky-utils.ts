@@ -13,14 +13,8 @@ import pMemoize from 'p-memoize'
 
 import type * as types from './types'
 import * as config from './config'
+import { assert, hashObject, pruneUndefined, trimMessage } from './server-utils'
 import { normalizeUrl } from './url-utils'
-import {
-  assert,
-  hashObject,
-  pruneUndefined,
-  trimMessage
-  // trimMessage
-} from './utils'
 
 const debugKy = debug('ky')
 

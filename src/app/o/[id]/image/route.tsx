@@ -61,6 +61,9 @@ export async function GET(
             }}
           >
             {wellnessFact?.text || 'The work is mysterious and important.'}
+            {/* {
+              'Your outie’s favorite form of self-care is releasing pricing update tweets for @vercel several times a month.' // TODO: produces a text overflow
+            } */}
           </div>
         </div>
       </div>
@@ -68,6 +71,7 @@ export async function GET(
     {
       width: 2048,
       height: 1024,
+      debug: true,
       fonts: [
         {
           name: 'Inter',
