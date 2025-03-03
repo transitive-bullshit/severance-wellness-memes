@@ -38,7 +38,7 @@ async function getFeaturedWellnessFacts(): Promise<types.WellnessFact[]> {
         has: 'featured'
       }
     },
-    take: 12
+    take: 10
   })
 
   return random.shuffle(wellnessFacts)
