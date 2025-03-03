@@ -21,31 +21,31 @@ Praise Kier.
 ## Examples
 
 <p align="center">
-  <img alt="Example meme" src="/public/examples/0.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/5.jpg" width="45%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Example meme" src="/public/examples/1.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/8.jpg" width="45%">
 </p>
 
 <p align="center">
-  <img alt="Example meme" src="/public/examples/2.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/7.jpg" width="45%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Example meme" src="/public/examples/3.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/11.jpg" width="45%">
 </p>
 
 <p align="center">
   <img alt="Example meme" src="/public/examples/4.jpg" width="45%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Example meme" src="/public/examples/5.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/0.jpg" width="45%">
 </p>
 
 <p align="center">
   <img alt="Example meme" src="/public/examples/6.jpg" width="45%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Example meme" src="/public/examples/7.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/2.jpg" width="45%">
 </p>
 
 <p align="center">
-  <img alt="Example meme" src="/public/examples/8.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/3.jpg" width="45%">
 &nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="Example meme" src="/public/examples/9.jpg" width="45%">
 </p>
@@ -53,7 +53,7 @@ Praise Kier.
 <p align="center">
   <img alt="Example meme" src="/public/examples/10.jpg" width="45%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Example meme" src="/public/examples/11.jpg" width="45%">
+  <img alt="Example meme" src="/public/examples/1.jpg" width="45%">
 </p>
 
 <p align="center">
