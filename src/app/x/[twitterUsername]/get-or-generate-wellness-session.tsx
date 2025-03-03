@@ -1,9 +1,9 @@
 'use server'
 
-import { generateWellnessSession } from '~/lib'
-import { createContext } from '~/lib/create-context'
-import { prisma, type WellnessSession } from '~/lib/db'
-import { resolveTwitterUser } from '~/lib/resolve-twitter-user'
+import { generateWellnessSession } from '@/lib'
+import { createContext } from '@/lib/create-context'
+import { prisma, type WellnessSession } from '@/lib/db'
+import { resolveTwitterUser } from '@/lib/resolve-twitter-user'
 
 export async function getOrGenerateWellnessSession({
   twitterUsername

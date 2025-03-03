@@ -4,8 +4,9 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Inter } from 'next/font/google'
 
-import { bootstrap } from '~/lib/bootstrap'
-import * as config from '~/lib/config'
+import { ThemeProvider } from '@/components/theme-provider'
+import { bootstrap } from '@/lib/bootstrap'
+import * as config from '@/lib/config'
 
 import { Footer } from './footer'
 import { Header } from './header'
@@ -29,15 +30,22 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
-        <div className={styles.root}>
-          <Header />
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className={styles.root}>
+            <Header />
 
-          <main className={styles.main}>{children}</main>
+            <main className={styles.main}>{children}</main>
 
-          <Footer />
-        </div>
+            <Footer />
+          </div>
+        </ThemeProvider>
 
         <Analytics />
       </body>

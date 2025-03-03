@@ -1,5 +1,5 @@
-import { WellnessFactGallery } from '~/components'
-import { prisma } from '~/lib/db'
+import { WellnessFactGallery } from '@/components'
+import { prisma } from '@/lib/db'
 
 import { getOrGenerateWellnessSession } from './get-or-generate-wellness-session'
 import styles from './styles.module.css'

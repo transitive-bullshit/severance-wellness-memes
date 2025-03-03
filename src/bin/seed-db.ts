@@ -5,8 +5,8 @@ import fs from 'node:fs/promises'
 import { gracefulExit } from 'exit-hook'
 import restoreCursor from 'restore-cursor'
 
-import { type ResolvedTwitterUser } from '~/lib'
-import { prisma } from '~/lib/db'
+import { type ResolvedTwitterUser } from '@/lib'
+import { prisma } from '@/lib/db'
 
 const seedWellnessFacts = [
   'Your outie once tried to fine-tune a GPT model on their own tweets but had to stop because it became “too unhinged.”',

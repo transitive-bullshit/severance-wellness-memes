@@ -1,5 +1,11 @@
 import { assert } from '@agentic/core'
+import { type ClassValue, clsx } from 'clsx'
 import hashObjectImpl, { type Options as HashObjectOptions } from 'hash-object'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export {
   assert,

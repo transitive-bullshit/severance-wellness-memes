@@ -15,7 +15,7 @@ export const author = 'Travis Fischer'
 export const twitter = 'transitive_bs'
 export const twitterUrl = `https://x.com/${twitter}`
 export const copyright = `Copyright 2025 Lumon Industries`
-export const madeWithLove = 'Made from Bangkok with ❤️'
+export const madeWithLove = 'Made with ❤️ in Bangkok'
 export const githubUrl =
   'https://github.com/transitive-bullshit/severance-wellness-memes'
 

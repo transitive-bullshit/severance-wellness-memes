@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { ActiveLink } from '~/components'
+import { ActiveLink } from '@/components'
 
 import styles from './header.module.css'
 

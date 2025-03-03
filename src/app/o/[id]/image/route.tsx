@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import { ImageResponse } from 'next/og'
 
-import { prisma } from '~/lib/db'
+import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-static'
 

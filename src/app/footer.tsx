@@ -1,5 +1,5 @@
-import { GitHub, Twitter } from '~/icons'
-import * as config from '~/lib/config'
+import { GitHub, Twitter } from '@/icons'
+import * as config from '@/lib/config'
 
 import styles from './footer.module.css'
 

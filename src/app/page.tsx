@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import random from 'random'
 
-import type * as types from '~/lib'
-import { WellnessFactGallery } from '~/components'
-import { prisma } from '~/lib/db'
+import type * as types from '@/lib'
+import { WellnessFactGallery } from '@/components'
+import { prisma } from '@/lib/db'
 
 import styles from './styles.module.css'
 

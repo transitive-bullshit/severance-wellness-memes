@@ -1,7 +1,7 @@
 import cs from 'clsx'
 import Image from 'next/image'
 
-import type * as types from '~/lib'
+import type * as types from '@/lib'
 
 import styles from './styles.module.css'
 
