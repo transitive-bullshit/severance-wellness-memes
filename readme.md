@@ -1,6 +1,6 @@
 # Severance Wellness Session <!-- omit from toc -->
 
-> Generate custom wellness facts based on your Twitter profile.
+> Roast your Twitter profile with AI-generated Severance wellness memes.
 
 <p>
   <a href="https://github.com/transitive-bullshit/severance-wellness-session/actions/workflows/main.yml"><img alt="Build Status" src="https://github.com/transitive-bullshit/severance-wellness-session/actions/workflows/main.yml/badge.svg" /></a>
@@ -9,6 +9,7 @@
 </p>
 
 - [Intro](#intro)
+- [Examples](#examples)
 - [License](#license)
 
 ## Intro
@@ -16,6 +17,14 @@
 The work is mysterious and important.
 
 Praise Kier.
+
+## Examples
+
+<p align="center">
+  <img alt="Example meme" src="/public/examples/0.jpg" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Example meme" src="/public/examples/1.jpg" width="45%">
+</p>
 
 ## License
 

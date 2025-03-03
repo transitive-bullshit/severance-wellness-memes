@@ -31,7 +31,6 @@ export async function generateWellnessSession({
 
   const createWellnessSession = prisma.wellnessSession.create({
     data: {
-      id: resolvedTwitterUser.user.id_str,
       twitterUserId: resolvedTwitterUser.user.id_str,
       twitterUsername: resolvedTwitterUser.user.screen_name,
       userFullName,
@@ -42,7 +41,6 @@ export async function generateWellnessSession({
         create: generatedWellnessFacts.wellnessFacts.map((text) => ({
           text,
           model: generatedWellnessFacts.model,
-          twitterUserId: resolvedTwitterUser.user.id_str,
           twitterUsername: resolvedTwitterUser.user.screen_name
         }))
       }

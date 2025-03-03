@@ -1,7 +1,7 @@
 {
   "name": "severance-wellness-session",
   "private": true,
-  "description": "Generate custom wellness facts based on your Twitter profile.",
+  "description": "Roast your Twitter profile with AI-generated Severance wellness memes.",
   "author": "Travis Fischer <travis@transitivebullsh.it>",
   "license": "MIT",
   "repository": {

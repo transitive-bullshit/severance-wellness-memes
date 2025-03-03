@@ -8,14 +8,14 @@ export const isSafari =
 
 export const title = 'Severance Wellness Session'
 export const description =
-  'Generate custom wellness facts based on your Twitter profile.'
+  'Roast your Twitter profile with AI-generated Severance wellness memes.'
 export const domain = 'severance-wellness-facts.vercel.app'
 
 export const author = 'Travis Fischer'
 export const twitter = 'transitive_bs'
 export const twitterUrl = `https://x.com/${twitter}`
 export const copyright = `Copyright 2025 Lumon Industries`
-export const madeWithLove = 'Made with ❤️ in Bangkok'
+export const madeWithLove = 'Made from Bangkok with ❤️'
 export const githubUrl =
   'https://github.com/transitive-bullshit/severance-wellness-session'
 

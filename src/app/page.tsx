@@ -8,7 +8,7 @@ import { prisma } from '~/lib/db'
 import styles from './styles.module.css'
 
 export default async function Page() {
-  const wellnessFacts = await getFeaturedWellnessFacts()
+  const featuredWellnessFacts = await getFeaturedWellnessFacts()
 
   // TODO
   const twitterUsername = 'transitive_bs'
@@ -25,7 +25,7 @@ export default async function Page() {
       <section className={styles.examples}>
         <h2>Examples</h2>
 
-        <WellnessFactGallery wellnessFacts={wellnessFacts} />
+        <WellnessFactGallery wellnessFacts={featuredWellnessFacts} />
       </section>
     </div>
   )
