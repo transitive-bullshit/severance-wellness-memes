@@ -1,4 +1,8 @@
-# Severance Wellness Session <!-- omit from toc -->
+<p align="center">
+  <a href="https://severance-wellness-memes"><img alt="Your outie likes to star random GitHub repos." src="/public/examples/hero.jpg" width="512"></a>
+</p>
+
+# Severance Wellness Memes <!-- omit from toc -->
 
 > Roast your Twitter profile with AI-generated Severance wellness memes.
 
