@@ -3,6 +3,7 @@ import random from 'random'
 
 import type * as types from '@/lib'
 import { WellnessFactGallery } from '@/components'
+import { Bootstrap } from '@/components/bootstrap'
 import { prisma } from '@/lib/db'
 
 import styles from './styles.module.css'
@@ -29,6 +30,8 @@ export default async function Page() {
 
         <WellnessFactGallery wellnessFacts={featuredWellnessFacts} />
       </section>
+
+      <Bootstrap />
     </div>
   )
 }

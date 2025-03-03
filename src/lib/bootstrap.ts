@@ -1,4 +1,4 @@
-import { githubUrl, isSafari, twitterUrl } from './config'
+import { githubUrl, isSafari, isServer, twitterUrl } from './config'
 
 const detail = `- ${twitterUrl}
 - ${githubUrl}
@@ -17,8 +17,8 @@ const banner = `
 ${detail}
 `
 
-export async function bootstrap() {
-  // if (isServer) return
+export function bootstrap() {
+  if (isServer) return
 
   if (isSafari) {
     console.log(detail)

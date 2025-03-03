@@ -1,4 +1,6 @@
-import { Skeleton } from '@/components/ui/skeleton'
+// import { Skeleton } from '@/components/ui/skeleton'
+
+import { LoadingIndicator } from '@/components'
 
 import styles from './styles.module.css'
 
@@ -11,7 +13,8 @@ export default async function Page() {
       </section>
 
       <section className={styles.wellnessFacts}>
-        <Skeleton className={styles.loadingWellnessFact} />
+        {/* <Skeleton className={styles.loadingWellnessFact} /> */}
+        <LoadingIndicator isLoading={true} />
       </section>
     </div>
   )

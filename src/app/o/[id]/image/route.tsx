@@ -71,7 +71,7 @@ export async function GET(
     {
       width: 2048,
       height: 1024,
-      debug: true,
+      // debug: true,
       fonts: [
         {
           name: 'Inter',

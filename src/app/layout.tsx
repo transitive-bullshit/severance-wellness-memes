@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/next'
 import { Inter } from 'next/font/google'
 
 import { ThemeProvider } from '@/components/theme-provider'
-import { bootstrap } from '@/lib/bootstrap'
 import * as config from '@/lib/config'
 
 import { Footer } from './footer'
@@ -16,8 +15,6 @@ const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin']
 })
-
-bootstrap()
 
 export const metadata: Metadata = {
   title: config.title,
