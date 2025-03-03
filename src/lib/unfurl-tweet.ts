@@ -65,32 +65,34 @@ export function unfurlTweet(
 
       if (entity.source === 'url') {
         const expandedUrl = entity.expanded_url
-        body = expandedUrl
+        if (expandedUrl) {
+          body = expandedUrl
 
-        // TODO: this will also match non-twitter URLs
-        const tweetIdMatch = expandedUrl.match(tweetIdRegex)
+          // TODO: this will also match non-twitter URLs
+          const tweetIdMatch = expandedUrl.match(tweetIdRegex)
 
-        if (tweetIdMatch) {
-          const subTweetId = tweetIdMatch[1]
-          const subTweet =
-            subTweetId === tweet.id_str
-              ? null
-              : resolvedTwitterUser?.tweets[subTweetId]
+          if (tweetIdMatch) {
+            const subTweetId = tweetIdMatch[1]
+            const subTweet =
+              subTweetId === tweet.id_str
+                ? null
+                : resolvedTwitterUser?.tweets[subTweetId]
 
-          if (subTweet && unfurlSubtweets) {
-            if (tweet.quoted_status_id_str === subTweetId) {
-              body = `${unfurlTweet(subTweet, opts)}`
+            if (subTweet && unfurlSubtweets) {
+              if (tweet.quoted_status_id_str === subTweetId) {
+                body = `${unfurlTweet(subTweet, opts)}`
+              } else {
+                body = `${unfurlTweet(subTweet, opts)}`
+              }
             } else {
-              body = `${unfurlTweet(subTweet, opts)}`
+              // if we can't find the tweet, remove the URL
+              body = ''
             }
-          } else {
-            // if we can't find the tweet, remove the URL
-            body = ''
+          } else if (unfurlUrls) {
+            // Replace the URL with its opengraph metadata for other URLs
+            // TODO
+            // body = unfurlUrl(expandedUrl, { resolvedTwitterUser })
           }
-        } else if (unfurlUrls) {
-          // Replace the URL with its opengraph metadata for other URLs
-          // TODO
-          // body = unfurlUrl(expandedUrl, { resolvedTwitterUser })
         }
       } else if (entity.source === 'media') {
         const id = (entity as any).id_str

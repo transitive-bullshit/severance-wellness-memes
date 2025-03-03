@@ -147,13 +147,19 @@ export function createAIChain<Result extends types.AIChainResult = string>({
     do {
       ++numCalls
 
-      const response = await chatFn({
+      // console.log('CALLING', {
+      //   ...modelParams,
+      //   messages,
+      //   tools: functionSet.size ? functionSet.toolSpecs : undefined
+      // })
+
+      const response: any = await chatFn({
         ...modelParams,
         messages,
         tools: functionSet.size ? functionSet.toolSpecs : undefined
       })
 
-      const { message } = response
+      const message = response.choices[0].message
       messages.push(message)
 
       try {

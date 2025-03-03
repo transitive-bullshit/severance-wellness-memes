@@ -14,8 +14,9 @@ import {
 async function main() {
   const ctx = createContext()
 
+  const twitterUsername = 'rauchg'
   const resolvedTwitterUser = JSON.parse(
-    await fs.readFile('out/transitive_bs.json', 'utf8')
+    await fs.readFile(`out/${twitterUsername}.json`, 'utf8')
   ) as ResolvedTwitterUser
 
   const result = await generateWellnessFacts({

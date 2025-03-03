@@ -11,7 +11,7 @@ import { resolveTwitterUser } from '~/lib/resolve-twitter-user'
 async function main() {
   const ctx = createContext()
 
-  const twitterUsername = 'transitive_bs'
+  const twitterUsername = 'rauchg'
   const resolvedTwitterUser = await resolveTwitterUser({ twitterUsername, ctx })
   await fs.writeFile(
     `out/${twitterUsername}.json`,

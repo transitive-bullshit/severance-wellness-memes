@@ -14,7 +14,7 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "generate": "prisma generate",
     "build": "next build",
     "start": "next start",
