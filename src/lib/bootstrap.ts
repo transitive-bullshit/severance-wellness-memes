@@ -1,7 +1,7 @@
-import { githubUrl, isSafari, isServer, twitterUrl } from './config'
+import * as config from '@/lib/config'
 
-const detail = `- ${twitterUrl}
-- ${githubUrl}
+const detail = `- ${config.twitterUrl}
+- ${config.githubUrl}
 
 Praise Kier.`
 
@@ -18,11 +18,13 @@ ${detail}
 `
 
 export function bootstrap() {
-  if (isServer) return
+  if (config.isServer) return
 
-  if (isSafari) {
+  if (config.isSafari) {
     console.log(detail)
   } else {
     console.log(banner)
   }
+
+  console.log('config', config)
 }
