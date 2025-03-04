@@ -5,7 +5,8 @@ import fs from 'node:fs/promises'
 import { gracefulExit } from 'exit-hook'
 import restoreCursor from 'restore-cursor'
 
-import { createContext, logCacheStats } from '@/lib'
+import { createContext } from '@/lib/create-context'
+import { logCacheStats } from '@/lib/ky-utils'
 import { resolveTwitterUser } from '@/lib/resolve-twitter-user'
 
 async function main() {

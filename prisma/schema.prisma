@@ -22,7 +22,10 @@ model WellnessSession {
   userFullName    String?
 
   twitterUser   TwitterUser?
-  wellnessFacts WellnessFact[]
+  wellnessFacts WellnessFact[] @relation(name: "wellnessFacts")
+
+  pinnedWellnessFact   WellnessFact? @relation(name: "pinnedWellnessFact", fields: [pinnedWellnessFactId], references: [id], onDelete: Cascade)
+  pinnedWellnessFactId String?
 
   @@index([twitterUsername])
   @@index([twitterUserId])
@@ -59,7 +62,9 @@ model WellnessFact {
   twitterUsername String
   tags            String[]
 
-  wellnessSession WellnessSession? @relation(fields: [twitterUserId], references: [id], onDelete: Cascade)
+  wellnessSession WellnessSession? @relation(name: "wellnessFacts", fields: [twitterUserId], references: [id], onDelete: Cascade)
+
+  pinnedWellnessSessions WellnessSession[] @relation(name: "pinnedWellnessFact")
 
   @@index([twitterUsername])
   @@index([twitterUserId])

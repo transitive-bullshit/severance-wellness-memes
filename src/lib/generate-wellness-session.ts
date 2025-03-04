@@ -47,6 +47,7 @@ export async function generateWellnessSession({
     },
     include: {
       wellnessFacts: true,
+      pinnedWellnessFact: true,
       twitterUser: {
         select: { user: true }
       }

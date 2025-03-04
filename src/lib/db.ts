@@ -10,7 +10,7 @@ export const prisma = _prisma ?? (_prisma = new PrismaClient())
 export type { WellnessFact } from '@prisma/client'
 
 type WellnessSessionBase = Prisma.WellnessSessionGetPayload<{
-  include: { wellnessFacts: true; twitterUser: true }
+  include: { wellnessFacts: true; twitterUser: true; pinnedWellnessFact: true }
 }>
 
 export type WellnessSession = SimplifyDeep<

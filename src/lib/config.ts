@@ -14,7 +14,7 @@ export const domain = 'severance-wellness-facts.vercel.app'
 export const author = 'Travis Fischer'
 export const twitter = 'transitive_bs'
 export const twitterUrl = `https://x.com/${twitter}`
-export const copyright = `Copyright 2025 Lumon Industries`
+export const copyright = `© ${new Date().getFullYear()} Lumon Industries. All rights reserved.`
 export const madeWithLove = 'Made with ❤️ in Bangkok'
 export const githubUrl =
   'https://github.com/transitive-bullshit/severance-wellness-memes'

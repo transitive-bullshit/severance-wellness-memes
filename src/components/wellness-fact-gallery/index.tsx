@@ -1,6 +1,6 @@
 import cs from 'clsx'
 
-import type * as types from '@/lib'
+import type * as types from '@/lib/types'
 
 import { WellnessFact } from '../wellness-fact'
 import styles from './styles.module.css'

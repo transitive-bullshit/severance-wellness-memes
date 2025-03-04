@@ -1,7 +1,7 @@
-import { WellnessFactGallery } from '@/components'
+import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { prisma } from '@/lib/db'
+import { upsertWellnessSession } from '@/lib/upsert-wellness-session'
 
-import { getOrGenerateWellnessSession } from './get-or-generate-wellness-session'
 import styles from './styles.module.css'
 
 export default async function Page({
@@ -10,8 +10,11 @@ export default async function Page({
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
-  const { userFullName, wellnessFacts, twitterUser } =
-    await getOrGenerateWellnessSession({ twitterUsername })
+  const wellnessSession = await upsertWellnessSession({
+    twitterUsername
+  })
+  const { userFullName, twitterUser, wellnessFacts, pinnedWellnessFact } =
+    wellnessSession
 
   const user = twitterUser!.user
   const userFullNameParts = userFullName
@@ -23,16 +26,29 @@ export default async function Page({
       ? `${userFullNameParts![0]} ${userFullNameParts![1]![0]}.`
       : userFullName || user.name || user.screen_name || 'Mysterious Guest'
 
+  // Make sure any pinned wellness fact is at the start of the gallery.
+  if (pinnedWellnessFact) {
+    const pinnedWellnessFactIndex = wellnessFacts.findIndex(
+      (wellnessFact) =>
+        pinnedWellnessFact?.id && pinnedWellnessFact.id === wellnessFact.id
+    )
+    if (pinnedWellnessFactIndex > 0) {
+      wellnessFacts.splice(pinnedWellnessFactIndex, 1)
+    }
+
+    wellnessFacts.splice(0, 0, pinnedWellnessFact)
+  }
+
   return (
-    <div className={styles.page}>
+    <>
       <section className={styles.intro}>
         <h1 className={styles.title}>Hello {userDisplayName}</h1>
       </section>
 
-      <section className={styles.wellnessFacts}>
+      <section className='flex-auto'>
         <WellnessFactGallery wellnessFacts={wellnessFacts} />
       </section>
-    </div>
+    </>
   )
 }
 

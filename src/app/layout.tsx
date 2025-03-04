@@ -4,10 +4,12 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Inter } from 'next/font/google'
 
+import { Bootstrap } from '@/components/bootstrap'
 import { ThemeProvider } from '@/components/theme-provider'
 import * as config from '@/lib/config'
 
-import { Footer } from './footer'
+// import { Footer } from './footer'
+import { Footer2 } from './footer2'
 import { Header } from './header'
 import styles from './styles.module.css'
 
@@ -39,10 +41,11 @@ export default function RootLayout({
 
             <main className={styles.main}>{children}</main>
 
-            <Footer />
+            <Footer2 />
           </div>
         </ThemeProvider>
 
+        <Bootstrap />
         <Analytics />
       </body>
     </html>

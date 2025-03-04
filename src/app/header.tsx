@@ -1,4 +1,5 @@
-import { ActiveLink, DarkModeToggle } from '@/components'
+import { ActiveLink } from '@/components/active-link'
+import { DarkModeToggle } from '@/components/dark-mode-toggle'
 
 import styles from './header.module.css'
 
