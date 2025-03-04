@@ -3,8 +3,6 @@ import type { KyInstance } from 'ky'
 import type { OpenAIClient } from 'openai-fetch'
 import type { Simplify } from 'type-fest'
 
-import type { ScraperClient } from './scraper-client'
-
 export type { WellnessFact, WellnessSession } from './db'
 export type { Simplify } from 'type-fest'
 
@@ -78,7 +76,6 @@ export type AgenticContext = Readonly<{
 
   // Required Services
   socialData: SocialDataClient
-  scraper: ScraperClient
 
   // OpenAI
   openai: OpenAIClient

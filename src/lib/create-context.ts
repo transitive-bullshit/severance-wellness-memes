@@ -4,7 +4,6 @@ import { OpenAIClient } from 'openai-fetch'
 
 import type * as types from './types'
 import { memoizedKy, MemoizedOpenAIClient } from './ky-utils'
-import { ScraperClient } from './scraper-client'
 
 export function createContext(
   overrides: Partial<types.AgenticContext> = {}
@@ -34,7 +33,6 @@ export function createContext(
 
     // Required services
     socialData: new SocialDataClient({ ky }),
-    scraper: new ScraperClient({ ky }),
 
     // Allow for overrides
     ...overrides

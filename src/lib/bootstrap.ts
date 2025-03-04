@@ -25,6 +25,4 @@ export function bootstrap() {
   } else {
     console.log(banner)
   }
-
-  console.log('config', config)
 }
