@@ -29,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --strict-peer-dependencies
 
+      - name: Generate Prisma
+        run: pnpm generate
+
       - name: Run test
         run: pnpm test
