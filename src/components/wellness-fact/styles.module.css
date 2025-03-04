@@ -1,9 +1,16 @@
-.wellnessFact {
+.wellnessFactContainer {
   position: relative;
+  user-select: none;
+  margin: 0 auto;
+  width: 100%;
+  max-width: calc(min(100%, 640px));
+}
+
+.wellnessFact {
+  display: block;
   width: 100%;
   max-width: calc(min(100%, 640px));
   aspect-ratio: 2 / 1;
-  display: block;
   border-radius: 8px;
 
   --tw-ring-offset-shadow: 0 0 #0000;
@@ -17,4 +24,11 @@
   box-shadow:
     var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
     var(--tw-shadow);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 2vmin;
+  left: 2vmin;
+  cursor: pointer;
 }

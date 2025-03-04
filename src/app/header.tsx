@@ -16,9 +16,6 @@ export function Header() {
           <AudioToggle />
 
           <DarkModeToggle />
-          {/* <Button asChild>
-            <ActiveLink href='/signup'>Sign up</ActiveLink>
-          </Button> */}
         </div>
       </div>
     </header>

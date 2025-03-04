@@ -1,7 +1,8 @@
 'use client'
 
 import { Volume2, VolumeX } from 'lucide-react'
-import * as React from 'react'
+import React from 'react'
+import { useEffectOnce } from 'react-use'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,6 +16,11 @@ import { useAudio } from './theme-provider'
 
 export function AudioToggle() {
   const { isAudioEnabled, toggleAudio } = useAudio()
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  useEffectOnce(() => {
+    setIsMounted(true)
+  })
 
   return (
     <TooltipProvider>
@@ -25,11 +31,12 @@ export function AudioToggle() {
             size='icon'
             className='cursor-pointer'
             onClick={toggleAudio}
+            suppressHydrationWarning
           >
-            {isAudioEnabled ? (
-              <Volume2 className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
+            {isAudioEnabled && isMounted ? (
+              <Volume2 className='h-[1.2rem] w-[1.2rem]' />
             ) : (
-              <VolumeX className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
+              <VolumeX className='h-[1.2rem] w-[1.2rem]' />
             )}
             <span className='sr-only'>Toggle music</span>
           </Button>

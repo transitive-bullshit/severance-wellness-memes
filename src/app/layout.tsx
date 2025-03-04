@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
 
 import { Bootstrap } from '@/components/bootstrap'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -40,6 +41,7 @@ export default function RootLayout({
 
             <main className={styles.main}>{children}</main>
 
+            <Toaster richColors />
             <Footer />
           </div>
         </ThemeProvider>

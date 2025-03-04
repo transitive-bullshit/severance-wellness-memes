@@ -7,10 +7,10 @@ export default async function Page() {
   return (
     <>
       <section className={styles.intro}>
-        <h1 className={styles.title}>Loading...</h1>
+        <h3 className={styles.title}>Loading...</h3>
       </section>
 
-      <section className='flex-auto justify-center'>
+      <section className='flex-auto justify-center p-16'>
         <LoadingIndicator isLoading={true} />
       </section>
     </>

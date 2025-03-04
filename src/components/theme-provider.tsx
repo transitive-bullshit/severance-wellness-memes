@@ -5,7 +5,7 @@ import React from 'react'
 import { useAudio as useAudioHook, useLocalStorage } from 'react-use'
 
 const audioContext = React.createContext({
-  isAudioEnabled: true,
+  isAudioEnabled: false,
   toggleAudio: () => {}
 })
 
@@ -13,13 +13,13 @@ export function ThemeProvider({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
-  const [isAudioEnabled = true, setIsAudioEnabled] = useLocalStorage(
+  const [isAudioEnabled = false, setIsAudioEnabled] = useLocalStorage(
     'audio',
     true
   )
   const [audio, _state, controls] = useAudioHook({
     src: '/music-of-wellness.mp3',
-    autoPlay: isAudioEnabled,
+    autoPlay: false,
     loop: true
   })
 

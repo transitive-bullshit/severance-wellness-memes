@@ -67,7 +67,7 @@ export function Footer() {
               <nav className='flex flex-col space-y-2'>
                 <Link
                   href={twitterUrl}
-                  className='flex items-center space-x-2 hover:underline'
+                  className='flex items-center space-x-2'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
@@ -77,7 +77,7 @@ export function Footer() {
 
                 <Link
                   href={githubUrl}
-                  className='flex items-center space-x-2 hover:underline'
+                  className='flex items-center space-x-2'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
