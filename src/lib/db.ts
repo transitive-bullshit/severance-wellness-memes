@@ -1,5 +1,6 @@
 import type { SetRequired, SimplifyDeep } from 'type-fest'
 import { type Prisma, PrismaClient } from '@prisma/client'
+// import { asyncExitHook } from 'exit-hook'
 
 // This is intentionally left as a global singleton to avoid re-creating the
 // Prisma connection instance on successive calls in serverless environments.
@@ -21,3 +22,12 @@ export type WellnessSession = SimplifyDeep<
     > | null
   }
 >
+
+// asyncExitHook(
+//   async () => {
+//     return prisma.$disconnect()
+//   },
+//   {
+//     wait: 2000
+//   }
+// )

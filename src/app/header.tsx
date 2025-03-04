@@ -1,4 +1,5 @@
 import { ActiveLink } from '@/components/active-link'
+import { AudioToggle } from '@/components/audio-toggle'
 import { DarkModeToggle } from '@/components/dark-mode-toggle'
 
 import styles from './header.module.css'
@@ -12,8 +13,9 @@ export function Header() {
         </ActiveLink>
 
         <div className={styles.rhs}>
-          <DarkModeToggle />
+          <AudioToggle />
 
+          <DarkModeToggle />
           {/* <Button asChild>
             <ActiveLink href='/signup'>Sign up</ActiveLink>
           </Button> */}

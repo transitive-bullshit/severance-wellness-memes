@@ -36,6 +36,8 @@ model TwitterUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  twitterUsername String? @unique
+
   /// [TwitterUser]
   user Json
 
@@ -48,6 +50,8 @@ model TwitterUser {
   users Json
 
   wellnessSession WellnessSession @relation(fields: [id], references: [twitterUserId], onDelete: Cascade)
+
+  @@index([twitterUsername])
 }
 
 model WellnessFact {

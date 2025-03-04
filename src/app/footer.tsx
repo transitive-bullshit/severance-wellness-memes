@@ -1,156 +1,53 @@
 import Link from 'next/link'
 
 import { ActiveLink } from '@/components/active-link'
+import { exampleTwitterUsers } from '@/data/example-twitter-users'
 import { GitHub, Twitter } from '@/icons'
 import { copyright, githubUrl, twitterUrl } from '@/lib/config'
-
-const exampleUsers = [
-  {
-    twitterUsername: 'elonmusk',
-    displayName: 'Elon Musk'
-  },
-  {
-    twitterUsername: 'barackobama',
-    displayName: 'Barack Obama'
-  },
-  {
-    twitterUsername: 'realdonaldtrump',
-    displayName: 'Donald Trump'
-  },
-  {
-    twitterUsername: 'transitive_bs',
-    displayName: 'Travis Fischer'
-  },
-  {
-    twitterUsername: 'rauchg',
-    displayName: 'Guillermo Rauch'
-  },
-  {
-    twitterUsername: 'paulg',
-    displayName: 'Paul Graham'
-  },
-  {
-    twitterUsername: 'sama',
-    displayName: 'Sam Altman'
-  },
-  {
-    twitterUsername: 'balajis',
-    displayName: 'Balaji'
-  },
-  {
-    twitterUsername: 'tszzl',
-    displayName: 'Roon'
-  },
-  {
-    twitterUsername: 'karpathy',
-    displayName: 'Andrej Karpathy'
-  },
-  {
-    twitterUsername: 'pmarca',
-    displayName: 'Marc Andreessen'
-  },
-  {
-    twitterUsername: 'naval',
-    displayName: 'Naval'
-  },
-  {
-    twitterUsername: 'Beyonce',
-    displayName: 'Beyoncé'
-  },
-  {
-    twitterUsername: 'TrungTPhan',
-    displayName: 'Trung Phan'
-  },
-  {
-    twitterUsername: 'BillGates',
-    displayName: 'Bill Gates'
-  },
-  {
-    twitterUsername: 'lexfridman',
-    displayName: 'Lex Fridman'
-  },
-  {
-    twitterUsername: 'chamath',
-    displayName: 'Chamath'
-  },
-  {
-    twitterUsername: 'KimKardashian',
-    displayName: 'Kim Kardashian'
-  },
-  {
-    twitterUsername: 'Cristiano',
-    displayName: 'Cristiano Ronaldo'
-  },
-  {
-    twitterUsername: 'BenStiller',
-    displayName: 'Ben Stiller'
-  },
-  {
-    twitterUsername: 'KingJames',
-    displayName: 'Lebron James'
-  },
-  {
-    twitterUsername: 'levelsio',
-    displayName: 'Pieter Levels'
-  },
-  {
-    twitterUsername: 'waitbutwhy',
-    displayName: 'Tim Urban'
-  },
-  {
-    twitterUsername: 'rihanna',
-    displayName: 'Rihanna'
-  },
-  {
-    twitterUsername: 'taylorswift13',
-    displayName: 'Taylor Swift'
-  },
-  {
-    twitterUsername: 'kanyewest',
-    displayName: 'Kanye West'
-  },
-  {
-    twitterUsername: 'joerogan',
-    displayName: 'Joe Rogan'
-  }
-]
 
 export function Footer() {
   return (
     <footer className='w-full py-12 border-t flex flex-col items-center'>
       <div className='container px-4 md:px-6 max-w-1200px'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+        <div className='flex flex-col md:grid md:grid-cols-4 gap-8'>
           <div className='flex flex-col md:items-center'>
             <div className='space-y-4'>
               <h3 className='text-lg font-semibold'>Site</h3>
               <nav className='flex flex-col space-y-2'>
-                <ActiveLink href='/' className='hover:underline'>
-                  Home
-                </ActiveLink>
+                <span>
+                  <ActiveLink href='/' className='link'>
+                    Home
+                  </ActiveLink>
+                </span>
 
-                <ActiveLink href='/examples' className='hover:underline'>
-                  Examples
-                </ActiveLink>
+                <span>
+                  <ActiveLink href='/examples' className='link'>
+                    Examples
+                  </ActiveLink>
+                </span>
 
-                <ActiveLink href='/about' className='hover:underline'>
-                  About
-                </ActiveLink>
+                <span>
+                  <ActiveLink href='/about' className='link'>
+                    About
+                  </ActiveLink>
+                </span>
               </nav>
             </div>
           </div>
 
-          <div className='flex flex-col order-last md:order-none'>
+          <div className='flex flex-col order-last md:order-none col-span-2'>
             <div className='space-y-4 flex flex-col w-full'>
               <h3 className='text-lg font-semibold'>Example Users</h3>
               <div className='grid grid-cols-[repeat(auto-fill,_minmax(8em,_1fr))] gap-y-2 gap-x-8 w-full flex-auto'>
-                {exampleUsers.map((user) => (
-                  <ActiveLink
-                    key={user.twitterUsername}
-                    href={`/x/${user.twitterUsername}`}
-                    className='hover:underline'
-                  >
-                    {user.displayName}
-                  </ActiveLink>
+                {exampleTwitterUsers.map((user) => (
+                  <span key={user.twitterUsername}>
+                    <ActiveLink
+                      href={`/x/${user.twitterUsername}`}
+                      className='link'
+                    >
+                      {user.displayName}
+                    </ActiveLink>
+                  </span>
                 ))}
               </div>
             </div>

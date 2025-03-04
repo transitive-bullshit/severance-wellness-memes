@@ -3,8 +3,10 @@ import random from 'random'
 
 import type * as types from '@/lib/types'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
-import { prisma } from '@/lib/db'
+import { exampleTwitterUsers } from '@/data/example-twitter-users'
+import { featuredWellnessFacts } from '@/data/featured-wellness-facts'
 
+// import { prisma } from '@/lib/db'
 import styles from './styles.module.css'
 
 export default async function Page() {
@@ -23,6 +25,17 @@ export default async function Page() {
         <h5>Who are you?</h5>
 
         <Link href={`/x/${twitterUsername}`}>View {twitterUsername}</Link>
+
+        <div className='flex -space-x-2'>
+          {exampleTwitterUsers.map((user) => (
+            <img
+              key={user.twitterUsername}
+              alt={user.displayName}
+              src={`https://unavatar.io/x/${user.twitterUsername}`}
+              className='inline-block size-8 rounded-full ring-2 ring-white'
+            />
+          ))}
+        </div>
       </section>
 
       <section className='flex-auto'>
@@ -35,14 +48,17 @@ export default async function Page() {
 }
 
 async function getFeaturedWellnessFacts(): Promise<types.WellnessFact[]> {
-  const wellnessFacts = await prisma.wellnessFact.findMany({
-    where: {
-      tags: {
-        has: 'featured'
-      }
-    },
-    take: 10
-  })
+  return random.shuffle(featuredWellnessFacts)
 
-  return random.shuffle(wellnessFacts)
+  // TODO
+  // const wellnessFacts = await prisma.wellnessFact.findMany({
+  //   where: {
+  //     tags: {
+  //       has: 'featured'
+  //     }
+  //   },
+  //   take: 10
+  // })
+
+  // return random.shuffle(wellnessFacts)
 }

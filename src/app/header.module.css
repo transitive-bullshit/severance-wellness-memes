@@ -25,7 +25,7 @@
   justify-content: flex-end;
   align-items: center;
   height: 100%;
-  gap: qem;
+  gap: 0.5em;
 }
 
 .logo {

@@ -336,7 +336,7 @@ export const seedTwitterUsers: string[] = Array.from(
     'Rockdale_Tiger',
     'jasonlipshutz',
     'ancientlovesong',
-    'AlstonNovak',
+    // 'AlstonNovak',
     'nocturnalnati',
     // 'AmberSevart',
     'megachop',
