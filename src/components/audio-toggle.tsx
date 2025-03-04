@@ -12,7 +12,7 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 
-import { useAudio } from './theme-provider'
+import { useAudio } from './audio-provider'
 
 export function AudioToggle() {
   const { isAudioEnabled, toggleAudio } = useAudio()

@@ -28,7 +28,7 @@
 
 .dropdownMenu {
   position: absolute;
-  top: 2vmin;
-  left: 2vmin;
+  top: calc(var(--spacing) * 3);
+  left: calc(var(--spacing) * 3);
   cursor: pointer;
 }

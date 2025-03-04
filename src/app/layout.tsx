@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'sonner'
 
+import { AudioProvider } from '@/components/audio-provider'
 import { Bootstrap } from '@/components/bootstrap'
 import { ThemeProvider } from '@/components/theme-provider'
 import * as config from '@/lib/config'
@@ -36,14 +37,16 @@ export default function RootLayout({
           defaultTheme='dark'
           disableTransitionOnChange
         >
-          <div className={styles.root}>
-            <Header />
+          <AudioProvider>
+            <div className={styles.root}>
+              <Header />
 
-            <main className={styles.main}>{children}</main>
+              <main className={styles.main}>{children}</main>
 
-            <Toaster richColors />
-            <Footer />
-          </div>
+              <Toaster richColors />
+              <Footer />
+            </div>
+          </AudioProvider>
         </ThemeProvider>
 
         <Bootstrap />
