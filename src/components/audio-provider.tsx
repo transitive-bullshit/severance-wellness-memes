@@ -25,6 +25,12 @@ export function AudioProvider({
 
   useEffectOnce(() => {
     setIsMounted(true)
+
+    if (isAudioEnabled) {
+      controls.play()
+    } else {
+      controls.pause()
+    }
   })
 
   const [audio, _state, controls] = useAudioHook({
