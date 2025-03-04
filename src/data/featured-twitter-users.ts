@@ -1,4 +1,4 @@
-export const exampleTwitterUsers = [
+export const featuredTwitterUsers = [
   {
     id: '44196397',
     twitterUsername: 'elonmusk',

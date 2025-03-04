@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { ActiveLink } from '@/components/active-link'
-import { exampleTwitterUsers } from '@/data/example-twitter-users'
+import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { GitHub, Twitter } from '@/icons'
 import { copyright, githubUrl, twitterUrl } from '@/lib/config'
 
@@ -40,7 +40,7 @@ export function Footer() {
             <div className='space-y-4 flex flex-col w-full'>
               <h3 className='text-lg font-semibold'>Lumon Employees</h3>
               <div className='grid grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))] gap-y-4 gap-x-8 w-full flex-auto'>
-                {exampleTwitterUsers.map((user) => (
+                {featuredTwitterUsers.map((user) => (
                   <ActiveLink
                     href={`/x/${user.twitterUsername}`}
                     key={user.twitterUsername}

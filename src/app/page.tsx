@@ -4,7 +4,7 @@ import random from 'random'
 
 import type * as types from '@/lib/types'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
-import { exampleTwitterUsers } from '@/data/example-twitter-users'
+import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { featuredWellnessFacts } from '@/data/featured-wellness-facts'
 
 // import { prisma } from '@/lib/db'
@@ -28,7 +28,7 @@ export default async function Page() {
         <Link href={`/x/${twitterUsername}`}>View {twitterUsername}</Link>
 
         <div className='flex -space-x-2'>
-          {exampleTwitterUsers.map((user) => (
+          {featuredTwitterUsers.map((user) => (
             <Link
               href={`/x/${user.twitterUsername}`}
               key={user.twitterUsername}

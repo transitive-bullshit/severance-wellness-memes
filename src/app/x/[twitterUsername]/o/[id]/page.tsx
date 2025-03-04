@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import { WellnessFact } from '@/components/wellness-fact'
-import { seedTwitterUsers } from '@/data/seed-twitter-users'
+import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { prisma } from '@/lib/db'
 
 export default async function Page({
@@ -64,26 +64,48 @@ export default async function Page({
 }
 
 export async function generateStaticParams() {
-  const wellnessFacts = await prisma.wellnessSession.findMany({
+  const featuredWellnessSessions = await prisma.wellnessSession.findMany({
     where: {
       twitterUsername: {
-        in: seedTwitterUsers
+        in: featuredTwitterUsers.map((user) => user.twitterUsername)
       }
     },
     select: {
       twitterUsername: true,
       wellnessFacts: {
         select: {
-          id: true
+          id: true,
+          twitterUsername: true
         }
       }
     }
   })
 
-  return wellnessFacts.flatMap((wellnessSession) =>
-    wellnessSession.wellnessFacts.map(({ id }) => ({
-      twitterUsername: wellnessSession.twitterUsername,
-      id
-    }))
+  const featuredWellnessFacts = await prisma.wellnessFact.findMany({
+    where: {
+      tags: {
+        has: 'featured'
+      }
+    },
+    select: {
+      id: true,
+      twitterUsername: true
+    }
+  })
+
+  // Join wellness facts from featured users and featured wellness facts
+  const wellnessFacts = [
+    ...featuredWellnessSessions.flatMap(({ wellnessFacts }) => wellnessFacts),
+    ...featuredWellnessFacts
+  ]
+
+  // Remove duplicates
+  return Object.values(
+    Object.fromEntries(
+      wellnessFacts.map(({ twitterUsername, id }) => [
+        id,
+        { twitterUsername, id }
+      ])
+    )
   )
 }
