@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { ActiveLink } from '@/components/active-link'
@@ -37,17 +38,24 @@ export function Footer() {
 
           <div className='flex flex-col order-last md:order-none col-span-2'>
             <div className='space-y-4 flex flex-col w-full'>
-              <h3 className='text-lg font-semibold'>Example Users</h3>
-              <div className='grid grid-cols-[repeat(auto-fill,_minmax(8em,_1fr))] gap-y-2 gap-x-8 w-full flex-auto'>
+              <h3 className='text-lg font-semibold'>Lumon Employees</h3>
+              <div className='grid grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))] gap-y-4 gap-x-8 w-full flex-auto'>
                 {exampleTwitterUsers.map((user) => (
-                  <span key={user.twitterUsername}>
-                    <ActiveLink
-                      href={`/x/${user.twitterUsername}`}
-                      className='link'
-                    >
-                      {user.displayName}
-                    </ActiveLink>
-                  </span>
+                  <ActiveLink
+                    href={`/x/${user.twitterUsername}`}
+                    key={user.twitterUsername}
+                    className='block'
+                  >
+                    <Image
+                      alt={user.displayName}
+                      src={user.profileImageUrl}
+                      width={48}
+                      height={48}
+                      className='inline-block size-8 rounded-full mr-3'
+                    />
+
+                    <span className='link'>{user.displayName}</span>
+                  </ActiveLink>
                 ))}
               </div>
             </div>

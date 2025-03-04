@@ -40,7 +40,8 @@ a:hover {
   text-decoration: none;
 }
 
-a.link {
+a.link,
+a .link {
   position: relative;
   transition: unset;
   opacity: 1;
@@ -55,7 +56,9 @@ a.link {
 }
 
 a.link:focus,
-a.link:hover {
+a.link:hover,
+a:focus .link,
+a:hover .link {
   border-bottom-color: transparent;
 
   background-image: linear-gradient(90.68deg, #b439df 0.26%, #e5337e 102.37%);

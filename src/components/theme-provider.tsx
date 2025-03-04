@@ -19,7 +19,8 @@ export function ThemeProvider({
   )
   const [audio, _state, controls] = useAudioHook({
     src: '/music-of-wellness.mp3',
-    autoPlay: isAudioEnabled
+    autoPlay: isAudioEnabled,
+    loop: true
   })
 
   const toggleAudio = React.useCallback(() => {

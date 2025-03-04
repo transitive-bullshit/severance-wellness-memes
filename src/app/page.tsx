@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import random from 'random'
 
@@ -28,12 +29,18 @@ export default async function Page() {
 
         <div className='flex -space-x-2'>
           {exampleTwitterUsers.map((user) => (
-            <img
+            <Link
+              href={`/x/${user.twitterUsername}`}
               key={user.twitterUsername}
-              alt={user.displayName}
-              src={`https://unavatar.io/x/${user.twitterUsername}`}
-              className='inline-block size-8 rounded-full ring-2 ring-white'
-            />
+            >
+              <Image
+                alt={user.displayName}
+                src={user.profileImageUrl}
+                className='inline-block size-8 rounded-full ring-2 ring-white transition-transform duration-300 scale-100 hover:scale-200'
+                width={48}
+                height={48}
+              />
+            </Link>
           ))}
         </div>
       </section>

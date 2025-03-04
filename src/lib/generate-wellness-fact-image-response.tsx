@@ -58,7 +58,8 @@ export async function generateWellnessFactImageResponse({
               textWrap: 'balance'
             }}
           >
-            {wellnessFact?.text || 'The work is mysterious and important.'}
+            {wellnessFact?.text?.replaceAll('@', '') ||
+              'The work is mysterious and important.'}
             {/* {
               'Your outie’s favorite form of self-care is releasing pricing update tweets for @vercel several times a month.' // TODO: produces a text overflow
             } */}
