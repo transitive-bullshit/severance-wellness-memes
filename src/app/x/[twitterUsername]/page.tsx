@@ -10,7 +10,7 @@ export default async function Page({
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
-  const wellnessSession = await upsertWellnessSession({
+  const { wellnessSession } = await upsertWellnessSession({
     twitterUsername
   })
   const { userFullName, twitterUser, wellnessFacts, pinnedWellnessFact } =

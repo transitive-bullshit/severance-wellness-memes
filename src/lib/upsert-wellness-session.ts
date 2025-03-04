@@ -11,12 +11,12 @@ export async function upsertWellnessSession({
 }: {
   twitterUsername: string
   force?: boolean
-}): Promise<WellnessSession> {
+}): Promise<{ wellnessSession: WellnessSession; existing: boolean }> {
   // await new Promise((resolve) => setTimeout(resolve, 5000))
 
   if (!force) {
     // First check if we already have a session
-    const existingSession = await prisma.wellnessSession.findUnique({
+    const wellnessSession = await prisma.wellnessSession.findUnique({
       where: { twitterUsername },
       include: {
         wellnessFacts: true,
@@ -27,8 +27,8 @@ export async function upsertWellnessSession({
       }
     })
 
-    if (existingSession) {
-      return existingSession
+    if (wellnessSession) {
+      return { wellnessSession, existing: true }
     }
   }
 
@@ -41,10 +41,12 @@ export async function upsertWellnessSession({
       ctx
     })
 
-    return generateWellnessSession({
+    const wellnessSession = await generateWellnessSession({
       resolvedTwitterUser,
       ctx
     })
+
+    return { wellnessSession, existing: false }
   } catch (err) {
     console.error(
       `Error generating wellness session for user ${twitterUsername}`,

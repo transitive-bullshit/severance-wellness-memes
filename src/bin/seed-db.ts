@@ -82,20 +82,22 @@ async function main() {
           `${i + 1}/${seedTwitterUsers.length}) Seeding wellness session for user https://x.com/${twitterUsername} ...`
         )
 
-        const wellnessSession = await upsertWellnessSession({
+        const result = await upsertWellnessSession({
           twitterUsername
         })
 
-        console.log(
-          `${i + 1}/${seedTwitterUsers.length}) ✅ Generated wellness session for user https://x.com/${twitterUsername}`,
-          wellnessSession
-        )
+        if (!result.existing) {
+          console.log(
+            `${i + 1}/${seedTwitterUsers.length}) ✅ Generated wellness session for user https://x.com/${twitterUsername}`,
+            result.wellnessSession
+          )
+        }
 
-        return wellnessSession
+        return result
       } catch (err: any) {
         console.error(
           `${i + 1}/${seedTwitterUsers.length}) Error seeding wellness session for user https://x.com/${twitterUsername}:`,
-          err.message
+          err
         )
       }
     },
@@ -104,11 +106,17 @@ async function main() {
     }
   )
 
-  const numWellnessSessions = wellnessSessions.filter(Boolean).length
+  const numWellnessSessionsExisting = wellnessSessions.filter(
+    (w) => w?.existing
+  ).length
+  const numWellnessSessionsCreated = wellnessSessions.filter(
+    (w) => w?.wellnessSession && !w.existing
+  ).length
   const numWellnessSessionErrors = wellnessSessions.filter((w) => !w).length
 
   console.log()
-  console.log(`✅ Seeded ${numWellnessSessions} wellness sessions`)
+  console.log(`✅ Created ${numWellnessSessionsCreated} wellness sessions`)
+  console.log(`✅ Existing ${numWellnessSessionsExisting} wellness sessions`)
   console.log(`❌ Encountered ${numWellnessSessionErrors} errors`)
   console.log()
 }

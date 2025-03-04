@@ -215,16 +215,24 @@ export async function getTimelineTweetsByUserId(
   let cursor: string | undefined
 
   do {
-    const res = await ctx.socialData.getTweetsByUserId({
-      userId,
-      replies,
-      cursor
-    })
+    try {
+      const res = await ctx.socialData.getTweetsByUserId({
+        userId,
+        replies,
+        cursor
+      })
 
-    if (!res.tweets?.length) break
+      if (!res.tweets?.length) break
 
-    tweets.push(...res.tweets)
-    cursor = res.next_cursor
+      tweets.push(...res.tweets)
+      cursor = res.next_cursor
+    } catch (err) {
+      console.warn(
+        `ignoring error fetching tweets for twitter user ${userId}`,
+        err
+      )
+      break
+    }
 
     if (!cursor) break
   } while (tweets.length < limit)
