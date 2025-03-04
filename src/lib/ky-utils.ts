@@ -12,7 +12,7 @@ import { OpenAIClient } from 'openai-fetch'
 import pMemoize from 'p-memoize'
 
 import type * as types from './types'
-import * as config from './config'
+import * as config from './server-config'
 import { assert, hashObject, pruneUndefined, trimMessage } from './server-utils'
 import { normalizeUrl } from './url-utils'
 
