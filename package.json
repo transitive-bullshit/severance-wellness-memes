@@ -25,7 +25,8 @@
     "fix": "run-s fix:*",
     "fix:format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "fix:lint": "eslint --fix .",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@agentic/core": "^7.3.1",
