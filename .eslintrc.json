@@ -1,5 +1,8 @@
 {
   "root": true,
-  "extends": ["@fisch0920/eslint-config/node"],
-  "ignorePatterns": ["dist", "out"]
+  "extends": ["@fisch0920/eslint-config"],
+  "ignorePatterns": ["dist", "out"],
+  "rules": {
+    "unicorn/filename-case": "off"
+  }
 }

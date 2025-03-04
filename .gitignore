@@ -40,5 +40,4 @@ next-env.d.ts
 
 .env
 
-old/
 out/

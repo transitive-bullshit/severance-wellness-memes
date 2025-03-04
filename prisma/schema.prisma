@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
+}
+
+model WellnessSession {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  twitterUserId   String  @unique
+  twitterUsername String  @unique
+  userFullName    String?
+
+  twitterUser   TwitterUser?
+  wellnessFacts WellnessFact[] @relation(name: "wellnessFacts")
+
+  pinnedWellnessFact   WellnessFact? @relation(name: "pinnedWellnessFact", fields: [pinnedWellnessFactId], references: [id], onDelete: Cascade)
+  pinnedWellnessFactId String?
+
+  @@index([twitterUsername])
+  @@index([twitterUserId])
+}
+
+model TwitterUser {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  twitterUsername String? @unique
+
+  /// [TwitterUser]
+  user Json
+
+  timelineTweetIds String[]
+
+  /// [Tweets]
+  tweets Json
+
+  /// [TwitterUsers]
+  users Json
+
+  wellnessSession WellnessSession @relation(fields: [id], references: [twitterUserId], onDelete: Cascade)
+
+  @@index([twitterUsername])
+}
+
+model WellnessFact {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  text  String
+  model String
+
+  twitterUserId   String
+  twitterUsername String
+  tags            String[]
+
+  wellnessSession WellnessSession? @relation(name: "wellnessFacts", fields: [twitterUserId], references: [id], onDelete: Cascade)
+
+  pinnedWellnessSessions WellnessSession[] @relation(name: "pinnedWellnessFact")
+
+  @@index([twitterUsername])
+  @@index([twitterUserId])
+  @@index([tags])
+}

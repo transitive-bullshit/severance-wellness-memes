@@ -1,0 +1,9 @@
+.desc {
+  max-width: 700px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
