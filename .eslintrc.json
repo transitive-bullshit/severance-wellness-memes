@@ -3,6 +3,7 @@
   "extends": ["@fisch0920/eslint-config"],
   "ignorePatterns": ["dist", "out"],
   "rules": {
-    "unicorn/filename-case": "off"
+    "unicorn/filename-case": "off",
+    "no-process-env": "off"
   }
 }
