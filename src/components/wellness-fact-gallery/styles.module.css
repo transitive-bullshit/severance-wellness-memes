@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   display: grid;
-  grid-gap: calc(var(--spacing) * 3);
+  grid-gap: calc(var(--spacing) * 6);
   grid-template-columns: repeat(auto-fill, minmax(calc(min(512px, 100%)), 1fr));
   justify-items: center;
   justify-content: center;
