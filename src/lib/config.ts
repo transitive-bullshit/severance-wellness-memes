@@ -22,10 +22,10 @@ export const githubUrl =
 
 export const env = getEnv('VERCEL_ENV') ?? getEnv('NODE_ENV') ?? 'development'
 export const ci = getEnv('CI')
-export const isDev = env === 'development'
-export const isTest = env === 'test'
 export const isCI = ci === 'true' || ci === '1'
 export const isVercel = !!getEnv('VERCEL_ENV')
+export const isDev = env === 'development' && !isVercel
+export const isTest = env === 'test'
 
 export const port = getEnv('PORT') || '3000'
 export const prodUrl = `https://${domain}`
@@ -33,6 +33,18 @@ export const url = isDev ? `http://localhost:${port}` : prodUrl
 
 export const apiBaseUrl =
   isDev || !getEnv('VERCEL_URL') ? url : `https://${getEnv('VERCEL_URL')}`
+
+console.log({
+  env,
+  ci,
+  isDev,
+  isVercel,
+  isTest,
+  prodUrl,
+  url,
+  apiBaseUrl,
+  vercelUrl: getEnv('VERCEL_URL')
+})
 
 // -----------------------------------------------------------------------------
 // Caching
