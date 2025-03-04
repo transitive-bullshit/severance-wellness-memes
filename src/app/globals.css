@@ -112,7 +112,6 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 8vmin;
   @apply mb-8;
 }
 
