@@ -22,6 +22,7 @@
     "sourceMap": true,
     "strict": true,
     "useDefineForClassFields": true,
+    // "erasableSyntaxOnly": true,
     "plugins": [
       {
         "name": "next"
