@@ -1,10 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import random from 'random'
 
 import type * as types from '@/lib/types'
+import { HeroButton } from '@/components/hero-button'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
-import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { featuredWellnessFacts } from '@/data/featured-wellness-facts'
 
 // import { prisma } from '@/lib/db'
@@ -25,9 +24,11 @@ export default async function Page() {
 
         <h5>Who are you?</h5>
 
-        <Link href={`/x/${twitterUsername}`}>View {twitterUsername}</Link>
+        <HeroButton variant='purple' href={`/x/${twitterUsername}`}>
+          View {twitterUsername}
+        </HeroButton>
 
-        <div className='flex -space-x-2'>
+        {/* <div className='flex -space-x-2'>
           {featuredTwitterUsers.map((user) => (
             <Link
               href={`/x/${user.twitterUsername}`}
@@ -42,7 +43,7 @@ export default async function Page() {
               />
             </Link>
           ))}
-        </div>
+        </div> */}
       </section>
 
       <section className='flex-auto'>

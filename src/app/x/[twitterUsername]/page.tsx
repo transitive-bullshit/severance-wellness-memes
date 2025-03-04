@@ -77,11 +77,11 @@ export default async function Page({
         <p
           className={cs(
             styles.desc,
-            'text-muted-foreground pb-8 border-b border-border'
+            'text-muted-foreground pb-8 border-b border-border text-sm text-balance text-center'
           )}
         >
           All right, {userFirstName}. What I’d like to do is share with you some
-          facts about your Outie. Because your Outie is an exemplary person,
+          facts about your outie. Because your outie is an exemplary person,
           these facts should be very pleasing. Just relax your body and be open
           to the facts. Try to enjoy each one equally.
         </p>

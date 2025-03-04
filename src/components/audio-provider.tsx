@@ -21,11 +21,7 @@ export function AudioProvider({
     'audio',
     true
   )
-  const [isMounted, setIsMounted] = React.useState(false)
-
   useEffectOnce(() => {
-    setIsMounted(true)
-
     if (isAudioEnabled) {
       controls.play()
     } else {
@@ -36,7 +32,8 @@ export function AudioProvider({
   const [audio, _state, controls] = useAudioHook({
     src: '/music-of-wellness.mp3',
     autoPlay: isAudioEnabled,
-    loop: true
+    loop: true,
+    preload: 'auto'
   })
 
   const toggleAudio = React.useCallback(() => {
@@ -61,7 +58,7 @@ export function AudioProvider({
     >
       {children}
 
-      {isMounted && <div className='hidden'>{audio}</div>}
+      <div className='hidden'>{audio}</div>
     </AudioContext.Provider>
   )
 }

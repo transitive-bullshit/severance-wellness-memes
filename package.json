@@ -65,6 +65,7 @@
     "react-lottie-player": "^2.1.0",
     "react-use": "^17.6.0",
     "restore-cursor": "^5.1.0",
+    "server-only": "^0.0.1",
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
