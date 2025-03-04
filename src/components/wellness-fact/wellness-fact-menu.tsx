@@ -1,7 +1,13 @@
 'use client'
 
 import ky from 'ky'
-import { Check, ExternalLink, LoaderCircle, Menu } from 'lucide-react'
+import {
+  Check,
+  ExternalLink,
+  LoaderCircle,
+  Menu,
+  TriangleAlert
+} from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { toast } from 'sonner'
@@ -20,29 +26,31 @@ import * as config from '@/lib/config'
 
 import styles from './styles.module.css'
 
+type Status = 'success' | 'error' | 'loading' | 'idle'
+
 export function WellnessFactMenu({
   wellnessFact
 }: {
   wellnessFact: types.WellnessFact
 }) {
-  const [isDone, setIsDone] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [status, setStatus] = React.useState<Status>('idle')
 
   const onCopyText = React.useCallback(async () => {
+    setStatus('loading')
+
     try {
       await navigator.clipboard.writeText(wellnessFact.text)
 
       toast.success('Copied text to clipboard')
+      setStatus('success')
     } catch {
       toast.error('Error copying text to clipboard')
+      setStatus('error')
     }
-
-    setIsDone(true)
   }, [wellnessFact.text])
 
   const onCopyImageAsPNG = React.useCallback(async () => {
-    setIsDone(false)
-    setIsLoading(true)
+    setStatus('loading')
 
     try {
       const blob = await ky
@@ -52,16 +60,16 @@ export function WellnessFactMenu({
       await navigator.clipboard.write([item])
 
       toast.success('Copied image to clipboard')
-    } catch {
+      setStatus('success')
+    } catch (err) {
+      console.error('Error copying PNG image to clipboard', err)
       toast.error('Error copying image to clipboard')
+      setStatus('error')
     }
-
-    setIsDone(true)
   }, [wellnessFact])
 
   const onDownloadImageAsPNG = React.useCallback(async () => {
-    setIsDone(false)
-    setIsLoading(true)
+    setStatus('loading')
 
     try {
       const blob = await ky
@@ -74,16 +82,16 @@ export function WellnessFactMenu({
       link.click()
 
       toast.success('Downloaded image')
-    } catch {
+      setStatus('success')
+    } catch (err) {
+      console.error('Error downloading PNG image', err)
       toast.error('Error downloading image')
+      setStatus('error')
     }
-
-    setIsDone(true)
   }, [wellnessFact])
 
   const onDownloadImageAsJPG = React.useCallback(async () => {
-    setIsDone(false)
-    setIsLoading(true)
+    setStatus('loading')
 
     try {
       const blob = await convertPngToJpg({
@@ -96,28 +104,30 @@ export function WellnessFactMenu({
       link.click()
 
       toast.success('Downloaded image')
-    } catch {
+      setStatus('success')
+    } catch (err) {
+      console.error('Error downloading JPG image', err)
       toast.error('Error downloading image')
+      setStatus('error')
     }
-
-    setIsDone(true)
   }, [wellnessFact])
 
   React.useEffect(() => {
-    if (isDone) {
-      setIsLoading(false)
-      setTimeout(() => setIsDone(false), 2000)
+    if (status === 'success' || status === 'error') {
+      setTimeout(() => setStatus('idle'), 2000)
     }
-  }, [isDone])
+  }, [status])
 
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild className={styles.dropdownMenu}>
         <Button variant='secondary' size='icon'>
-          {isDone ? (
+          {status === 'success' ? (
             <Check />
-          ) : isLoading ? (
+          ) : status === 'loading' ? (
             <LoaderCircle className='animate-spin' />
+          ) : status === 'error' ? (
+            <TriangleAlert className='text-red-500' />
           ) : (
             <Menu />
           )}
