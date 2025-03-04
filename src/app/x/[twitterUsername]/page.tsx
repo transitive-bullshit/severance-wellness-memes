@@ -16,7 +16,9 @@ export default async function Page({
 }) {
   const { twitterUsername } = await params
   const { wellnessSession } = await upsertWellnessSession({
-    twitterUsername
+    twitterUsername,
+    // TODO
+    failIfNotExists: true
   })
   const { userFullName, twitterUser, wellnessFacts, pinnedWellnessFact } =
     wellnessSession

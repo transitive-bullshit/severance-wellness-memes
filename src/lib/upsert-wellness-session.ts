@@ -7,10 +7,12 @@ import { resolveTwitterUser } from './resolve-twitter-user'
 
 export async function upsertWellnessSession({
   twitterUsername,
-  force = false
+  force = false,
+  failIfNotExists = false
 }: {
   twitterUsername: string
   force?: boolean
+  failIfNotExists?: boolean
 }): Promise<{ wellnessSession: WellnessSession; existing: boolean }> {
   // await new Promise((resolve) => setTimeout(resolve, 5000))
 
@@ -30,6 +32,10 @@ export async function upsertWellnessSession({
     if (wellnessSession) {
       return { wellnessSession, existing: true }
     }
+  }
+
+  if (failIfNotExists) {
+    throw new Error(`User ${twitterUsername} has not been generated yet.`)
   }
 
   // If not, create a new context and generate a session
