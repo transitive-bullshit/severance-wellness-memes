@@ -41,6 +41,7 @@ export async function generateWellnessSession({
         create: generatedWellnessFacts.wellnessFacts.map((text) => ({
           text,
           model: generatedWellnessFacts.model,
+          twitterUserId: resolvedTwitterUser.user.id_str,
           twitterUsername: resolvedTwitterUser.user.screen_name
         }))
       }

@@ -1,14 +1,53 @@
 import 'dotenv/config'
 
-import fs from 'node:fs/promises'
-
-import type { TwitterUser } from '@prisma/client'
+// import fs from 'node:fs/promises'
+// import type { TwitterUser } from '@prisma/client'
+import { assert } from '@agentic/core'
 import { gracefulExit } from 'exit-hook'
+import pMap from 'p-map'
 import restoreCursor from 'restore-cursor'
 
+import type * as types from '@/lib/types'
 import { prisma } from '@/lib/db'
 
 async function main() {
+  const wellnessSessions = await prisma.wellnessSession.findMany()
+  const twitterUsernameToWellnessSession = new Map<
+    string,
+    Partial<types.WellnessSession>
+  >()
+
+  for (const wellnessSession of wellnessSessions) {
+    twitterUsernameToWellnessSession.set(
+      wellnessSession.twitterUsername,
+      wellnessSession
+    )
+  }
+
+  const wellnessFacts = await prisma.wellnessFact.findMany()
+  await pMap(
+    wellnessFacts,
+    async (wellnessFact) => {
+      const twitterUserId = twitterUsernameToWellnessSession.get(
+        wellnessFact.twitterUsername
+      )?.twitterUserId!
+      assert(twitterUserId)
+      console.log(wellnessFact.twitterUsername, '=>', twitterUserId)
+
+      await prisma.wellnessFact.update({
+        where: {
+          id: wellnessFact.id
+        },
+        data: {
+          twitterUserId
+        }
+      })
+    },
+    { concurrency: 16 }
+  )
+
+  return
+
   // const wellnessSessions = await prisma.wellnessSession.findMany()
   // console.log(`writing ${wellnessSessions.length} wellness sessions`)
   // await fs.writeFile(
@@ -23,20 +62,22 @@ async function main() {
   //   JSON.stringify(wellnessFacts, null, 2)
   // )
 
-  const twitterUsers: TwitterUser[] = []
-  do {
-    const t = await prisma.twitterUser.findMany({
-      take: 10,
-      skip: twitterUsers.length
-    })
+  // {
+  //   const twitterUsers: TwitterUser[] = []
+  //   do {
+  //     const t = await prisma.twitterUser.findMany({
+  //       take: 10,
+  //       skip: twitterUsers.length
+  //     })
 
-    console.log('fetched', t.length, 'twitter users')
-    if (!t.length) break
-    twitterUsers.push(...t)
-  } while (true)
+  //     console.log('fetched', t.length, 'twitter users')
+  //     if (!t.length) break
+  //     twitterUsers.push(...t)
+  //   } while (true)
 
-  console.log(`writing ${twitterUsers.length} twitter users`)
-  await fs.writeFile('out/twitter-users.json', JSON.stringify(twitterUsers))
+  //   console.log(`writing ${twitterUsers.length} twitter users`)
+  //   await fs.writeFile('out/twitter-users.json', JSON.stringify(twitterUsers))
+  // }
 
   // const twitterUsers = await prisma.twitterUser.findMany({
   //   where: {

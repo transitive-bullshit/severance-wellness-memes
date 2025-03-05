@@ -32,6 +32,7 @@
   transition: unset;
   opacity: 1;
   color: unset;
+  padding-bottom: 0.1rem;
   border-color: var(--border);
   border-bottom-width: 0.135rem;
   background: transparent;
@@ -40,19 +41,6 @@
   background-position: 50% 100%;
   background-size: 0 0.135rem;
 }
-
-/*
-.markdown a {
-  color: #0969da;
-  text-decoration: none;
-
-:global(.dark) .markdown a {
-  color: #3291ff;
-}
-
-.markdown a:hover {
-  text-decoration: underline;
-} */
 
 .markdown a:hover:not(:has(img)),
 .markdown a:focus:not(:has(img)) {
@@ -105,12 +93,10 @@
 
 .markdown h1 {
   font-size: 2em;
-  border-bottom: 1px solid var(--border);
 }
 
 .markdown h2 {
   font-size: 1.5em;
-  border-bottom: 1px solid var(--border);
 }
 
 .markdown h3 {

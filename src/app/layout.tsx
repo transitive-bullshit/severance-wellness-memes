@@ -22,7 +22,39 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: config.title,
-  description: config.description
+  description: config.description,
+  authors: [{ name: config.author, url: config.twitterUrl }],
+  keywords: [
+    'severance',
+    'memes',
+    'twitter',
+    'ai',
+    'generative',
+    'art',
+    'lumon',
+    'wellness',
+    'wellness session',
+    'meme generator',
+    'meme maker',
+    'meme creator',
+    'severance meme maker'
+  ],
+  openGraph: {
+    title: config.title,
+    description: config.description,
+    images: config.ogImageUrl,
+    siteName: config.title,
+    locale: 'en_US',
+    type: 'website',
+    url: config.prodUrl
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@transitive_bs',
+    images: config.ogImageUrl,
+    title: config.title,
+    description: config.description
+  }
 }
 
 export default function RootLayout({

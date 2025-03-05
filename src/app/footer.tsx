@@ -22,12 +22,6 @@ export function Footer() {
                 </span>
 
                 <span>
-                  <ActiveLink href='/examples' className='link'>
-                    Examples
-                  </ActiveLink>
-                </span>
-
-                <span>
                   <ActiveLink href='/about' className='link'>
                     About
                   </ActiveLink>

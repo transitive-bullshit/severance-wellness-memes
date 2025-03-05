@@ -66,7 +66,7 @@ model WellnessFact {
   twitterUsername String
   tags            String[]
 
-  wellnessSession WellnessSession? @relation(name: "wellnessFacts", fields: [twitterUserId], references: [id]) // TODO: change this to 'twitterUserId'
+  wellnessSession WellnessSession? @relation(name: "wellnessFacts", fields: [twitterUserId], references: [twitterUserId])
 
   pinnedWellnessSessions WellnessSession[] @relation(name: "pinnedWellnessFact")
 

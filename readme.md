@@ -28,7 +28,7 @@ Praise Kier.
 
 lol but seriously though, with [the release of GPT-4.5](https://openai.com/index/introducing-gpt-4-5/), I was really curious to see how good the latest LLMs were at generating subtle, personalized humor.
 
-After a lot of iterating and testing with every frontier LLM, **the results were... mixed... except for GPT-4.5**, which was able to generate some genuinely funny and surprisingly nuanced jokes. In my experience, \`gpt-4.5-preview\` generates really solid results about 50% of the time, so in a batch of 10 memes, I expect you to really like a few and be happy with about half of them.
+After a lot of iterating and testing with every frontier LLM, **the results were... mixed... except for GPT-4.5**, which was able to generate some genuinely funny and surprisingly nuanced jokes. In my experience, \`gpt-4.5-preview\` generates really solid results about 50% of the time, so in a batch of 10 memes, there's generally a few standouts.
 
 ## Examples
 
@@ -82,26 +82,30 @@ After a lot of iterating and testing with every frontier LLM, **the results were
 
 ## Feedback
 
-Feel free to send feedback to me by replying publicly to this [Twitter/X thread](TODO). You can also [DM me on X](https://x.com/transitive_bs), but I am more likely to reply if you are following me and if the conversation is public.
+Feel free to send feedback by replying publicly to this [Twitter/X thread](TODO). You can also [DM me](https://x.com/transitive_bs), but I am more likely to reply if you are following me and the conversation is public.
 
-I prefer public convos so the answers can help other people who might have the same question, but if it's related to billing, please [DM me on X](https://x.com/transitive_bs).
+I prefer public convos so the answers can help other people who might have similar questions, but if it's related to billing, please [DM me](https://x.com/transitive_bs).
 
 ## TODO
 
-- [ ] website analytics (posthog)
-- [ ] hero section
-- [ ] stripe checkout
-- [ ] handle multiple upserts/checkout attempts
-- [ ] add an explanation for wtf is this, and how it works
-- [ ] double check social images for all routes
-- [ ] update ref lazily on third-party fact url access for stats
-- [ ] header section + mobile
-- [ ] fetch twitter user before tweets or wellness session
-- [ ] add url resolving to `ResolvedTwitterUser`
-- [ ] consider switching from prisma to drizzle
-- [ ] consider switching from supabase
-- [ ] show generated date and model on fact detail page
-- [ ] allow paying for more tweets + generations
+- MVP Launch
+  - [ ] add stripe checkout paywall
+  - [ ] landing page hero section
+  - [ ] handle multiple upserts/checkout attempts
+  - [ ] fetch twitter user before tweets or wellness session
+    - [ ] handle twitter user doesn't exist separately from not having been generated yet
+  - [ ] double check social images for all routes (need main og.jpg)
+  - [ ] header section + mobile
+  - [ ] test across a few browsers
+  - [ ] add legal page
+  - [ ] stress test database and connection limits...
+- Post-MVP
+  - [ ] add url resolving to `ResolvedTwitterUser`
+  - [ ] show generated date and model on fact detail page
+  - [ ] consider switching from prisma to drizzle
+  - [ ] consider switching from supabase
+  - [ ] allow paying for more tweets + generations
+  - [ ] update ref lazily on third-party fact url access for stats
 
 ## How it works
 
@@ -116,15 +120,11 @@ To generate severance memes for a user, we:
 
 - [TypeScript](https://www.typescriptlang.org)
 - [Next.js](https://nextjs.org)
-- [React](https://react.dev)
 - [Vercel](https://vercel.com)
 - [OpenAI](https://openai.com)
 - [Postgres](https://www.postgresql.org)
 - [Prisma](https://www.prisma.io)
-- [Supabase](https://supabase.com)
 - [Stripe](https://stripe.com)
-- [Tailwind CSS](https://tailwindcss.com)
-- [shadcn/ui](https://ui.shadcn.com)
 - [SocialDataTools](https://socialdata.tools)
 - [Agentic](https://github.com/transitive-bullshit/agentic)
 

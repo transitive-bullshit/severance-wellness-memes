@@ -44,6 +44,7 @@ async function main() {
         create: seedWellnessFacts.map((text) => ({
           text,
           model: 'gpt-4.5-preview',
+          twitterUserId: resolvedTwitterUser.user.id_str,
           twitterUsername: resolvedTwitterUser.user.screen_name,
           tags: ['featured']
         }))
@@ -68,7 +69,6 @@ async function main() {
   console.log()
   console.log(JSON.stringify(wellnessSession, null, 2))
   console.log()
-
   */
 
   console.log(

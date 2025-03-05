@@ -49,7 +49,8 @@ export default async function Page() {
             wellnessFactIds={[
               'cm7uapehe000b2rk22cyn72ik',
               'cm7uapehe000k2rk228t5qs8f',
-              'cm7uapehe00012rk2h2l4jlob'
+              'cm7uapehe00012rk2h2l4jlob',
+              'cm7uapehe000j2rk26wdfyc64'
             ]}
             className={styles.embed}
           />
@@ -62,7 +63,12 @@ export default async function Page() {
           </p>
 
           <WellnessFactGalleryByIds
-            wellnessFactIds={['cm7u2o5mo000d2ra2alzzend7', '', '']}
+            wellnessFactIds={[
+              'cm7u2o5mo000d2ra2alzzend7',
+              'cm7vv9he300002r5gfoem2ulj',
+              'cm7vv9he300042r5gfki2cd8p',
+              'cm7vv9he300032r5gewc4ik1n'
+            ]}
             className={styles.embed}
           />
 
@@ -171,15 +177,6 @@ export default async function Page() {
             </li>
             <li>
               <Link
-                href='https://react.dev'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                React
-              </Link>
-            </li>
-            <li>
-              <Link
                 href='https://vercel.com'
                 target='_blank'
                 rel='noopener noreferrer'
@@ -212,15 +209,6 @@ export default async function Page() {
                 rel='noopener noreferrer'
               >
                 Prisma
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='https://supabase.com'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                Supabase
               </Link>
             </li>
             <li>

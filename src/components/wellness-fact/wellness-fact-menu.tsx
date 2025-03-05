@@ -9,7 +9,7 @@ import {
   TriangleAlert
 } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import type * as types from '@/lib/types'
@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import * as config from '@/lib/config'
 
+import { convertPngToJpg } from './convert-png-to-jpg'
 import styles from './styles.module.css'
 
 type Status = 'success' | 'error' | 'loading' | 'idle'
@@ -33,9 +34,10 @@ export function WellnessFactMenu({
 }: {
   wellnessFact: types.WellnessFact
 }) {
-  const [status, setStatus] = React.useState<Status>('idle')
+  const [status, setStatus] = useState<Status>('idle')
+  const wellnessFactUrl = `${config.prodUrl}/x/${wellnessFact.twitterUsername}/o/${wellnessFact.id}`
 
-  const onCopyText = React.useCallback(async () => {
+  const onCopyText = useCallback(async () => {
     setStatus('loading')
 
     try {
@@ -49,7 +51,21 @@ export function WellnessFactMenu({
     }
   }, [wellnessFact.text])
 
-  const onCopyImageAsPNG = React.useCallback(async () => {
+  const onCopyUrl = useCallback(async () => {
+    setStatus('loading')
+
+    try {
+      await navigator.clipboard.writeText(wellnessFactUrl)
+
+      toast.success('Copied URL to clipboard')
+      setStatus('success')
+    } catch {
+      toast.error('Error copying URL to clipboard')
+      setStatus('error')
+    }
+  }, [wellnessFactUrl])
+
+  const onCopyImageAsPNG = useCallback(async () => {
     setStatus('loading')
 
     try {
@@ -68,7 +84,7 @@ export function WellnessFactMenu({
     }
   }, [wellnessFact])
 
-  const onDownloadImageAsPNG = React.useCallback(async () => {
+  const onDownloadImageAsPNG = useCallback(async () => {
     setStatus('loading')
 
     try {
@@ -90,7 +106,7 @@ export function WellnessFactMenu({
     }
   }, [wellnessFact])
 
-  const onDownloadImageAsJPG = React.useCallback(async () => {
+  const onDownloadImageAsJPG = useCallback(async () => {
     setStatus('loading')
 
     try {
@@ -112,7 +128,7 @@ export function WellnessFactMenu({
     }
   }, [wellnessFact])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (status === 'success' || status === 'error') {
       setTimeout(() => setStatus('idle'), 2000)
     }
@@ -138,6 +154,10 @@ export function WellnessFactMenu({
         <DropdownMenuGroup>
           <DropdownMenuItem className='cursor-pointer' onSelect={onCopyText}>
             Copy Text
+          </DropdownMenuItem>
+
+          <DropdownMenuItem className='cursor-pointer' onSelect={onCopyUrl}>
+            Copy URL
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -171,7 +191,7 @@ export function WellnessFactMenu({
         <DropdownMenuGroup>
           <DropdownMenuItem className='cursor-pointer' asChild>
             <Link
-              href={`https://x.com/intent/tweet?text=${'Praise Kier.'}&url=${config.prodUrl}/x/${wellnessFact.twitterUsername}/o/${wellnessFact.id}`}
+              href={`https://x.com/intent/tweet?text=${'Praise Kier.'}&url=${wellnessFactUrl}`}
               target='_blank'
             >
               Share on X / Twitter <ExternalLink />
@@ -181,65 +201,4 @@ export function WellnessFactMenu({
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
-
-/**
- * Converts a PNG image to JPG format.
- * @param {Blob|string} input - PNG image as Blob or URL string
- * @param {number} quality - JPEG quality (0 to 1)
- * @returns {Promise<Blob>} - JPG image as Blob
- */
-async function convertPngToJpg({
-  input,
-  quality = 0.8
-}: {
-  input: string | Blob
-  quality?: number
-}): Promise<Blob> {
-  // Create an Image object
-  const img = new Image()
-
-  // Create a canvas element
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')!
-
-  // Create a promise to handle the image loading
-  return new Promise((resolve, reject) => {
-    img.addEventListener('load', () => {
-      try {
-        // Set canvas dimensions to match the image
-        canvas.width = img.width
-        canvas.height = img.height
-
-        // Draw the image onto the canvas
-        ctx.fillStyle = '#111111'
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
-        ctx.drawImage(img, 0, 0)
-
-        // Convert canvas content to JPG
-        canvas.toBlob(
-          (blob) => {
-            resolve(blob!)
-          },
-          'image/jpeg',
-          quality
-        )
-      } catch (err) {
-        reject(err)
-      }
-    })
-
-    img.addEventListener('error', () => {
-      reject(new Error('Failed to load image'))
-    })
-
-    // Set the source of the image
-    if (typeof input === 'string') {
-      // If input is a URL
-      img.src = input
-    } else {
-      // If input is a Blob
-      img.src = URL.createObjectURL(input)
-    }
-  })
 }
