@@ -57,8 +57,24 @@
   transition-duration: 300ms;
 }
 
+.markdown :where(ul):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  margin-top: 1em;
+}
+
 .markdown p + ul,
-.markdown p + ol {
+.markdown p + ol,
+.markdown h1 + ul,
+.markdown h2 + ul,
+.markdown h3 + ul,
+.markdown h4 + ul,
+.markdown h5 + ul,
+.markdown h6 + ul,
+.markdown h1 + ol,
+.markdown h2 + ol,
+.markdown h3 + ol,
+.markdown h4 + ol,
+.markdown h5 + ol,
+.markdown h6 + ol {
   margin-top: 0;
 }
 

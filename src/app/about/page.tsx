@@ -18,7 +18,7 @@ export default async function Page() {
         </div>
 
         <Markdown className={styles.markdown}>
-          <h2>What is this?</h2>
+          <h1>What is this?</h1>
 
           <p>
             This site lets you roast any Twitter profile with AI-generated
@@ -72,7 +72,7 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>Why?</h2>
+          <h1>Why?</h1>
 
           <p>
             <b>Because the work is mysterious and important.</b>
@@ -103,36 +103,27 @@ export default async function Page() {
             about half of them.
           </p>
 
-          <h2>How it works</h2>
+          <h1>How it works</h1>
 
-          <p>
-            This project is open source on{' '}
-            <Link
-              href={config.githubUrl}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              GitHub
-            </Link>
-            .
-          </p>
-
-          <p>To generate severance memes for a user, we:</p>
+          <p>The workflow to generate memes for a user:</p>
 
           <ul>
             <li>
               Fetch their twitter profile and 200 of their most recent tweets.
             </li>
+
             <li>
               Use <code>gpt-4.5-preview</code> to generate a list of text-based
               wellness facts based on a long prompt, some examples to guide the
               model, and the user's unfurled tweets as an array of plain text.
             </li>
+
             <li>
               Use <code>gpt-4o-mini</code> to try and extract the user's full
               first and last name, so we can call them by their Severed Lumon
               name (eg, Helly R).
             </li>
+
             <li>
               Use{' '}
               <Link
@@ -154,7 +145,19 @@ export default async function Page() {
             </li>
           </ul>
 
-          <h3>Tech stack</h3>
+          <p>
+            For more details, check out the{' '}
+            <Link
+              href={config.githubUrl}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              full source code on GitHub
+            </Link>
+            .
+          </p>
+
+          <h1>Tech stack</h1>
 
           <ul>
             <li>
@@ -236,7 +239,7 @@ export default async function Page() {
             </li>
           </ul>
 
-          <h2>Feedback</h2>
+          <h1>Feedback</h1>
 
           <p>
             Feel free to send feedback by replying publicly to this{' '}
@@ -272,7 +275,7 @@ export default async function Page() {
             .
           </p>
 
-          <h2>Credits</h2>
+          <h1>Credits</h1>
 
           <p>
             <strong>
@@ -297,9 +300,23 @@ export default async function Page() {
               target='_blank'
               rel='noopener noreferrer'
             >
-              100% open source
-            </Link>{' '}
-            (MIT License).
+              open source (MIT License)
+            </Link>
+            .
+          </p>
+
+          <p>
+            A huge shoutout to{' '}
+            <Link
+              href='https://en.wikipedia.org/wiki/Dichen_Lachman'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Dichen Lachman
+            </Link>
+            , the amazing actress who plays Gemma on Severance. Also a huge
+            shoutout to the cast &amp; crew of Severance for creating one of the
+            best shows on TV and inspiring this mysterious and important work.
           </p>
 
           <p>

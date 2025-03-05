@@ -75,7 +75,9 @@ export default function RootLayout({
               <div className={styles.root}>
                 <Header />
 
-                <main className={cs(styles.main, 'py-12')}>{children}</main>
+                <main className={cs(styles.main, 'py-12 px-4 md:px-0')}>
+                  {children}
+                </main>
 
                 <Toaster richColors />
                 <Footer />
