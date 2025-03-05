@@ -1,6 +1,8 @@
 import cs from 'clsx'
+import { unstable_cache as cache } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
@@ -9,16 +11,27 @@ import { upsertWellnessSession } from '@/lib/upsert-wellness-session'
 
 import styles from './styles.module.css'
 
+const tryUpsertWellnessSession = cache(
+  async ({ twitterUsername }: { twitterUsername: string }) => {
+    const result = await upsertWellnessSession({
+      twitterUsername,
+      // TODO
+      failIfNotExists: true
+    })
+    if (!result) return notFound()
+
+    return result.wellnessSession
+  }
+)
+
 export default async function Page({
   params
 }: {
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
-  const { wellnessSession } = await upsertWellnessSession({
-    twitterUsername,
-    // TODO
-    failIfNotExists: true
+  const wellnessSession = await tryUpsertWellnessSession({
+    twitterUsername
   })
   const { userFullName, twitterUser, wellnessFacts, pinnedWellnessFact } =
     wellnessSession

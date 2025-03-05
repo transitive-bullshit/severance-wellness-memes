@@ -6,7 +6,6 @@ import { gracefulExit } from 'exit-hook'
 import restoreCursor from 'restore-cursor'
 
 import { createContext } from '@/lib/create-context'
-import { logCacheStats } from '@/lib/ky-utils'
 import { resolveTwitterUser } from '@/lib/resolve-twitter-user'
 
 async function main() {
@@ -20,7 +19,6 @@ async function main() {
   )
 
   console.log(JSON.stringify(resolvedTwitterUser, null, 2))
-  logCacheStats(ctx)
 }
 
 try {

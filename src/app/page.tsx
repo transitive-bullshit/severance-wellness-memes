@@ -1,15 +1,12 @@
-import random from 'random'
-
-import type * as types from '@/lib/types'
 import { HeroButton } from '@/components/hero-button'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
-import { featuredWellnessFacts } from '@/data/featured-wellness-facts'
+import { getFeaturedWellnessFacts } from '@/lib/db-queries'
 
 // import { prisma } from '@/lib/db'
 import styles from './styles.module.css'
 
 export default async function Page() {
-  const featuredWellnessFacts = await getFeaturedWellnessFacts()
+  const featuredWellnessFacts = (await getFeaturedWellnessFacts()).slice(0, 10)
   // await new Promise((resolve) => setTimeout(resolve, 20_000))
 
   // TODO
@@ -52,20 +49,4 @@ export default async function Page() {
       </section>
     </>
   )
-}
-
-async function getFeaturedWellnessFacts(): Promise<types.WellnessFact[]> {
-  return random.shuffle(featuredWellnessFacts)
-
-  // TODO
-  // const wellnessFacts = await prisma.wellnessFact.findMany({
-  //   where: {
-  //     tags: {
-  //       has: 'featured'
-  //     }
-  //   },
-  //   take: 10
-  // })
-
-  // return random.shuffle(wellnessFacts)
 }

@@ -1,5 +1,3 @@
-import { notFound } from 'next/navigation'
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,6 +9,7 @@ import {
 import { WellnessFact } from '@/components/wellness-fact'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { prisma } from '@/lib/db'
+import { getWellnessFactById } from '@/lib/db-queries'
 
 export default async function Page({
   params
@@ -18,15 +17,7 @@ export default async function Page({
   params: Promise<{ id: string; twitterUsername: string }>
 }) {
   const { id: wellnessFactId, twitterUsername } = await params
-
-  const wellnessFact = await prisma.wellnessFact.findUnique({
-    where: {
-      id: wellnessFactId
-    }
-  })
-  if (!wellnessFact) {
-    return notFound()
-  }
+  const wellnessFact = await getWellnessFactById(wellnessFactId)
 
   return (
     <>

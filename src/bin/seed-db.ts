@@ -1,5 +1,6 @@
 import 'dotenv/config'
 
+import { assert } from '@agentic/core'
 // import fs from 'node:fs/promises'
 import { gracefulExit } from 'exit-hook'
 import pMap from 'p-map'
@@ -85,6 +86,7 @@ async function main() {
         const result = await upsertWellnessSession({
           twitterUsername
         })
+        assert(result)
 
         if (!result.existing) {
           console.log(

@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import { ImageResponse } from 'next/og'
 
-import { prisma } from '@/lib/db'
+import { getWellnessFactById } from '@/lib/db-queries'
 
 export async function generateWellnessFactImageResponse({
   wellnessFactId
@@ -13,10 +13,7 @@ export async function generateWellnessFactImageResponse({
   const [wellnessFactBg, inter, wellnessFact] = await Promise.all([
     readFile(path.join(process.cwd(), 'public/wellness-fact-bg.jpg')),
     readFile(path.join(process.cwd(), 'public/fonts/inter-light.ttf')),
-    prisma.wellnessFact.findUnique({
-      where: { id: wellnessFactId },
-      select: { text: true }
-    })
+    getWellnessFactById(wellnessFactId)
   ])
   const wellnessFactBgUrl = `data:image/jpeg;base64,${wellnessFactBg.toString('base64')}`
 

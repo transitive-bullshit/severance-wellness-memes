@@ -1,5 +1,3 @@
-import './server-config'
-
 import { htmlEscape, htmlUnescape } from 'escape-goat'
 import { parse } from 'twemoji-parser'
 

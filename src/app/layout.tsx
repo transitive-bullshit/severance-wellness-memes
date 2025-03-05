@@ -2,6 +2,7 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import cs from 'clsx'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'sonner'
 
@@ -41,7 +42,7 @@ export default function RootLayout({
             <div className={styles.root}>
               <Header />
 
-              <main className={styles.main}>{children}</main>
+              <main className={cs(styles.main, 'py-12')}>{children}</main>
 
               <Toaster richColors />
               <Footer />

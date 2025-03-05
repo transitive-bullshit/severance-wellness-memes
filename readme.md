@@ -30,21 +30,18 @@ Praise Kier.
 - [ ] handle multiple upserts/checkout attempts
 - [ ] add an explanation for wtf is this, and how it works
 - [ ] favicon
-- [ ] prod domain
-- [ ] add caching
+- [ ] double check social images for all routes
 - [ ] update ref lazily on third-party fact url access for stats
 - [ ] header section + mobile
 - [ ] about page
 - [ ] terms / privacy pages
 - [ ] fetch twitter user before tweets or wellness session
-- [ ] remove ky caching and redis
 - [ ] add url resolving
 - [ ] consider switching from prisma to drizzle
 - [ ] consider switching from supabase
 - [ ] show generated date and model on fact detail page
 - [ ] allow paying for more tweets + generations
 - [ ] website analytics (posthog?)
-- [ ] seek audio during initial playback
 
 ## Examples
 

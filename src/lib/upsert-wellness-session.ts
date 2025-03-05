@@ -1,7 +1,8 @@
 'use server'
 
+import type * as types from './types'
 import { createContext } from './create-context'
-import { prisma, type WellnessSession } from './db'
+import { getWellnessSessionByTwitterUsername } from './db-queries'
 import { generateWellnessSession } from './generate-wellness-session'
 import { resolveTwitterUser } from './resolve-twitter-user'
 
@@ -13,21 +14,15 @@ export async function upsertWellnessSession({
   twitterUsername: string
   force?: boolean
   failIfNotExists?: boolean
-}): Promise<{ wellnessSession: WellnessSession; existing: boolean }> {
+}): Promise<
+  { wellnessSession: types.WellnessSession; existing: boolean } | undefined
+> {
   // await new Promise((resolve) => setTimeout(resolve, 5000))
 
   if (!force) {
     // First check if we already have a session
-    const wellnessSession = await prisma.wellnessSession.findUnique({
-      where: { twitterUsername },
-      include: {
-        wellnessFacts: true,
-        pinnedWellnessFact: true,
-        twitterUser: {
-          select: { user: true }
-        }
-      }
-    })
+    const wellnessSession =
+      await getWellnessSessionByTwitterUsername(twitterUsername)
 
     if (wellnessSession) {
       return { wellnessSession, existing: true }
@@ -35,7 +30,7 @@ export async function upsertWellnessSession({
   }
 
   if (failIfNotExists) {
-    throw new Error(`User ${twitterUsername} has not been generated yet.`)
+    return
   }
 
   // If not, create a new context and generate a session
