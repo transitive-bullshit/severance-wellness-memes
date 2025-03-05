@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import random from 'random'
 
 import type * as types from '@/lib/types'
