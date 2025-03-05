@@ -25,23 +25,22 @@ Praise Kier.
 
 ## TODO
 
+- [ ] website analytics (posthog)
 - [ ] hero section
 - [ ] stripe checkout
 - [ ] handle multiple upserts/checkout attempts
 - [ ] add an explanation for wtf is this, and how it works
-- [ ] favicon
 - [ ] double check social images for all routes
 - [ ] update ref lazily on third-party fact url access for stats
 - [ ] header section + mobile
 - [ ] about page
 - [ ] terms / privacy pages
 - [ ] fetch twitter user before tweets or wellness session
-- [ ] add url resolving
+- [ ] add url resolving to `ResolvedTwitterUser`
 - [ ] consider switching from prisma to drizzle
 - [ ] consider switching from supabase
 - [ ] show generated date and model on fact detail page
 - [ ] allow paying for more tweets + generations
-- [ ] website analytics (posthog?)
 
 ## Examples
 
