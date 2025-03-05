@@ -35,7 +35,7 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>Example Memes of Donald Trump</h2>
+          <h2>Example memes roasting Donald Trump</h2>
 
           <p>
             <b>All memes are personalized</b> to the user's profile and most
@@ -54,7 +54,7 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>Example Memes of Sam Altman</h2>
+          <h2>Example memes roasting Sam Altman</h2>
 
           <p>
             For a less controversial example, let's look at{' '}
@@ -97,7 +97,7 @@ export default async function Page() {
             about half of them.
           </p>
 
-          <h2>How It Works</h2>
+          <h2>How it works</h2>
 
           <p>
             This project is open source on{' '}
@@ -148,7 +148,7 @@ export default async function Page() {
             </li>
           </ul>
 
-          <h3>Tech Stack</h3>
+          <h3>Tech stack</h3>
 
           <ul>
             <li>
@@ -234,24 +234,6 @@ export default async function Page() {
             </li>
             <li>
               <Link
-                href='https://tailwindcss.com'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                Tailwind CSS
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='https://ui.shadcn.com'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                shadcn/ui
-              </Link>
-            </li>
-            <li>
-              <Link
                 href='https://socialdata.tools'
                 target='_blank'
                 rel='noopener noreferrer'
@@ -285,13 +267,13 @@ export default async function Page() {
             >
               DM me
             </Link>
-            , but I am more likely to reply if you are following me and if the
+            , but I am more likely to reply if you are following me and the
             conversation is public.
           </p>
 
           <p>
             I prefer public convos so the answers can help other people who
-            might have the same question, but if it's related to billing, please{' '}
+            might have similar questions, but if it's related to billing, please{' '}
             <Link
               href={config.twitterUrl}
               target='_blank'

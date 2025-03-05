@@ -5,12 +5,12 @@ import { assert } from '@agentic/core'
 import { gracefulExit } from 'exit-hook'
 import restoreCursor from 'restore-cursor'
 
-import { createContext } from '@/lib/create-context'
+// import { createContext } from '@/lib/create-context'
 import { prisma } from '@/lib/db'
-import { generateWellnessFacts } from '@/lib/generate-wellness-facts'
+// import { generateWellnessFacts } from '@/lib/generate-wellness-facts'
 
 async function main() {
-  const ctx = createContext()
+  // const ctx = createContext()
 
   const twitterUsername = 'sama'
   // const resolvedTwitterUser = JSON.parse(
