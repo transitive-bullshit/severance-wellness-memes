@@ -5,6 +5,9 @@ import { ImageResponse } from 'next/og'
 
 import { getWellnessFactById } from '@/lib/db-queries'
 
+// TODO: text with certain symbols like '@' produces a text overflow with `text-wrap: balance`
+// 'Your outie’s favorite form of self-care is releasing pricing update tweets for @vercel several times a month.'
+
 export async function generateWellnessFactImageResponse({
   wellnessFactId
 }: {
@@ -57,9 +60,6 @@ export async function generateWellnessFactImageResponse({
           >
             {wellnessFact?.text?.replaceAll('@', '') ||
               'The work is mysterious and important.'}
-            {/* {
-              'Your outie’s favorite form of self-care is releasing pricing update tweets for @vercel several times a month.' // TODO: produces a text overflow
-            } */}
           </div>
         </div>
       </div>

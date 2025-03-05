@@ -32,6 +32,12 @@ export function Footer() {
                     About
                   </ActiveLink>
                 </span>
+
+                <span>
+                  <ActiveLink href='/legal' className='link'>
+                    Legal
+                  </ActiveLink>
+                </span>
               </nav>
             </div>
           </div>

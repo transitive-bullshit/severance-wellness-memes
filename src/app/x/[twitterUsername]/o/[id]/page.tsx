@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,6 +20,7 @@ export default async function Page({
 }) {
   const { id: wellnessFactId, twitterUsername } = await params
   const wellnessFact = await getWellnessFactById(wellnessFactId)
+  if (!wellnessFact) return notFound()
 
   return (
     <>

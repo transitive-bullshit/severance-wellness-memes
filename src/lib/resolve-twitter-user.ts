@@ -5,13 +5,14 @@ import { omit } from '@agentic/core'
 import pMap from 'p-map'
 
 import type * as types from './types'
+import { numTwitterTweetsProcdessed } from './config'
 import { tryGetTweetById, tryGetTwitterUserById } from './twitter-utils'
 
 export async function resolveTwitterUser({
   twitterUsername,
   ctx,
   concurrency = 8,
-  maxTimelineTweets = 200
+  maxTimelineTweets = numTwitterTweetsProcdessed
   // resolveUrls = false
 }: {
   twitterUsername: string

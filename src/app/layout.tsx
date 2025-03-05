@@ -1,7 +1,6 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/next'
 import cs from 'clsx'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'sonner'
@@ -13,6 +12,7 @@ import * as config from '@/lib/config'
 
 import { Footer } from './footer'
 import { Header } from './header'
+import { PostHogProvider } from './providers'
 import styles from './styles.module.css'
 
 const inter = Inter({
@@ -39,19 +39,20 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AudioProvider>
-            <div className={styles.root}>
-              <Header />
+            <PostHogProvider>
+              <div className={styles.root}>
+                <Header />
 
-              <main className={cs(styles.main, 'py-12')}>{children}</main>
+                <main className={cs(styles.main, 'py-12')}>{children}</main>
 
-              <Toaster richColors />
-              <Footer />
-            </div>
+                <Toaster richColors />
+                <Footer />
+              </div>
+            </PostHogProvider>
           </AudioProvider>
         </ThemeProvider>
 
         <Bootstrap />
-        <Analytics />
       </body>
     </html>
   )

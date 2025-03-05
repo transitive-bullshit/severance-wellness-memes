@@ -1,0 +1,40 @@
+.page {
+  flex: 1;
+  width: 100%;
+  gap: var(--gap-2);
+}
+
+.meta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.page .markdown img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(min(100%, 640px));
+  text-align: center;
+  aspect-ratio: 2 / 1;
+  border-radius: 8px;
+
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  border: 1px solid rgb(39, 39, 42);
+
+  --tw-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --tw-shadow-colored:
+    0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
+}
+
+.embed {
+  margin-top: calc(var(--spacing) * 4);
+  margin-bottom: calc(var(--spacing) * 4);
+}

@@ -36,7 +36,6 @@
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
-    "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "debug": "^4.4.0",
@@ -72,6 +71,7 @@
   "devDependencies": {
     "@fisch0920/eslint-config": "^1.4.0",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.16",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/debug": "^4.1.12",
     "@types/node": "^22.10.8",

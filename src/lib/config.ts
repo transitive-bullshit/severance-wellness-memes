@@ -12,6 +12,8 @@ export const domain =
 export const author = 'Travis Fischer'
 export const twitter = 'transitive_bs'
 export const twitterUrl = `https://x.com/${twitter}`
+export const twitterLaunchThreadUrl = 'TODO'
+export const numTwitterTweetsProcdessed = 200
 export const copyright = `© ${new Date().getFullYear()} Lumon Industries. All rights reserved.`
 export const madeWithLove = 'Made with ❤️ in Bangkok'
 export const githubUrl =
@@ -32,3 +34,7 @@ export const vercelUrl =
   process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL
 
 export const apiBaseUrl = isDev || !vercelUrl ? url : `https://${vercelUrl}`
+
+export const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
+export const posthogHost =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'

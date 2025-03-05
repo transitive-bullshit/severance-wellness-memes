@@ -1,11 +1,43 @@
 import 'dotenv/config'
 
+import fs from 'node:fs/promises'
+
+import type { TwitterUser } from '@prisma/client'
 import { gracefulExit } from 'exit-hook'
 import restoreCursor from 'restore-cursor'
 
-// import { prisma } from '@/lib/db'
+import { prisma } from '@/lib/db'
 
 async function main() {
+  // const wellnessSessions = await prisma.wellnessSession.findMany()
+  // console.log(`writing ${wellnessSessions.length} wellness sessions`)
+  // await fs.writeFile(
+  //   'out/wellness-sessions.json',
+  //   JSON.stringify(wellnessSessions, null, 2)
+  // )
+
+  // const wellnessFacts = await prisma.wellnessFact.findMany()
+  // console.log(`writing ${wellnessFacts.length} wellness facts`)
+  // await fs.writeFile(
+  //   'out/wellness-facts.json',
+  //   JSON.stringify(wellnessFacts, null, 2)
+  // )
+
+  const twitterUsers: TwitterUser[] = []
+  do {
+    const t = await prisma.twitterUser.findMany({
+      take: 10,
+      skip: twitterUsers.length
+    })
+
+    console.log('fetched', t.length, 'twitter users')
+    if (!t.length) break
+    twitterUsers.push(...t)
+  } while (true)
+
+  console.log(`writing ${twitterUsers.length} twitter users`)
+  await fs.writeFile('out/twitter-users.json', JSON.stringify(twitterUsers))
+
   // const twitterUsers = await prisma.twitterUser.findMany({
   //   where: {
   //     twitterUsername: null

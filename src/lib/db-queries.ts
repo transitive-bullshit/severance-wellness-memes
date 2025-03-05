@@ -1,19 +1,16 @@
 import 'server-only'
 
 import { unstable_cache as cache } from 'next/cache'
-import { notFound } from 'next/navigation'
 import random from 'random'
 
 import type * as types from '@/lib/types'
 import { prisma } from '@/lib/db'
 
 export const getWellnessFactById = cache(
-  async (id: string): Promise<types.WellnessFact> => {
-    const wellnessFact = await prisma.wellnessFact.findUnique({
+  async (id: string): Promise<types.WellnessFact | null> => {
+    return prisma.wellnessFact.findUnique({
       where: { id }
     })
-    if (!wellnessFact) return notFound()
-    return wellnessFact
   }
 )
 
