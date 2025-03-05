@@ -1,15 +1,11 @@
 'use client'
 
 import type { SetOptional } from 'type-fest'
-import React from 'react'
-import {
-  useAudio as useAudioHook,
-  useEffectOnce,
-  useLocalStorage
-} from 'react-use'
+import React, { createContext, useCallback, useEffect, useState } from 'react'
+import { useAudio as useAudioHook } from 'react-use'
 
-const AudioContext = React.createContext({
-  isAudioEnabled: true,
+const AudioContext = createContext({
+  isAudioEnabled: false,
   toggleAudio: () => {}
 })
 
@@ -17,36 +13,30 @@ export function AudioProvider({
   children,
   ...props
 }: SetOptional<React.ComponentProps<typeof AudioContext.Provider>, 'value'>) {
-  const [isAudioEnabled = true, setIsAudioEnabled] = useLocalStorage(
-    'audio',
-    true
-  )
-  useEffectOnce(() => {
-    if (isAudioEnabled) {
-      controls.play()
-    } else {
-      controls.pause()
-    }
-  })
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false)
 
   const [audio, _state, controls] = useAudioHook({
     src: '/music-of-wellness.mp3',
-    autoPlay: isAudioEnabled,
+    autoPlay: false,
     loop: true,
+    controls: true,
     preload: 'auto'
   })
 
-  const toggleAudio = React.useCallback(() => {
+  const toggleAudio = useCallback(() => {
     setIsAudioEnabled(!isAudioEnabled)
   }, [isAudioEnabled, setIsAudioEnabled])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAudioEnabled) {
+      console.log('playing audio')
       controls.play()
     } else {
+      console.log('pausing audio')
       controls.pause()
     }
-  }, [isAudioEnabled, controls])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAudioEnabled])
 
   return (
     <AudioContext.Provider
@@ -56,6 +46,8 @@ export function AudioProvider({
         toggleAudio
       }}
     >
+      {/* Useful for debugging */}
+      {/* <div className='w-full flex justify-center items-center'>{audio}</div> */}
       {children}
 
       <div className='hidden'>{audio}</div>
