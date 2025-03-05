@@ -7,13 +7,15 @@ import random from 'random'
 import type * as types from '@/lib/types'
 import { prisma } from '@/lib/db'
 
-export const getWellnessFactById = cache(async (id: string) => {
-  const wellnessFact = await prisma.wellnessFact.findUnique({
-    where: { id }
-  })
-  if (!wellnessFact) return notFound()
-  return wellnessFact
-})
+export const getWellnessFactById = cache(
+  async (id: string): Promise<types.WellnessFact> => {
+    const wellnessFact = await prisma.wellnessFact.findUnique({
+      where: { id }
+    })
+    if (!wellnessFact) return notFound()
+    return wellnessFact
+  }
+)
 
 export const getFeaturedWellnessFacts = cache(
   async (): Promise<types.WellnessFact[]> => {
