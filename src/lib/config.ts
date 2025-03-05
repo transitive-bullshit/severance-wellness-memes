@@ -7,7 +7,7 @@ export const description =
   'Roast your Twitter profile with AI-generated Severance wellness memes.'
 export const domain =
   process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ??
-  'severance.vercel.app'
+  'severance-wellness-session.com'
 
 export const author = 'Travis Fischer'
 export const twitter = 'transitive_bs'
