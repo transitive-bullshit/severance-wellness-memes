@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/transitive-bullshit/severance-wellness-memes.git"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.5.2",
   "engines": {
     "node": ">=18"
   },
@@ -29,8 +29,8 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@agentic/core": "^7.3.1",
-    "@agentic/social-data": "^7.3.1",
+    "@agentic/core": "^7.3.3",
+    "@agentic/social-data": "^7.3.4",
     "@prisma/client": "^6.4.1",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-separator": "^1.1.2",
@@ -39,19 +39,19 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "debug": "^4.4.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "escape-goat": "^4.0.0",
     "exit-hook": "^4.0.0",
-    "framer-motion": "^12.4.9",
+    "framer-motion": "^12.4.10",
     "hash-object": "^5.0.1",
     "is-relative-url": "^4.0.0",
     "ky": "^1.7.5",
     "lucide-react": "^0.477.0",
-    "next": "15.2.0",
+    "next": "15.2.1",
     "next-themes": "^0.4.4",
     "normalize-url": "^8.0.1",
-    "openai-fetch": "^3.3.1",
-    "p-map": "^7.0.2",
+    "openai-fetch": "^3.4.2",
+    "p-map": "^7.0.3",
     "posthog-js": "^1.227.0",
     "quick-lru": "^7.0.0",
     "random": "^5.3.0",
@@ -65,34 +65,36 @@
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "twemoji-parser": "^14.0.0",
-    "type-fest": "^4.35.0",
+    "type-fest": "^4.37.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@fisch0920/eslint-config": "^1.4.0",
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.0.9",
     "@tailwindcss/typography": "^0.5.16",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/debug": "^4.1.12",
-    "@types/node": "^22.10.8",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/node": "^22.13.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "@types/twemoji-parser": "^13.1.4",
     "del-cli": "^6.0.0",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.2.0",
+    "eslint-config-next": "15.2.1",
     "npm-run-all2": "^7.0.2",
     "only-allow": "^1.2.1",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "prisma": "^6.4.1",
     "prisma-json-types-generator": "^3.2.2",
-    "tailwindcss": "^4",
-    "typescript": "^5.7.3",
-    "vitest": "3.0.3"
+    "tailwindcss": "^4.0.9",
+    "typescript": "^5.8.2",
+    "vitest": "3.0.7"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@prisma/client"
+      "@prisma/client",
+      "esbuild",
+      "prisma"
     ]
   }
 }
