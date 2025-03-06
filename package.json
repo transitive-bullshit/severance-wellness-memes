@@ -25,6 +25,7 @@
     "fix": "run-s fix:*",
     "fix:format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "fix:lint": "eslint --fix .",
+    "stripe:listen": "stripe listen --forward-to http://localhost:3000/api/stripe/webhook",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "prisma generate"
   },
@@ -62,6 +63,7 @@
     "restore-cursor": "^5.1.0",
     "server-only": "^0.0.1",
     "sonner": "^2.0.1",
+    "stripe": "^17.7.0",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "twemoji-parser": "^14.0.0",

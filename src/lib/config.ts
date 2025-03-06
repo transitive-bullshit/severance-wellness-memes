@@ -25,6 +25,7 @@ export const isVercel = !!(
   process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.VERCEL
 )
 export const isDev = env === 'development' && !isVercel
+export const isProd = env === 'production'
 export const isTest = env === 'test'
 
 export const port = process.env.PORT || '3000'
@@ -38,3 +39,6 @@ export const ogImageUrl = `${prodUrl}/og.jpg`
 export const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
 export const posthogHost =
   process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+
+export const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY!
+export const isStripeLive = !!stripePublishableKey.startsWith('pk_live_')
