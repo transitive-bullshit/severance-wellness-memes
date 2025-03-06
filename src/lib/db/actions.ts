@@ -6,11 +6,10 @@ import { waitUntil } from '@vercel/functions'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-import type * as types from '@/lib/types'
 import { prisma } from '@/lib/db'
 import { resolveWellnessSession } from '@/lib/resolve-wellness-session'
 import { stripeSuffix } from '@/lib/server-config'
-import { assert, clone } from '@/lib/server-utils'
+import { assert } from '@/lib/server-utils'
 import { createCheckoutSession } from '@/lib/stripe'
 
 export async function unlockWellnessSession(opts: {
@@ -19,7 +18,7 @@ export async function unlockWellnessSession(opts: {
   stripeCustomerEmail?: string | null
   stripeCheckoutSessionId?: string
   stripeSubscriptionId?: string
-}): Promise<Partial<types.WellnessSession> | null> {
+}): Promise<void> {
   const {
     twitterUsername,
     stripeCustomerId,
@@ -29,7 +28,7 @@ export async function unlockWellnessSession(opts: {
   } = opts
   console.log('unlocking user', pruneNullOrUndefined(opts))
 
-  const wellnessSession = await prisma.wellnessSession.update({
+  await prisma.wellnessSession.update({
     where: { twitterUsername },
     data: pruneNullOrUndefined({
       status: 'pending',
@@ -48,8 +47,6 @@ export async function unlockWellnessSession(opts: {
       revalidatePath(`/x/${twitterUsername}`)
     })()
   )
-
-  return clone(wellnessSession)
 }
 
 export async function initCheckoutSession({

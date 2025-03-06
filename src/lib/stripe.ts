@@ -71,7 +71,7 @@ export async function handleCheckoutSessionCompleted({
   checkoutSession
 }: {
   checkoutSession: Stripe.Checkout.Session
-}) {
+}): Promise<void> {
   assert(checkoutSession.metadata, 'unexpected checkout session metadata', {
     status: 400
   })
