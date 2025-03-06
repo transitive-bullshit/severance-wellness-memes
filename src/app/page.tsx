@@ -1,6 +1,6 @@
 import { HeroButton } from '@/components/hero-button'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
-import { getFeaturedWellnessFacts } from '@/lib/db-queries'
+import { getFeaturedWellnessFacts } from '@/lib/db/queries'
 
 // import { prisma } from '@/lib/db'
 import styles from './styles.module.css'

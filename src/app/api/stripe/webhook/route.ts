@@ -1,9 +1,9 @@
 import type Stripe from 'stripe'
-import { revalidatePath } from 'next/cache'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 import { isStripeLive } from '@/lib/config'
+import { unlockWellnessSession } from '@/lib/db/actions'
 import { assert } from '@/lib/server-utils'
 import { stripe } from '@/lib/stripe'
 
@@ -69,17 +69,21 @@ export async function POST(req: Request) {
             { status: 400 }
           )
 
-          console.log(
-            'unlocking user',
-            checkoutSession.metadata.twitterUsername
-          )
-
-          // await unlockUser({
-          //   username: checkoutSession.metadata.username,
-          //   unlockType: 'stripe'
-          // })
-
-          revalidatePath(`/x/${checkoutSession.metadata.twitterUsername}`)
+          await unlockWellnessSession({
+            twitterUsername: checkoutSession.metadata.twitterUsername,
+            stripeCustomerId:
+              typeof checkoutSession.customer === 'string'
+                ? checkoutSession.customer
+                : checkoutSession.customer?.id,
+            stripeCustomerEmail:
+              checkoutSession.customer_email ??
+              checkoutSession.customer_details?.email,
+            stripeCheckoutSessionId: checkoutSession.id,
+            stripeSubscriptionId:
+              typeof checkoutSession.subscription === 'string'
+                ? checkoutSession.subscription
+                : checkoutSession.subscription?.id
+          })
           break
 
         default:

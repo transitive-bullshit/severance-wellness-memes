@@ -2,49 +2,56 @@ import 'dotenv/config'
 
 // import fs from 'node:fs/promises'
 // import type { TwitterUser } from '@prisma/client'
-import { assert } from '@agentic/core'
+// import { assert } from '@agentic/core'
 import { gracefulExit } from 'exit-hook'
-import pMap from 'p-map'
+// import pMap from 'p-map'
 import restoreCursor from 'restore-cursor'
 
-import type * as types from '@/lib/types'
+// import type * as types from '@/lib/types'
 import { prisma } from '@/lib/db'
 
 async function main() {
-  const wellnessSessions = await prisma.wellnessSession.findMany()
-  const twitterUsernameToWellnessSession = new Map<
-    string,
-    Partial<types.WellnessSession>
-  >()
+  const res = await prisma.wellnessSession.findUniqueOrThrow({
+    where: { twitterUsername: 'transitive_BS' }
+  })
+  console.log(res)
+  return
 
-  for (const wellnessSession of wellnessSessions) {
-    twitterUsernameToWellnessSession.set(
-      wellnessSession.twitterUsername,
-      wellnessSession
-    )
-  }
+  // const wellnessSessions = await prisma.wellnessSession.findMany()
+  // const twitterUsernameToWellnessSession = new Map<
+  //   string,
+  //   Partial<types.WellnessSession>
+  // >()
 
-  const wellnessFacts = await prisma.wellnessFact.findMany()
-  await pMap(
-    wellnessFacts,
-    async (wellnessFact) => {
-      const twitterUserId = twitterUsernameToWellnessSession.get(
-        wellnessFact.twitterUsername
-      )?.twitterUserId!
-      assert(twitterUserId)
-      console.log(wellnessFact.twitterUsername, '=>', twitterUserId)
+  // for (const wellnessSession of wellnessSessions) {
+  //   twitterUsernameToWellnessSession.set(
+  //     wellnessSession.twitterUsername,
+  //     wellnessSession
+  //   )
+  // }
 
-      await prisma.wellnessFact.update({
-        where: {
-          id: wellnessFact.id
-        },
-        data: {
-          twitterUserId
-        }
-      })
-    },
-    { concurrency: 16 }
-  )
+  // Update all wellness facts to have the correct `twitterUserId`
+  // const wellnessFacts = await prisma.wellnessFact.findMany()
+  // await pMap(
+  //   wellnessFacts,
+  //   async (wellnessFact) => {
+  //     const twitterUserId = twitterUsernameToWellnessSession.get(
+  //       wellnessFact.twitterUsername
+  //     )?.twitterUserId!
+  //     assert(twitterUserId)
+  //     console.log(wellnessFact.twitterUsername, '=>', twitterUserId)
+
+  //     await prisma.wellnessFact.update({
+  //       where: {
+  //         id: wellnessFact.id
+  //       },
+  //       data: {
+  //         twitterUserId
+  //       }
+  //     })
+  //   },
+  //   { concurrency: 16 }
+  // )
 
   return
 
@@ -104,9 +111,10 @@ async function main() {
   //   },
   //   { concurrency: 8 }
   // )
-  // const twitterUsers = await prisma.twitterUser.findMany({
+  // // const twitterUsers = await prisma.twitterUser.findMany({
   //   where: {
   //     twitterUsername: {
+  // TODO: this will fail after moving to `citext`
   //       in: exampleTwitterUsers.map((u) => u.twitterUsername)
   //     }
   //   },

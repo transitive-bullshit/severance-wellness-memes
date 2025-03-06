@@ -26,6 +26,10 @@ export const getFeaturedWellnessFacts = cache(
     })
 
     return random.shuffle(wellnessFacts)
+  },
+  ['featured-wellness-facts'],
+  {
+    revalidate: 60 * 60 * 24 // 24 hours in seconds
   }
 )
 

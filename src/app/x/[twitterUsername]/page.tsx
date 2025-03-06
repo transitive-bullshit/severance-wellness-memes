@@ -1,35 +1,37 @@
 import cs from 'clsx'
-import { unstable_cache as cache } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
-import { prisma } from '@/lib/db'
 import { upsertWellnessSession } from '@/lib/upsert-wellness-session'
 
 import styles from './styles.module.css'
 
-const tryUpsertWellnessSession = cache(
-  async ({ twitterUsername }: { twitterUsername: string }) => {
-    const result = await upsertWellnessSession({
-      twitterUsername,
-      // TODO
-      failIfNotExists: true
-    })
-    if (!result) return notFound()
+async function tryUpsertWellnessSession({
+  twitterUsername
+}: {
+  twitterUsername: string
+}) {
+  const result = await upsertWellnessSession({
+    twitterUsername,
+    // TODO
+    failIfNotExists: true
+  })
+  if (!result) return notFound()
 
-    return result.wellnessSession
-  }
-)
+  return result.wellnessSession
+}
 
 export default async function Page({
   params
 }: {
   params: Promise<{ twitterUsername: string }>
 }) {
+  console.log('Page')
   const { twitterUsername } = await params
+  console.log('Page', { twitterUsername })
   const wellnessSession = await tryUpsertWellnessSession({
     twitterUsername
   })
@@ -68,7 +70,7 @@ export default async function Page({
     <>
       <section className={cs(styles.intro)}>
         <h1 className={cs(styles.title, 'leading-none')}>
-          Hello {userDisplayName}
+          Hello, {userDisplayName}
           {user.profile_image_url_https && (
             <Link
               href={`https://x.com/${user.screen_name}`}
@@ -108,14 +110,5 @@ export default async function Page({
 }
 
 export async function generateStaticParams() {
-  return prisma.wellnessSession.findMany({
-    where: {
-      twitterUsername: {
-        in: seedTwitterUsers
-      }
-    },
-    select: {
-      twitterUsername: true
-    }
-  })
+  return seedTwitterUsers.map((twitterUsername) => ({ twitterUsername }))
 }

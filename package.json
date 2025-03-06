@@ -25,7 +25,7 @@
     "fix": "run-s fix:*",
     "fix:format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "fix:lint": "eslint --fix .",
-    "stripe:listen": "stripe listen --forward-to http://localhost:3000/api/stripe/webhook",
+    "stripe:listen": "stripe listen --load-from-webhooks-api --forward-to http://localhost:3000/api/stripe/webhook",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "prisma generate"
   },

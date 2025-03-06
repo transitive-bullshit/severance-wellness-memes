@@ -15,7 +15,7 @@ export function AudioProvider({
 }: SetOptional<React.ComponentProps<typeof AudioContext.Provider>, 'value'>) {
   const [isAudioEnabled, setIsAudioEnabled] = useState(false)
 
-  const [audio, _state, controls] = useAudioHook({
+  const [audio, state, controls] = useAudioHook({
     src: '/music-of-wellness.mp3',
     autoPlay: false,
     loop: true,
@@ -29,10 +29,14 @@ export function AudioProvider({
 
   useEffect(() => {
     if (isAudioEnabled) {
-      console.log('playing audio')
+      if (!state.playing) {
+        console.log('playing audio')
+      }
       controls.play()
     } else {
-      console.log('pausing audio')
+      if (state.playing) {
+        console.log('pausing audio')
+      }
       controls.pause()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

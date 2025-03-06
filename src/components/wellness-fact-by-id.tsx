@@ -1,4 +1,4 @@
-import { getWellnessFactById } from '@/lib/db-queries'
+import { getWellnessFactById } from '@/lib/db/queries'
 
 import { WellnessFact } from './wellness-fact'
 

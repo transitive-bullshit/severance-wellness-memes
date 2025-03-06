@@ -11,7 +11,7 @@ import {
 import { WellnessFact } from '@/components/wellness-fact'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { prisma } from '@/lib/db'
-import { getWellnessFactById } from '@/lib/db-queries'
+import { getWellnessFactById } from '@/lib/db/queries'
 
 export default async function Page({
   params
@@ -65,7 +65,6 @@ export async function generateStaticParams() {
       }
     },
     select: {
-      twitterUsername: true,
       wellnessFacts: {
         select: {
           id: true,

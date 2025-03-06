@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 generator json {
@@ -18,7 +19,7 @@ model WellnessSession {
   updatedAt DateTime @updatedAt
 
   twitterUserId   String  @unique
-  twitterUsername String  @unique
+  twitterUsername String  @unique @db.Citext()
   userFullName    String?
 
   twitterUser   TwitterUser?
@@ -26,6 +27,17 @@ model WellnessSession {
 
   pinnedWellnessFact   WellnessFact? @relation(name: "pinnedWellnessFact", fields: [pinnedWellnessFactId], references: [id])
   pinnedWellnessFactId String?
+
+  // Stripe state
+  isUnlocked                  Boolean @default(false)
+  stripeCustomerIdLive        String?
+  stripeCustomerIdTest        String?
+  stripeCustomerEmailLive     String?
+  stripeCustomerEmailTest     String?
+  stripeCheckoutSessionIdLive String?
+  stripeCheckoutSessionIdTest String?
+  stripeSubscriptionIdLive    String?
+  stripeSubscriptionIdTest    String?
 
   @@index([twitterUsername])
   @@index([twitterUserId])
@@ -36,7 +48,7 @@ model TwitterUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  twitterUsername String? @unique
+  twitterUsername String? @unique @db.Citext()
 
   /// [TwitterUser]
   user Json
@@ -63,7 +75,7 @@ model WellnessFact {
   model String
 
   twitterUserId   String
-  twitterUsername String
+  twitterUsername String   @db.Citext()
   tags            String[]
 
   wellnessSession WellnessSession? @relation(name: "wellnessFacts", fields: [twitterUserId], references: [twitterUserId])

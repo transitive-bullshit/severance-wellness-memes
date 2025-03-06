@@ -40,5 +40,6 @@ export const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
 export const posthogHost =
   process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
 
-export const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY!
-export const isStripeLive = !!stripePublishableKey.startsWith('pk_live_')
+export const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY
+export const isStripeLive = !!stripePublishableKey?.startsWith('pk_live_')
+export const stripeSuffix = isStripeLive ? 'Live' : 'Test'
