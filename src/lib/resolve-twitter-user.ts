@@ -164,6 +164,13 @@ export async function resolveTwitterUser({
     )
   }
 
+  console.log('PRE resolved twitter user', {
+    ...res,
+    timelineTweetIds: res.timelineTweetIds.length,
+    users: Object.keys(res.users).length,
+    tweets: Object.keys(res.tweets).length
+  })
+
   const twitterUser = await prisma.twitterUser.update({
     where: {
       twitterUsername
@@ -172,6 +179,13 @@ export async function resolveTwitterUser({
       ...res,
       status: 'resolved'
     }
+  })
+
+  console.log('POST resolved twitter user', {
+    ...twitterUser,
+    timelineTweetIds: twitterUser.timelineTweetIds.length,
+    users: Object.keys(twitterUser.users).length,
+    tweets: Object.keys(twitterUser.tweets).length
   })
 
   return {

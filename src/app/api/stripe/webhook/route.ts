@@ -2,10 +2,8 @@ import type Stripe from 'stripe'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
-import { unlockWellnessSession } from '@/lib/db/actions'
 import { isStripeLive, stripeWebhookSecret } from '@/lib/server-config'
-import { assert } from '@/lib/server-utils'
-import { stripe } from '@/lib/stripe'
+import { handleCheckoutSessionCompleted, stripe } from '@/lib/stripe'
 
 const relevantStripeEvents = new Set<Stripe.Event.Type>([
   'checkout.session.completed'
@@ -44,38 +42,7 @@ export async function POST(req: Request) {
           const checkoutSession = event.data.object
           console.log(`stripe event ${event.type}`, checkoutSession)
 
-          assert(
-            checkoutSession.metadata,
-            'unexpected checkout session metadata',
-            { status: 400 }
-          )
-          assert(
-            checkoutSession.metadata.type ===
-              'severance-wellness-session-twitter-user',
-            'invalid checkout session metadata',
-            { status: 400 }
-          )
-          assert(
-            checkoutSession.metadata.twitterUsername,
-            'invalid checkout session metadata',
-            { status: 400 }
-          )
-
-          await unlockWellnessSession({
-            twitterUsername: checkoutSession.metadata.twitterUsername,
-            stripeCustomerId:
-              typeof checkoutSession.customer === 'string'
-                ? checkoutSession.customer
-                : checkoutSession.customer?.id,
-            stripeCustomerEmail:
-              checkoutSession.customer_email ??
-              checkoutSession.customer_details?.email,
-            stripeCheckoutSessionId: checkoutSession.id,
-            stripeSubscriptionId:
-              typeof checkoutSession.subscription === 'string'
-                ? checkoutSession.subscription
-                : checkoutSession.subscription?.id
-          })
+          await handleCheckoutSessionCompleted({ checkoutSession })
           break
 
         default:

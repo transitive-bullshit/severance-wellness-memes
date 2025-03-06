@@ -1,17 +1,15 @@
 import 'server-only'
 
-import { assert } from '@agentic/core'
 import Stripe from 'stripe'
 
 import * as config from './config'
+import { prisma } from './db'
+import { unlockWellnessSession } from './db/actions'
 import { getOrUpsertWellnessSession } from './get-or-upsert-wellness-session'
-import { stripeProductId } from './server-config'
+import { stripeProductId, stripeSecretKey, stripeSuffix } from './server-config'
+import { assert } from './server-utils'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Stripe secret key not found')
-}
-
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+export const stripe = new Stripe(stripeSecretKey, {
   apiVersion: '2025-02-24.acacia'
 })
 
@@ -57,5 +55,49 @@ export async function createCheckoutSession({
     cancel_url: cancelUrl
   })
 
+  await prisma.wellnessSession.update({
+    where: {
+      twitterUsername
+    },
+    data: {
+      [`stripeCheckoutSessionId${stripeSuffix}`]: session.id
+    }
+  })
+
   return session
+}
+
+export async function handleCheckoutSessionCompleted({
+  checkoutSession
+}: {
+  checkoutSession: Stripe.Checkout.Session
+}) {
+  assert(checkoutSession.metadata, 'unexpected checkout session metadata', {
+    status: 400
+  })
+  assert(
+    checkoutSession.metadata.type === 'severance-wellness-session-twitter-user',
+    'invalid checkout session metadata',
+    { status: 400 }
+  )
+  assert(
+    checkoutSession.metadata.twitterUsername,
+    'invalid checkout session metadata',
+    { status: 400 }
+  )
+
+  await unlockWellnessSession({
+    twitterUsername: checkoutSession.metadata.twitterUsername,
+    stripeCustomerId:
+      typeof checkoutSession.customer === 'string'
+        ? checkoutSession.customer
+        : checkoutSession.customer?.id,
+    stripeCustomerEmail:
+      checkoutSession.customer_email ?? checkoutSession.customer_details?.email,
+    stripeCheckoutSessionId: checkoutSession.id,
+    stripeSubscriptionId:
+      typeof checkoutSession.subscription === 'string'
+        ? checkoutSession.subscription
+        : checkoutSession.subscription?.id
+  })
 }

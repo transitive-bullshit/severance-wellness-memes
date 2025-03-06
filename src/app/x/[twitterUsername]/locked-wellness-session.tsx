@@ -1,6 +1,8 @@
 'use client'
 
 import cs from 'clsx'
+import { Loader2 } from 'lucide-react'
+import { useCallback, useState } from 'react'
 
 import type * as types from '@/lib/types'
 import { Button } from '@/components/ui/button'
@@ -14,6 +16,12 @@ export function LockedWellnessSession({
   wellnessSession: types.WellnessSession
 }) {
   const { twitterUsername } = wellnessSession
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onGenerateProfile = useCallback(() => {
+    setIsLoading(true)
+    initCheckoutSession({ twitterUsername }).finally(() => setIsLoading(false))
+  }, [twitterUsername])
 
   return (
     <>
@@ -25,8 +33,19 @@ export function LockedWellnessSession({
         <p>{JSON.stringify(wellnessSession)}</p>
 
         <p>
-          <Button onClick={() => initCheckoutSession({ twitterUsername })}>
-            Generate profile
+          <Button
+            disabled={isLoading}
+            className='cursor-pointer select-none'
+            onClick={onGenerateProfile}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className='animate-spin' />
+                Redirecting...
+              </>
+            ) : (
+              'Generate profile ($8 USD)'
+            )}
           </Button>
         </p>
       </section>

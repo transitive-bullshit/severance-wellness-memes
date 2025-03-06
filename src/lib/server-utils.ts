@@ -82,3 +82,9 @@ export function assert(
     }
   }
 }
+
+// TODO: workaround for https://github.com/prisma/prisma/issues/20627
+export function clone<T extends object>(value: T): T {
+  /* eslint-disable-next-line unicorn/prefer-structured-clone */
+  return JSON.parse(JSON.stringify(value)) as T
+}

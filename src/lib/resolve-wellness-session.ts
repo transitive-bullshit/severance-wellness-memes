@@ -48,10 +48,22 @@ export async function resolveWellnessSession({
     })
     assert(twitterUser?.user, `Twitter user not found for ${twitterUsername}`)
 
+    console.log('>>> resolving user full name', { twitterUsername })
+    console.log('>>> resolving wellness facts', { twitterUsername })
+
     const [userFullName, generatedWellnessFacts] = await Promise.all([
       extractUserFullName({ twitterUser, ctx }),
       generateWellnessFacts({ twitterUser, ctx, ...opts })
     ])
+
+    console.log('<<< resolving user full name', {
+      twitterUsername,
+      userFullName
+    })
+    console.log('<<< resolving wellness facts', {
+      twitterUsername,
+      generatedWellnessFacts
+    })
 
     const createWellnessFacts = prisma.wellnessFact.createManyAndReturn({
       data: generatedWellnessFacts.wellnessFacts.map((text) => ({
@@ -79,10 +91,12 @@ export async function resolveWellnessSession({
       }
     })
 
+    console.log('>>> transaction')
     const [wellnessFacts, wellnessSession] = await prisma.$transaction([
       createWellnessFacts,
       updateWellnessSession
     ])
+    console.log('<<< transaction')
 
     return {
       ...wellnessSession,

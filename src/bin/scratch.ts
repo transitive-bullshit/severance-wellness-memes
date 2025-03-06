@@ -9,15 +9,15 @@ import restoreCursor from 'restore-cursor'
 
 // import { createContext } from '@/lib/create-context'
 // import type * as types from '@/lib/types'
-// import { prisma } from '@/lib/db'
+import { prisma } from '@/lib/db'
 
 async function main() {
   // const ctx = createContext()
   // const res = await ctx.socialData.getUserByUsername('transitive_BSldkkdlkl')
-  // const res = await prisma.wellnessSession.findUniqueOrThrow({
-  //   where: { twitterUsername: 'transitive_BS' }
-  // })
-  // console.log(res)
+  const res = await prisma.wellnessSession.findUniqueOrThrow({
+    where: { twitterUsername: 'transitive_BS' }
+  })
+  console.log(res)
 
   // const res = await prisma.twitterUser.updateMany({
   //   where: {

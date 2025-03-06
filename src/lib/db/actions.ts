@@ -2,15 +2,16 @@
 import 'server-only'
 
 import { pruneNullOrUndefined } from '@agentic/core'
+import { waitUntil } from '@vercel/functions'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import type * as types from '@/lib/types'
 import { prisma } from '@/lib/db'
+import { resolveWellnessSession } from '@/lib/resolve-wellness-session'
 import { stripeSuffix } from '@/lib/server-config'
-
-import { resolveWellnessSession } from '../resolve-wellness-session'
-import { createCheckoutSession } from '../stripe'
+import { assert, clone } from '@/lib/server-utils'
+import { createCheckoutSession } from '@/lib/stripe'
 
 export async function unlockWellnessSession(opts: {
   twitterUsername: string
@@ -28,7 +29,7 @@ export async function unlockWellnessSession(opts: {
   } = opts
   console.log('unlocking user', pruneNullOrUndefined(opts))
 
-  await prisma.wellnessSession.update({
+  const wellnessSession = await prisma.wellnessSession.update({
     where: { twitterUsername },
     data: pruneNullOrUndefined({
       status: 'pending',
@@ -38,11 +39,17 @@ export async function unlockWellnessSession(opts: {
       [`stripeSubscriptionId${stripeSuffix}`]: stripeSubscriptionId
     })
   })
-
-  const wellnessSession = await resolveWellnessSession({ twitterUsername })
-
   revalidatePath(`/x/${twitterUsername}`)
-  return wellnessSession
+
+  waitUntil(
+    (async () => {
+      await resolveWellnessSession({ twitterUsername })
+
+      revalidatePath(`/x/${twitterUsername}`)
+    })()
+  )
+
+  return clone(wellnessSession)
 }
 
 export async function initCheckoutSession({
@@ -55,7 +62,6 @@ export async function initCheckoutSession({
   })
 
   console.log('checkoutSession', checkoutSession)
-  if (checkoutSession.url) {
-    redirect(checkoutSession.url)
-  }
+  assert(checkoutSession.url, 'stripe checkout session url not found')
+  redirect(checkoutSession.url)
 }

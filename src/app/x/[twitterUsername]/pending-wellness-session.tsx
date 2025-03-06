@@ -1,5 +1,3 @@
-'use client'
-
 import cs from 'clsx'
 
 import type * as types from '@/lib/types'

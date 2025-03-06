@@ -65,10 +65,10 @@ model TwitterUser {
   timelineTweetIds String[]
 
   /// [Tweets]
-  tweets Json
+  tweets Json @default("{}")
 
   /// [TwitterUsers]
-  users Json
+  users Json @default("{}")
 
   wellnessSession WellnessSession? @relation(fields: [id], references: [twitterUserId], onDelete: Cascade)
 

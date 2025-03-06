@@ -47,7 +47,7 @@ export default async function Page({
       <>
         <section className={cs(styles.intro)}>
           <h1 className={cs(styles.title, 'leading-none')}>
-            There was an error processing this profile. TODO
+            There was an error processing this profile. Please contact support.
           </h1>
         </section>
       </>

@@ -5,6 +5,8 @@ import { unstable_cache as cache } from 'next/cache'
 import type * as types from './types'
 import { createContext } from './create-context'
 import { prisma } from './db'
+import { clone } from './server-utils'
+// import { handleCheckoutSessionCompleted, stripe } from './stripe'
 import { tryGetTwitterUserByUsername } from './twitter-utils'
 
 export const getOrUpsertWellnessSession = cache(
@@ -13,7 +15,6 @@ export const getOrUpsertWellnessSession = cache(
   }: {
     twitterUsername: string
   }): Promise<types.WellnessSession> => {
-    const ctx = createContext()
     const existingWellnessSession = await prisma.wellnessSession.findUnique({
       where: {
         twitterUsername
@@ -28,9 +29,34 @@ export const getOrUpsertWellnessSession = cache(
     })
 
     if (existingWellnessSession) {
-      return existingWellnessSession
+      // if (
+      //   existingWellnessSession.status === 'initial' &&
+      //   existingWellnessSession.stripeCheckoutSessionId
+      // ) {
+      //   try {
+      //     const checkoutSession = await stripe.checkout.sessions.retrieve(
+      //       existingWellnessSession.stripeCheckoutSessionId
+      //     )
+
+      //     if (
+      //       checkoutSession.status === 'complete' &&
+      //       checkoutSession.payment_status === 'paid'
+      //     ) {
+      //       await handleCheckoutSessionCompleted({ checkoutSession })
+      //     }
+      //   } catch (err: any) {
+      //     console.warn(
+      //       'ignoring error handling delayed checkout session completed',
+      //       err.message
+      //     )
+      //   }
+      // }
+
+      return clone(existingWellnessSession)
+      // return existingWellnessSession
     }
 
+    const ctx = createContext()
     const user = await tryGetTwitterUserByUsername(twitterUsername, ctx, {
       fetchFromTwitter: true
     })
@@ -46,9 +72,7 @@ export const getOrUpsertWellnessSession = cache(
           create: {
             twitterUsername,
             user,
-            status,
-            tweets: {},
-            users: {}
+            status
           }
         }
       },
@@ -61,6 +85,6 @@ export const getOrUpsertWellnessSession = cache(
       }
     })
 
-    return wellnessSession
+    return clone(wellnessSession)
   }
 )

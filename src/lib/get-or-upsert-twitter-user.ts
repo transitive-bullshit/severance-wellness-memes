@@ -30,11 +30,8 @@ export async function getOrUpsertTwitterUser({
   if (!user) {
     return prisma.twitterUser.create({
       data: {
-        // TODO: id?
         twitterUsername,
-        status: 'missing',
-        tweets: {},
-        users: {}
+        status: 'missing'
       }
     })
   }
@@ -43,10 +40,8 @@ export async function getOrUpsertTwitterUser({
     data: {
       id: user.id_str,
       twitterUsername,
-      user,
       status: 'initial',
-      tweets: {},
-      users: {}
+      user
     }
   })
 }
