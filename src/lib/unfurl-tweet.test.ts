@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 
 import { unfurlTweet } from './unfurl-tweet'
 
-const resolvedTwitterUser: any = JSON.parse(
+const twitterUser: any = JSON.parse(
   fs.readFileSync('fixtures/transitive_bs.json', 'utf8')
 )
 
@@ -29,14 +29,14 @@ const fixtures = [
 
 for (const fixture of fixtures) {
   test(`unfurlTweet ${fixture.id} – ${fixture.label}`, async () => {
-    const tweet = resolvedTwitterUser.tweets[fixture.id]
+    const tweet = twitterUser.tweets[fixture.id]
     expect(tweet).toBeTruthy()
 
-    const text = unfurlTweet(tweet, { resolvedTwitterUser })
+    const text = unfurlTweet(tweet, { twitterUser })
     expect(text).toBeTruthy()
 
     const expanded = unfurlTweet(tweet, {
-      resolvedTwitterUser,
+      twitterUser,
       unfurlUrls: true
     })
     expect(expanded).toBeTruthy()

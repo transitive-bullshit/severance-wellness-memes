@@ -1,37 +1,52 @@
 'use server'
 
 import type { socialdata } from '@agentic/social-data'
-import { omit } from '@agentic/core'
+import { assert, omit } from '@agentic/core'
 import pMap from 'p-map'
 
 import type * as types from './types'
-import { numTwitterTweetsProcdessed } from './config'
+import { numTwitterTweetsProcessed } from './config'
+import { prisma } from './db'
+import { getOrUpsertTwitterUser } from './get-or-upsert-twitter-user'
 import { tryGetTweetById, tryGetTwitterUserById } from './twitter-utils'
 
 export async function resolveTwitterUser({
   twitterUsername,
   ctx,
   concurrency = 8,
-  maxTimelineTweets = numTwitterTweetsProcdessed
-  // resolveUrls = false
+  maxTimelineTweets = numTwitterTweetsProcessed,
+  force = false
 }: {
   twitterUsername: string
   ctx: types.AgenticContext
   concurrency?: number
   maxTimelineTweets?: number
-  // resolveUrls?: boolean
-}): Promise<types.ResolvedTwitterUser> {
-  const user = await ctx.socialData.getUserByUsername(twitterUsername)
+  force?: boolean
+}): Promise<types.TwitterUser & { existing: boolean }> {
+  const existingTwitterUser = await getOrUpsertTwitterUser({
+    twitterUsername,
+    ctx
+  })
 
-  const res: types.ResolvedTwitterUser = {
-    user,
-
-    timelineTweetIds: [],
-
-    tweets: {},
-    users: {}
+  if (!force && existingTwitterUser.status === 'resolved') {
+    return { ...existingTwitterUser, existing: true }
   }
 
+  const res = existingTwitterUser as Pick<
+    types.TwitterUser,
+    'timelineTweetIds' | 'tweets' | 'users' | 'status'
+  > & {
+    user: NonNullable<types.TwitterUser['user']>
+  }
+  const { user } = res
+  assert(
+    user && res.status !== 'missing',
+    `Twitter user not found for ${twitterUsername}`
+  )
+
+  console.log('resolving twitter user...', { twitterUsername })
+
+  // TODO: fetch most recent tweets based on possible existing `timelineTweetIds`
   const timelineTweets = await getTimelineTweetsByUserId(
     {
       userId: user.id_str,
@@ -149,55 +164,20 @@ export async function resolveTwitterUser({
     )
   }
 
-  // if (resolveUrls) {
-  //   const urls = new Set<string>()
+  const twitterUser = await prisma.twitterUser.update({
+    where: {
+      twitterUsername
+    },
+    data: {
+      ...res,
+      status: 'resolved'
+    }
+  })
 
-  //   for (const tweet of Object.values(res.tweets)) {
-  //     for (const urlEntity of tweet.entities?.urls ?? []) {
-  //       const url: string = urlEntity.expanded_url ?? urlEntity.url
-  //       if (!url) continue
-  //       urls.add(url)
-  //     }
-  //   }
-
-  //   // for (const user of Object.values(res.users)) {
-  //   //   if (user.url) {
-  //   //     urls.add(user.url)
-  //   //   }
-  //   // }
-
-  //   if (urls.size) {
-  //     console.log(`\nresolving ${urls.size} urls`)
-
-  //     const scrapedUrls = await ctx.scraper.scrapeUrls(Array.from(urls))
-
-  //     res.urls = Object.fromEntries(
-  //       Object.entries(scrapedUrls).map(([url, scrapedUrl]) => [
-  //         url,
-  //         scrapedUrl
-  //           ? {
-  //               url,
-  //               ...pick(
-  //                 scrapedUrl,
-  //                 'title',
-  //                 'description',
-  //                 'author',
-  //                 'byline',
-  //                 'imageUrl',
-  //                 'logoUrl',
-  //                 'lang',
-  //                 'publishedTime',
-  //                 'siteName',
-  //                 'textContent'
-  //               )
-  //             }
-  //           : undefined
-  //       ])
-  //     )
-  //   }
-  // }
-
-  return res
+  return {
+    ...twitterUser,
+    existing: false
+  }
 }
 
 export async function getTimelineTweetsByUserId(

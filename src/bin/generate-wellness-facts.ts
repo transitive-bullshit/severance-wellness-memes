@@ -13,18 +13,18 @@ async function main() {
   const ctx = createContext()
 
   const twitterUsername = 'sama'
-  // const resolvedTwitterUser = JSON.parse(
+  // const twitterUser = JSON.parse(
   //   await fs.readFile(`out/${twitterUsername}.json`, 'utf8')
-  // ) as types.ResolvedTwitterUser
-  const resolvedTwitterUser = await prisma.twitterUser.findUnique({
+  // ) as types.TwitterUser
+  const twitterUser = await prisma.twitterUser.findUnique({
     where: {
       twitterUsername
     }
   })
-  assert(resolvedTwitterUser, `Twitter user ${twitterUsername} not found`)
+  assert(twitterUser, `Twitter user ${twitterUsername} not found`)
 
   const result = await generateWellnessFacts({
-    resolvedTwitterUser,
+    twitterUser,
     ctx
   })
   console.log(JSON.stringify(result.wellnessFacts, null, 2))
@@ -33,8 +33,8 @@ async function main() {
     data: result.wellnessFacts.map((text) => ({
       text,
       model: result.model,
-      twitterUserId: resolvedTwitterUser.user.id_str,
-      twitterUsername: resolvedTwitterUser.user.screen_name
+      twitterUserId: twitterUser.user!.id_str,
+      twitterUsername: twitterUser.user!.screen_name
     }))
   })
 

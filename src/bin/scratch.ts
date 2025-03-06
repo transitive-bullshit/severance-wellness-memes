@@ -7,17 +7,28 @@ import { gracefulExit } from 'exit-hook'
 // import pMap from 'p-map'
 import restoreCursor from 'restore-cursor'
 
+// import { createContext } from '@/lib/create-context'
 // import type * as types from '@/lib/types'
-import { prisma } from '@/lib/db'
+// import { prisma } from '@/lib/db'
 
 async function main() {
-  const res = await prisma.wellnessSession.findUniqueOrThrow({
-    where: { twitterUsername: 'transitive_BS' }
-  })
-  console.log(res)
-  return
+  // const ctx = createContext()
+  // const res = await ctx.socialData.getUserByUsername('transitive_BSldkkdlkl')
+  // const res = await prisma.wellnessSession.findUniqueOrThrow({
+  //   where: { twitterUsername: 'transitive_BS' }
+  // })
+  // console.log(res)
 
-  // const wellnessSessions = await prisma.wellnessSession.findMany()
+  // const res = await prisma.twitterUser.updateMany({
+  //   where: {
+  //     status: 'initial'
+  //   },
+  //   data: {
+  //     status: 'resolved'
+  //   }
+  // })
+  // console.log(res)
+
   // const twitterUsernameToWellnessSession = new Map<
   //   string,
   //   Partial<types.WellnessSession>

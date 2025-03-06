@@ -10,10 +10,10 @@ export const domain =
   'severance-wellness-session.com'
 
 export const author = 'Travis Fischer'
-export const twitter = 'transitive_bs'
-export const twitterUrl = `https://x.com/${twitter}`
+export const authorTwitterUsername = 'transitive_bs'
+export const twitterUrl = `https://x.com/${authorTwitterUsername}`
 export const twitterLaunchThreadUrl = 'TODO'
-export const numTwitterTweetsProcdessed = 200
+export const numTwitterTweetsProcessed = 200
 export const copyright = `© ${new Date().getFullYear()} Lumon Industries. All rights reserved.`
 export const madeWithLove = 'Made with ❤️ in Bangkok'
 export const githubUrl =
@@ -39,7 +39,3 @@ export const ogImageUrl = `${prodUrl}/og.jpg`
 export const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
 export const posthogHost =
   process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
-
-export const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY
-export const isStripeLive = !!stripePublishableKey?.startsWith('pk_live_')
-export const stripeSuffix = isStripeLive ? 'Live' : 'Test'

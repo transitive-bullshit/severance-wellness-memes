@@ -15,13 +15,13 @@ export const UserFullNameSchema = z.object({
 export type UserFullName = z.infer<typeof UserFullNameSchema>
 
 export async function extractUserFullName({
-  resolvedTwitterUser,
+  twitterUser,
   ctx
 }: {
-  resolvedTwitterUser: types.ResolvedTwitterUser
+  twitterUser: types.TwitterUser
   ctx: types.AgenticContext
 }): Promise<string | undefined> {
-  const { user } = resolvedTwitterUser
+  const { user } = twitterUser
 
   const result = await extractObject({
     name: 'extract_user_full_name',
@@ -119,5 +119,5 @@ ${JSON.stringify(user, null, 2)}
     return result.userFullName
   }
 
-  return resolvedTwitterUser.user.name
+  return twitterUser.user?.name ?? twitterUser.twitterUsername
 }

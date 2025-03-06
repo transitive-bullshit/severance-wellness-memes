@@ -7,10 +7,10 @@ import pMap from 'p-map'
 import restoreCursor from 'restore-cursor'
 
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
+import { resolveWellnessSession } from '@/lib/resolve-wellness-session'
 // import { seedWellnessFacts } from '@/data/seed-wellness-facts'
 // import type * as types from '@/lib/types'
 // import { prisma } from '@/lib/db'
-import { upsertWellnessSession } from '@/lib/upsert-wellness-session'
 
 async function main() {
   /*
@@ -55,7 +55,8 @@ async function main() {
       pinnedWellnessFact: true,
       twitterUser: {
         select: {
-          user: true
+          user: true,
+          status: true
         }
       }
     }
@@ -83,7 +84,7 @@ async function main() {
           `${i + 1}/${seedTwitterUsers.length}) Seeding wellness session for user https://x.com/${twitterUsername} ...`
         )
 
-        const result = await upsertWellnessSession({
+        const result = await resolveWellnessSession({
           twitterUsername
         })
         assert(result)
@@ -91,7 +92,7 @@ async function main() {
         if (!result.existing) {
           console.log(
             `${i + 1}/${seedTwitterUsers.length}) ✅ Generated wellness session for user https://x.com/${twitterUsername}`,
-            result.wellnessSession
+            result
           )
         }
 
@@ -109,10 +110,10 @@ async function main() {
   )
 
   const numWellnessSessionsExisting = wellnessSessions.filter(
-    (w) => w?.existing
+    (w) => w?.id && w.existing
   ).length
   const numWellnessSessionsCreated = wellnessSessions.filter(
-    (w) => w?.wellnessSession && !w.existing
+    (w) => w?.id && !w.existing
   ).length
   const numWellnessSessionErrors = wellnessSessions.filter((w) => !w).length
 

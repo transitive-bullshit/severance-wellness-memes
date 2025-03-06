@@ -3,10 +3,13 @@ import QuickLRU from 'quick-lru'
 import type * as types from './types'
 import { uriToUrl } from './url-utils'
 
-const tweetsCache = new QuickLRU<string, types.SocialDataTweet>({
+const tweetsCacheById = new QuickLRU<string, types.SocialDataTweet>({
   maxSize: 10_000
 })
-const usersCache = new QuickLRU<string, types.SocialDataTwitterUser>({
+const usersCacheById = new QuickLRU<string, types.SocialDataTwitterUser>({
+  maxSize: 4000
+})
+const usersCacheByUsername = new QuickLRU<string, types.SocialDataTwitterUser>({
   maxSize: 4000
 })
 
@@ -154,7 +157,7 @@ export async function tryGetTweetById(
 ): Promise<types.SocialDataTweet | undefined> {
   if (!tweetId) return
 
-  let tweet = tweetsCache.get(tweetId)
+  let tweet = tweetsCacheById.get(tweetId)
   if (tweet) return tweet
 
   if (fetchFromTwitter) {
@@ -162,7 +165,7 @@ export async function tryGetTweetById(
       tweet = await ctx.socialData.getTweetById(tweetId)
 
       if (tweet) {
-        tweetsCache.set(tweetId, tweet)
+        tweetsCacheById.set(tweetId, tweet)
         return tweet
       }
     } catch (err: any) {
@@ -190,7 +193,7 @@ export async function tryGetTwitterUserById(
 ): Promise<types.SocialDataTwitterUser | undefined> {
   if (!userId) return
 
-  let user = usersCache.get(userId)
+  let user = usersCacheById.get(userId)
   if (user) return user
 
   if (fetchFromTwitter) {
@@ -198,13 +201,49 @@ export async function tryGetTwitterUserById(
       user = await ctx.socialData.getUserById(userId)
 
       if (user) {
-        usersCache.set(userId, user)
+        usersCacheById.set(userId, user)
         return user
       }
     } catch (err: any) {
       // Silently ignore
       console.warn(
         `ignoring error fetching twitter user ${userId}`,
+        [err.status, err.type, err.toString()].filter(Boolean).join(' ')
+      )
+    }
+  }
+
+  return user
+}
+
+/** Attempts to retrieve a user from the cache */
+export async function tryGetTwitterUserByUsername(
+  username: string,
+  ctx: Pick<types.AgenticContext, 'socialData'>,
+  {
+    fetchFromTwitter = false
+  }: {
+    // Whether or not to fetch from twitter if missing from the cache
+    fetchFromTwitter?: boolean
+  } = {}
+): Promise<types.SocialDataTwitterUser | undefined> {
+  if (!username) return
+
+  let user = usersCacheByUsername.get(username)
+  if (user) return user
+
+  if (fetchFromTwitter) {
+    try {
+      user = await ctx.socialData.getUserByUsername(username)
+
+      if (user) {
+        usersCacheByUsername.set(username, user)
+        return user
+      }
+    } catch (err: any) {
+      // Silently ignore
+      console.warn(
+        `ignoring error fetching twitter user ${username}`,
         [err.status, err.type, err.toString()].filter(Boolean).join(' ')
       )
     }

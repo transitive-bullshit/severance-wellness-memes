@@ -2,24 +2,16 @@ import type Stripe from 'stripe'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
-import { isStripeLive } from '@/lib/config'
 import { unlockWellnessSession } from '@/lib/db/actions'
+import { isStripeLive, stripeWebhookSecret } from '@/lib/server-config'
 import { assert } from '@/lib/server-utils'
 import { stripe } from '@/lib/stripe'
 
 const relevantStripeEvents = new Set<Stripe.Event.Type>([
   'checkout.session.completed'
 ])
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
 export async function POST(req: Request) {
-  if (!webhookSecret) {
-    return NextResponse.json(
-      { error: 'internal config error' },
-      { status: 500 }
-    )
-  }
-
   const body = await req.text()
   const signature = (await headers()).get('Stripe-Signature')
   if (!signature) {
@@ -29,7 +21,7 @@ export async function POST(req: Request) {
   let event: Stripe.Event
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+    event = stripe.webhooks.constructEvent(body, signature, stripeWebhookSecret)
   } catch (err: any) {
     console.error('stripe webhook error: invalid event;', err.message)
 

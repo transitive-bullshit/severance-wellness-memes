@@ -32,18 +32,3 @@ export const getFeaturedWellnessFacts = cache(
     revalidate: 60 * 60 * 24 // 24 hours in seconds
   }
 )
-
-export const getWellnessSessionByTwitterUsername = cache(
-  async (twitterUsername: string): Promise<types.WellnessSession | null> => {
-    return prisma.wellnessSession.findUnique({
-      where: { twitterUsername },
-      include: {
-        wellnessFacts: true,
-        pinnedWellnessFact: true,
-        twitterUser: {
-          select: { user: true }
-        }
-      }
-    })
-  }
-)

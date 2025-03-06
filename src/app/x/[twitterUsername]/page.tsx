@@ -5,24 +5,11 @@ import { notFound } from 'next/navigation'
 
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
-import { upsertWellnessSession } from '@/lib/upsert-wellness-session'
+import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
+import { LockedWellnessSession } from './locked-wellness-session'
+import { PendingWellnessSession } from './pending-wellness-session'
 import styles from './styles.module.css'
-
-async function tryUpsertWellnessSession({
-  twitterUsername
-}: {
-  twitterUsername: string
-}) {
-  const result = await upsertWellnessSession({
-    twitterUsername,
-    // TODO
-    failIfNotExists: true
-  })
-  if (!result) return notFound()
-
-  return result.wellnessSession
-}
 
 export default async function Page({
   params
@@ -30,13 +17,44 @@ export default async function Page({
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
-  const wellnessSession = await tryUpsertWellnessSession({
+  const wellnessSession = await getOrUpsertWellnessSession({
     twitterUsername
   })
-  const { userFullName, twitterUser, wellnessFacts, pinnedWellnessFact } =
-    wellnessSession
+  if (!wellnessSession) return notFound()
 
-  const user = twitterUser!.user
+  const {
+    status,
+    userFullName,
+    twitterUser,
+    wellnessFacts,
+    pinnedWellnessFact
+  } = wellnessSession
+
+  if (status === 'missing' || twitterUser?.status === 'missing') {
+    return notFound()
+  }
+
+  if (status === 'initial') {
+    return <LockedWellnessSession wellnessSession={wellnessSession} />
+  }
+
+  if (status === 'pending') {
+    return <PendingWellnessSession wellnessSession={wellnessSession} />
+  }
+
+  if (status === 'error') {
+    return (
+      <>
+        <section className={cs(styles.intro)}>
+          <h1 className={cs(styles.title, 'leading-none')}>
+            There was an error processing this profile. TODO
+          </h1>
+        </section>
+      </>
+    )
+  }
+
+  const user = twitterUser!.user!
   const userFullNameParts = userFullName
     ?.split(' ')
     .map((s: string) => s.trim())

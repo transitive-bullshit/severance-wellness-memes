@@ -1,7 +1,7 @@
 import type { SetRequired, SimplifyDeep } from 'type-fest'
 import { type Prisma, PrismaClient } from '@prisma/client'
 
-import { isStripeLive } from '@/lib/config'
+import { isStripeLive } from '@/lib/server-config'
 // import { asyncExitHook } from 'exit-hook'
 
 // This is intentionally left as a global singleton to avoid re-creating the
@@ -26,7 +26,7 @@ function createPrismaClient() {
     //           wellnessFacts: true,
     //           pinnedWellnessFact: true,
     //           twitterUser: {
-    //             select: { user: true },
+    //             select: { user: true, status: true },
     //           },
     //           ...args.include
     //         },
@@ -91,7 +91,7 @@ function createPrismaClient() {
 
 export const prisma = _prisma ?? (_prisma = createPrismaClient())
 
-export type { WellnessFact } from '@prisma/client'
+export type { TwitterUser, WellnessFact } from '@prisma/client'
 
 type WellnessSessionBase = Prisma.Result<
   typeof prisma.wellnessSession,
@@ -115,7 +115,7 @@ export type WellnessSession = SimplifyDeep<
   > & {
     twitterUser: SetRequired<
       Partial<NonNullable<WellnessSessionBase['twitterUser']>>,
-      'user'
+      'user' | 'status'
     > | null
   }
 >

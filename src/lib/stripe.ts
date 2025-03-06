@@ -1,8 +1,11 @@
 import 'server-only'
 
+import { assert } from '@agentic/core'
 import Stripe from 'stripe'
 
 import * as config from './config'
+import { getOrUpsertWellnessSession } from './get-or-upsert-wellness-session'
+import { stripeProductId } from './server-config'
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Stripe secret key not found')
@@ -17,6 +20,14 @@ export async function createCheckoutSession({
 }: {
   twitterUsername: string
 }) {
+  const wellnessSession = await getOrUpsertWellnessSession({
+    twitterUsername
+  })
+  assert(
+    wellnessSession.status !== 'missing',
+    `Wellness session not found for ${twitterUsername}`
+  )
+
   const metadata = {
     type: 'severance-wellness-session-twitter-user',
     twitterUsername
@@ -30,7 +41,7 @@ export async function createCheckoutSession({
     line_items: [
       {
         price_data: {
-          product: process.env.STRIPE_PRODUCT_ID,
+          product: stripeProductId,
           currency: 'USD',
           unit_amount: 800
         },
@@ -46,6 +57,5 @@ export async function createCheckoutSession({
     cancel_url: cancelUrl
   })
 
-  // if (session.url) redirect(session.url)
   return session
 }

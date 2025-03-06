@@ -6,7 +6,7 @@ import { getFeaturedWellnessFacts } from '@/lib/db/queries'
 import styles from './styles.module.css'
 
 export default async function Page() {
-  const featuredWellnessFacts = (await getFeaturedWellnessFacts()).slice(0, 10)
+  const featuredWellnessFacts = (await getFeaturedWellnessFacts()).slice(0, 4)
   // await new Promise((resolve) => setTimeout(resolve, 20_000))
 
   // TODO
