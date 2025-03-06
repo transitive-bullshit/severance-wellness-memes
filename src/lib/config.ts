@@ -10,10 +10,10 @@ export const domain =
   'severance-wellness-session.com'
 
 export const author = 'Travis Fischer'
-export const twitter = 'transitive_bs'
-export const twitterUrl = `https://x.com/${twitter}`
+export const authorTwitterUsername = 'transitive_bs'
+export const twitterUrl = `https://x.com/${authorTwitterUsername}`
 export const twitterLaunchThreadUrl = 'TODO'
-export const numTwitterTweetsProcdessed = 200
+export const numTwitterTweetsProcessed = 200
 export const copyright = `© ${new Date().getFullYear()} Lumon Industries. All rights reserved.`
 export const madeWithLove = 'Made with ❤️ in Bangkok'
 export const githubUrl =
@@ -25,6 +25,7 @@ export const isVercel = !!(
   process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.VERCEL
 )
 export const isDev = env === 'development' && !isVercel
+export const isProd = env === 'production'
 export const isTest = env === 'test'
 
 export const port = process.env.PORT || '3000'

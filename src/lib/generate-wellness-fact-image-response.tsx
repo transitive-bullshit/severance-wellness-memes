@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import { ImageResponse } from 'next/og'
 
-import { getWellnessFactById } from '@/lib/db-queries'
+import { getWellnessFactById } from '@/lib/db/queries'
 
 // TODO: text with certain symbols like '@' produces a text overflow with `text-wrap: balance`
 // 'Your outie’s favorite form of self-care is releasing pricing update tweets for @vercel several times a month.'

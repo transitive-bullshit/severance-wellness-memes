@@ -7,16 +7,12 @@ import type * as types from './types'
 export function unfurlTweet(
   tweet: types.Tweet,
   opts: {
-    resolvedTwitterUser?: types.ResolvedTwitterUser
+    twitterUser?: types.TwitterUser
     unfurlUrls?: boolean
     unfurlSubtweets?: boolean
   } = {}
 ): string {
-  const {
-    resolvedTwitterUser,
-    unfurlUrls = false,
-    unfurlSubtweets = true
-  } = opts
+  const { twitterUser, unfurlUrls = false, unfurlSubtweets = true } = opts
   const tweetIdRegex = /\/status\/(\d+)$/
   let text = tweet.full_text
 
@@ -74,7 +70,7 @@ export function unfurlTweet(
             const subTweet =
               subTweetId === tweet.id_str
                 ? null
-                : resolvedTwitterUser?.tweets[subTweetId]
+                : twitterUser?.tweets[subTweetId]
 
             if (subTweet && unfurlSubtweets) {
               if (tweet.quoted_status_id_str === subTweetId) {

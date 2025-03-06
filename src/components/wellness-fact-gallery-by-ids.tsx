@@ -1,6 +1,6 @@
 import pMap from 'p-map'
 
-import { getWellnessFactById } from '@/lib/db-queries'
+import { getWellnessFactById } from '@/lib/db/queries'
 
 import { WellnessFactGallery } from './wellness-fact-gallery'
 

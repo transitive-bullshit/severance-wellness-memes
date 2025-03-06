@@ -3,7 +3,7 @@ import type { KyInstance } from 'ky'
 import type { OpenAIClient } from 'openai-fetch'
 import type { Simplify } from 'type-fest'
 
-export type { WellnessFact, WellnessSession } from './db'
+export type { TwitterUser, WellnessFact, WellnessSession } from './db'
 export type { Simplify } from 'type-fest'
 
 export type SocialDataTwitterUser = socialdata.User
@@ -26,21 +26,6 @@ export type Tweet = Simplify<
     is_retweet?: boolean
   }
 >
-
-export interface ResolvedTwitterUser {
-  user: SocialDataTwitterUser
-
-  timelineTweetIds: string[]
-  // favoriteTweetIds: string[]
-
-  // followerUserIds: string[]
-  // followingUserIds: string[]
-
-  tweets: Record<string, Tweet>
-  users: Record<string, SocialDataTwitterUser>
-
-  // urls: Record<string, LinkContent | undefined>
-}
 
 declare global {
   namespace PrismaJson {

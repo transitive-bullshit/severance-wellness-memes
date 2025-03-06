@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
@@ -35,14 +36,30 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>Example memes roasting Donald Trump</h2>
+          <h2>
+            Example memes roasting{' '}
+            <Link href={`${config.url}/x/realDonaldTrump`}>Donald Trump</Link>
+            <Link
+              href={`${config.url}/x/realDonaldTrump`}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='ml-3 inline'
+            >
+              <Image
+                alt='Donald Trump'
+                src='https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_400x400.jpg'
+                width={400}
+                height={400}
+                className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
+              />
+            </Link>
+          </h2>
 
           <p>
             <b>All memes are personalized</b> to the user's profile and most
             recent tweets. Take{' '}
             <Link href={`${config.url}/x/realDonaldTrump`}>Donald Trump</Link>{' '}
-            for example. Here are a few examples memes generated for his
-            account:
+            for example:
           </p>
 
           <WellnessFactGalleryByIds
@@ -55,12 +72,24 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>Example memes roasting Sam Altman</h2>
-
-          <p>
-            For a less controversial example, let's look at{' '}
-            <Link href={`${config.url}/x/sama`}>Sam Altman</Link>:
-          </p>
+          <h2>
+            Example memes roasting{' '}
+            <Link href={`${config.url}/x/sama`}>Sam Altman</Link>
+            <Link
+              href={`${config.url}/x/sama`}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='ml-3 inline'
+            >
+              <Image
+                alt='Sam Altman'
+                src='https://pbs.twimg.com/profile_images/804990434455887872/BG0Xh7Oa_400x400.jpg'
+                width={400}
+                height={400}
+                className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
+              />
+            </Link>
+          </h2>
 
           <WellnessFactGalleryByIds
             wellnessFactIds={[
@@ -275,14 +304,30 @@ export default async function Page() {
             .
           </p>
 
-          <h1>Credits</h1>
+          <h1>
+            Credits
+            <Link
+              href={`${config.url}/x/transitive_bs`}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='ml-3 inline'
+            >
+              <Image
+                alt='Travis Fischer'
+                src='https://pbs.twimg.com/profile_images/1347656662463766529/igIs8izN_400x400.png'
+                width={400}
+                height={400}
+                className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
+              />
+            </Link>
+          </h1>
 
           <p>
             <strong>
-              This website is not affiliated with Apple, Endeavor Content, Red
-              Hour Productions, Fifth Season, or anything else remotely official
+              This website is not affiliated with Apple, Severance, Lumon,
+              Endeavor Content, Red Hour Productions, Fifth Season, or anything
+              else remotely official.
             </strong>
-            .
           </p>
 
           <p>
@@ -293,16 +338,16 @@ export default async function Page() {
               rel='noopener noreferrer'
             >
               {config.author}
-            </Link>{' '}
-            and is{' '}
+            </Link>
+            . The{' '}
             <Link
               href={config.githubUrl}
               target='_blank'
               rel='noopener noreferrer'
             >
-              open source (MIT License)
-            </Link>
-            .
+              full source code is available
+            </Link>{' '}
+            (MIT License).
           </p>
 
           <p>

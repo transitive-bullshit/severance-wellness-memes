@@ -19,7 +19,7 @@ export type GenerateWellnessFactsResult = GeneratedWellnessFacts & {
 }
 
 export async function generateWellnessFacts({
-  resolvedTwitterUser,
+  twitterUser,
   ctx,
   positive = false,
 
@@ -31,19 +31,19 @@ export async function generateWellnessFacts({
   // model = 'o1',
   model = 'gpt-4.5-preview'
 }: {
-  resolvedTwitterUser: types.ResolvedTwitterUser
+  twitterUser: types.TwitterUser
   ctx: types.AgenticContext
   positive?: boolean
   model?: string
 }): Promise<GenerateWellnessFactsResult> {
-  const tweets = resolvedTwitterUser.timelineTweetIds
+  const tweets = twitterUser.timelineTweetIds
     .map((id) => {
-      return resolvedTwitterUser.tweets[id]
+      return twitterUser.tweets[id]
     })
     .filter(Boolean)
   const unfurledTweets = tweets.map((tweet) =>
     unfurlTweet(tweet, {
-      resolvedTwitterUser
+      twitterUser
     })
   )
 
@@ -176,7 +176,7 @@ Make sure to think through your reasoning step-by-step in \`explanation\`.
 ## User Data
 
 \`\`\`json
-${JSON.stringify(resolvedTwitterUser.user, null, 2)}
+${JSON.stringify(twitterUser.user, null, 2)}
 \`\`\`
 
 ### User Tweet Data

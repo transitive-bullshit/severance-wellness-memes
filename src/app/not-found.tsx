@@ -12,12 +12,12 @@ export default function NotFound() {
         <Image
           alt='404 not found'
           src={NotFoundImage.src}
-          className='absolute inset-0 -z-10 size-full object-cover object-top rounded-xl'
           width={NotFoundImage.width}
           height={NotFoundImage.height}
-          priority
           blurDataURL={NotFoundImage.blurDataURL}
           placeholder='blur'
+          priority
+          className='absolute inset-0 -z-10 size-full object-cover object-top rounded-xl'
         />
 
         <div className='mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8'>

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 generator json {
@@ -12,14 +13,23 @@ datasource db {
   directUrl = env("DATABASE_DIRECT_URL")
 }
 
+enum ResolvedStatus {
+  initial
+  pending
+  resolved
+  error
+  missing
+}
+
 model WellnessSession {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  twitterUserId   String  @unique
-  twitterUsername String  @unique
+  twitterUsername String         @unique @db.Citext()
+  twitterUserId   String?        @unique
   userFullName    String?
+  status          ResolvedStatus @default(initial)
 
   twitterUser   TwitterUser?
   wellnessFacts WellnessFact[] @relation(name: "wellnessFacts")
@@ -27,29 +37,40 @@ model WellnessSession {
   pinnedWellnessFact   WellnessFact? @relation(name: "pinnedWellnessFact", fields: [pinnedWellnessFactId], references: [id])
   pinnedWellnessFactId String?
 
+  // Stripe state
+  stripeCustomerIdLive        String?
+  stripeCustomerIdTest        String?
+  stripeCustomerEmailLive     String?
+  stripeCustomerEmailTest     String?
+  stripeCheckoutSessionIdLive String?
+  stripeCheckoutSessionIdTest String?
+  stripeSubscriptionIdLive    String?
+  stripeSubscriptionIdTest    String?
+
   @@index([twitterUsername])
   @@index([twitterUserId])
 }
 
 model TwitterUser {
-  id        String   @id
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  twitterUsername String? @unique
+  twitterUsername String         @unique @db.Citext()
+  status          ResolvedStatus @default(initial)
 
   /// [TwitterUser]
-  user Json
+  user Json?
 
   timelineTweetIds String[]
 
   /// [Tweets]
-  tweets Json
+  tweets Json @default("{}")
 
   /// [TwitterUsers]
-  users Json
+  users Json @default("{}")
 
-  wellnessSession WellnessSession @relation(fields: [id], references: [twitterUserId], onDelete: Cascade)
+  wellnessSession WellnessSession? @relation(fields: [id], references: [twitterUserId], onDelete: Cascade)
 
   @@index([twitterUsername])
 }
@@ -63,7 +84,7 @@ model WellnessFact {
   model String
 
   twitterUserId   String
-  twitterUsername String
+  twitterUsername String   @db.Citext()
   tags            String[]
 
   wellnessSession WellnessSession? @relation(name: "wellnessFacts", fields: [twitterUserId], references: [twitterUserId])

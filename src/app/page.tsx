@@ -1,12 +1,12 @@
 import { HeroButton } from '@/components/hero-button'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
-import { getFeaturedWellnessFacts } from '@/lib/db-queries'
+import { getFeaturedWellnessFacts } from '@/lib/db/queries'
 
 // import { prisma } from '@/lib/db'
 import styles from './styles.module.css'
 
 export default async function Page() {
-  const featuredWellnessFacts = (await getFeaturedWellnessFacts()).slice(0, 10)
+  const featuredWellnessFacts = (await getFeaturedWellnessFacts()).slice(0, 4)
   // await new Promise((resolve) => setTimeout(resolve, 20_000))
 
   // TODO

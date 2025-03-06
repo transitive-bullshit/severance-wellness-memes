@@ -1,28 +1,15 @@
 import cs from 'clsx'
-import { unstable_cache as cache } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
-import { prisma } from '@/lib/db'
-import { upsertWellnessSession } from '@/lib/upsert-wellness-session'
+import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
+import { LockedWellnessSession } from './locked-wellness-session'
+import { PendingWellnessSession } from './pending-wellness-session'
 import styles from './styles.module.css'
-
-const tryUpsertWellnessSession = cache(
-  async ({ twitterUsername }: { twitterUsername: string }) => {
-    const result = await upsertWellnessSession({
-      twitterUsername,
-      // TODO
-      failIfNotExists: true
-    })
-    if (!result) return notFound()
-
-    return result.wellnessSession
-  }
-)
 
 export default async function Page({
   params
@@ -30,13 +17,44 @@ export default async function Page({
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
-  const wellnessSession = await tryUpsertWellnessSession({
+  const wellnessSession = await getOrUpsertWellnessSession({
     twitterUsername
   })
-  const { userFullName, twitterUser, wellnessFacts, pinnedWellnessFact } =
-    wellnessSession
+  if (!wellnessSession) return notFound()
 
-  const user = twitterUser!.user
+  const {
+    status,
+    userFullName,
+    twitterUser,
+    wellnessFacts,
+    pinnedWellnessFact
+  } = wellnessSession
+
+  if (status === 'missing' || twitterUser?.status === 'missing') {
+    return notFound()
+  }
+
+  if (status === 'initial') {
+    return <LockedWellnessSession wellnessSession={wellnessSession} />
+  }
+
+  if (status === 'pending') {
+    return <PendingWellnessSession wellnessSession={wellnessSession} />
+  }
+
+  if (status === 'error') {
+    return (
+      <>
+        <section className={cs(styles.intro)}>
+          <h1 className={cs(styles.title, 'leading-none')}>
+            There was an error processing this profile. Please contact support.
+          </h1>
+        </section>
+      </>
+    )
+  }
+
+  const user = twitterUser!.user!
   const userFullNameParts = userFullName
     ?.split(' ')
     .map((s: string) => s.trim())
@@ -68,7 +86,7 @@ export default async function Page({
     <>
       <section className={cs(styles.intro)}>
         <h1 className={cs(styles.title, 'leading-none')}>
-          Hello {userDisplayName}
+          Hello, {userDisplayName}
           {user.profile_image_url_https && (
             <Link
               href={`https://x.com/${user.screen_name}`}
@@ -108,14 +126,5 @@ export default async function Page({
 }
 
 export async function generateStaticParams() {
-  return prisma.wellnessSession.findMany({
-    where: {
-      twitterUsername: {
-        in: seedTwitterUsers
-      }
-    },
-    select: {
-      twitterUsername: true
-    }
-  })
+  return seedTwitterUsers.map((twitterUsername) => ({ twitterUsername }))
 }

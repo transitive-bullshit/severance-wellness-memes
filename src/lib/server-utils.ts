@@ -1,8 +1,7 @@
-import { assert } from '@agentic/core'
+import { assert as assertImpl } from '@agentic/core'
 import hashObjectImpl, { type Options as HashObjectOptions } from 'hash-object'
 
 export {
-  assert,
   getEnv,
   omit,
   pick,
@@ -45,4 +44,47 @@ export function trimMessage(
   message = `${message.slice(0, maxLength - 3)}...`
 
   return message
+}
+
+export class HttpError extends Error {
+  status: number
+
+  constructor({
+    message,
+    status = 500,
+    cause
+  }: {
+    message?: string
+    status?: number
+    cause?: Error
+  }) {
+    super(message, { cause })
+    this.status = status
+  }
+}
+
+export function assert(
+  value: unknown,
+  message?: string | Error,
+  {
+    status = 500
+  }: {
+    status?: number
+  } = {}
+): asserts value {
+  try {
+    assertImpl(value, message)
+  } catch (err: any) {
+    if (status) {
+      throw new HttpError({ message: err.message, status, cause: err })
+    } else {
+      throw err
+    }
+  }
+}
+
+// TODO: workaround for https://github.com/prisma/prisma/issues/20627
+export function clone<T extends object>(value: T): T {
+  /* eslint-disable-next-line unicorn/prefer-structured-clone */
+  return JSON.parse(JSON.stringify(value)) as T
 }

@@ -99,6 +99,7 @@ I prefer public convos so the answers can help other people who might have simil
   - [ ] test across a few browsers
   - [ ] add legal page
   - [ ] stress test database and connection limits...
+  - [ ] fix CI
 - Post-MVP
   - [ ] add url resolving to `ResolvedTwitterUser`
   - [ ] show generated date and model on fact detail page
