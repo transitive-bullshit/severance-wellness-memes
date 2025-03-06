@@ -18,20 +18,17 @@ export async function upsertWellnessSession({
   { wellnessSession: types.WellnessSession; existing: boolean } | undefined
 > {
   // await new Promise((resolve) => setTimeout(resolve, 5000))
-  console.log('upsertWellnessSession 1', twitterUsername)
 
   if (!force) {
     // First check if we already have a session
     const wellnessSession =
       await getWellnessSessionByTwitterUsername(twitterUsername)
 
-    console.log('upsertWellnessSession 2', twitterUsername, wellnessSession)
     if (wellnessSession) {
       return { wellnessSession, existing: true }
     }
   }
 
-  console.log('upsertWellnessSession 3', { twitterUsername, failIfNotExists })
   if (failIfNotExists) {
     return
   }
@@ -39,7 +36,8 @@ export async function upsertWellnessSession({
   // If not, create a new context and generate a session
   // We need to be careful with what we're passing to the server action
   try {
-    console.log('upsertWellnessSession creating', { twitterUsername })
+    console.log('creating new wellness session', { twitterUsername })
+
     const ctx = createContext()
     const resolvedTwitterUser = await resolveTwitterUser({
       twitterUsername,

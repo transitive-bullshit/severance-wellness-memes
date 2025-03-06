@@ -29,9 +29,7 @@ export default async function Page({
 }: {
   params: Promise<{ twitterUsername: string }>
 }) {
-  console.log('Page')
   const { twitterUsername } = await params
-  console.log('Page', { twitterUsername })
   const wellnessSession = await tryUpsertWellnessSession({
     twitterUsername
   })
