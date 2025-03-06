@@ -4,7 +4,6 @@ import Stripe from 'stripe'
 
 import * as config from './config'
 import { prisma } from './db'
-import { unlockWellnessSession } from './db/actions'
 import { getOrUpsertWellnessSession } from './get-or-upsert-wellness-session'
 import { stripeProductId, stripeSecretKey, stripeSuffix } from './server-config'
 import { assert } from './server-utils'
@@ -31,6 +30,7 @@ export async function createCheckoutSession({
     twitterUsername
   }
 
+  // TODO: these urls don't exist yet
   const successUrl = `${config.url}/x/${twitterUsername}/success`
   const cancelUrl = `${config.url}/x/${twitterUsername}/cancel`
 
@@ -65,39 +65,4 @@ export async function createCheckoutSession({
   })
 
   return session
-}
-
-export async function handleCheckoutSessionCompleted({
-  checkoutSession
-}: {
-  checkoutSession: Stripe.Checkout.Session
-}): Promise<void> {
-  assert(checkoutSession.metadata, 'unexpected checkout session metadata', {
-    status: 400
-  })
-  assert(
-    checkoutSession.metadata.type === 'severance-wellness-session-twitter-user',
-    'invalid checkout session metadata',
-    { status: 400 }
-  )
-  assert(
-    checkoutSession.metadata.twitterUsername,
-    'invalid checkout session metadata',
-    { status: 400 }
-  )
-
-  await unlockWellnessSession({
-    twitterUsername: checkoutSession.metadata.twitterUsername,
-    stripeCustomerId:
-      typeof checkoutSession.customer === 'string'
-        ? checkoutSession.customer
-        : checkoutSession.customer?.id,
-    stripeCustomerEmail:
-      checkoutSession.customer_email ?? checkoutSession.customer_details?.email,
-    stripeCheckoutSessionId: checkoutSession.id,
-    stripeSubscriptionId:
-      typeof checkoutSession.subscription === 'string'
-        ? checkoutSession.subscription
-        : checkoutSession.subscription?.id
-  })
 }

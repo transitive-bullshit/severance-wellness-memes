@@ -1,4 +1,5 @@
 import cs from 'clsx'
+import { unstable_cache as cache } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -11,15 +12,15 @@ import { LockedWellnessSession } from './locked-wellness-session'
 import { PendingWellnessSession } from './pending-wellness-session'
 import styles from './styles.module.css'
 
+const getWellnessSession = cache(getOrUpsertWellnessSession)
+
 export default async function Page({
   params
 }: {
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
-  const wellnessSession = await getOrUpsertWellnessSession({
-    twitterUsername
-  })
+  const wellnessSession = await getWellnessSession({ twitterUsername })
   if (!wellnessSession) return notFound()
 
   const {

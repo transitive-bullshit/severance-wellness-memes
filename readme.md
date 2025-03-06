@@ -90,16 +90,14 @@ I prefer public convos so the answers can help other people who might have simil
 
 - MVP Launch
   - [ ] add stripe checkout paywall
+    - /success, /cancel
+    - UI for each case
   - [ ] landing page hero section
-  - [ ] handle multiple upserts/checkout attempts
-  - [ ] fetch twitter user before tweets or wellness session
-    - [ ] handle twitter user doesn't exist separately from not having been generated yet
   - [ ] double check social images for all routes (need main og.jpg)
   - [ ] header section + mobile
   - [ ] test across a few browsers
   - [ ] add legal page
   - [ ] stress test database and connection limits...
-  - [ ] fix CI
 - Post-MVP
   - [ ] add url resolving to `ResolvedTwitterUser`
   - [ ] show generated date and model on fact detail page
