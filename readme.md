@@ -89,14 +89,13 @@ I prefer public convos so the answers can help other people who might have simil
 ## TODO
 
 - MVP Launch
-  - [ ] add stripe checkout paywall
+  - [ ] fix stripe checkout paywall
     - /success, /cancel
     - UI for each case
   - [ ] landing page hero section
   - [ ] double check social images for all routes (need main og.jpg)
-  - [ ] header section + mobile
+  - [ ] improve header section + mobile support
   - [ ] test across a few browsers
-  - [ ] add legal page
   - [ ] stress test database and connection limits...
 - Post-MVP
   - [ ] add url resolving to `ResolvedTwitterUser`
