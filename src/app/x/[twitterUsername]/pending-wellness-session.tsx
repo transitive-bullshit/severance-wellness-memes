@@ -41,12 +41,13 @@ export function PendingWellnessSession({
           />
         </h1>
 
-        <p className={styles.title}>
-          Your memes are being generated which will take a few minutes. This
-          page will automatically refresh once they&apos;re ready.
+        <p className={cs(styles.title, 'max-w-xl')}>
+          Your memes are being generated. This will take a few minutes. This
+          page should automatically refresh once they&apos;re ready, but if it
+          doesn&apos;t, try refreshing after a few minutes.
         </p>
 
-        <p className={styles.title}>Praise Kier.</p>
+        <p className={cs(styles.title, 'max-w-xl mt-4')}>Praise Kier.</p>
       </section>
 
       <section className='flex-auto justify-center p-16'>

@@ -104,7 +104,7 @@ export async function resolveWellnessSession({
       ...wellnessSession,
       wellnessFacts
     }
-    console.log('resolved wellness session', resolvedWellnessSession)
+    console.log('resolved wellness session', { twitterUsername })
 
     return {
       ...resolvedWellnessSession,
