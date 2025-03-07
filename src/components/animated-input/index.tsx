@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 
+import { useAudio } from '@/components/audio-provider'
+
 import styles from './styles.module.css'
 
 interface AnimatedInputProps {
@@ -22,6 +24,7 @@ export function AnimatedInput({
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+  const { isAudioEnabled, toggleAudio } = useAudio()
 
   // Focus the input field on mount
   useEffect(() => {
@@ -87,6 +90,11 @@ export function AnimatedInput({
       const username = inputValue.trim().startsWith('@')
         ? inputValue.trim().slice(1)
         : inputValue.trim()
+
+      // Start audio if it's not already playing
+      if (!isAudioEnabled) {
+        toggleAudio()
+      }
 
       router.push(`/x/${username}`)
     }
