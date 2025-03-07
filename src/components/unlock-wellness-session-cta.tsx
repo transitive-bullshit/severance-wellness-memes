@@ -52,7 +52,7 @@ export function UnlockWellnessSessionCTA({
       },
       { description: 'Download the memes as PNG or JPG' },
       { description: 'Easily share them to Twitter / X / Reddit' },
-      { description: 'Payment is handled securely by Stripe' }
+      { description: 'Payment is one-time and handled securely by Stripe' }
     ]
   }
 

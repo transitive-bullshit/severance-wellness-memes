@@ -4,6 +4,8 @@
   margin: 0 auto;
   width: 100%;
   max-width: calc(min(100%, 640px));
+  aspect-ratio: 2 / 1;
+  border-radius: 8px;
 }
 
 .wellnessFact {

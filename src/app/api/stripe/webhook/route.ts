@@ -11,6 +11,9 @@ const relevantStripeEvents = new Set<Stripe.Event.Type>([
   'checkout.session.completed'
 ])
 
+// https://vercel.com/docs/functions/configuring-functions/duration
+export const maxDuration = 300 // 300 seconds (5 minutes)
+
 export async function POST(req: Request) {
   const body = await req.text()
   const signature = (await headers()).get('Stripe-Signature')

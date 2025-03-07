@@ -1,10 +1,11 @@
+'use server'
+
 import pMap from 'p-map'
 
 import { getWellnessFactById } from '@/lib/db/queries'
 
 import { WellnessFactGallery } from './wellness-fact-gallery'
 
-// TODO: add suspense boundary and loading state
 export async function WellnessFactGalleryByIds({
   wellnessFactIds,
   className
@@ -12,15 +13,13 @@ export async function WellnessFactGalleryByIds({
   wellnessFactIds: string[]
   className?: string
 }) {
-  const wellnessFacts = (
-    await pMap(
-      wellnessFactIds,
-      async (wellnessFactId) => getWellnessFactById(wellnessFactId),
-      {
-        concurrency: 8
-      }
-    )
-  ).filter(Boolean)
+  const wellnessFacts = pMap(
+    wellnessFactIds,
+    async (wellnessFactId) => getWellnessFactById(wellnessFactId),
+    {
+      concurrency: 8
+    }
+  )
 
   return (
     <WellnessFactGallery wellnessFacts={wellnessFacts} className={className} />

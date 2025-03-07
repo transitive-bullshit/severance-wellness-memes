@@ -32,7 +32,7 @@ export function PendingWellnessSession({
       </section>
 
       <section className='flex-auto justify-center p-16'>
-        <LoadingIndicator isLoading={true} />
+        <LoadingIndicator />
       </section>
 
       <CheckoutHandler />

@@ -2,7 +2,7 @@
 
 import type React from 'react'
 import cs from 'clsx'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useTheme } from 'next-themes'
 
@@ -15,7 +15,7 @@ const Lottie = dynamic(() => import('react-lottie-player'), {
 })
 
 export function LoadingIndicator({
-  isLoading = false,
+  isLoading = true,
   fill = false,
   className,
   initial,
@@ -33,23 +33,25 @@ export function LoadingIndicator({
   const { resolvedTheme } = useTheme()
 
   return (
-    // <AnimatePresence>
-    isLoading ? (
-      <motion.div
-        className={cs(styles.loading, fill && styles.fill, className)}
-        initial={{ opacity: 1, ...initial }}
-        animate={{ opacity: 1, ...animate }}
-        exit={{ opacity: 0, ...exit }}
-        {...rest}
-      >
-        <Lottie
-          play
-          loop
-          animationData={resolvedTheme === 'dark' ? loadingDark : loadingLight}
-          className={styles.loadingAnimation}
-        />
-      </motion.div>
-    ) : null
-    // </AnimatePresence>
+    <AnimatePresence>
+      {isLoading ? (
+        <motion.div
+          className={cs(styles.loading, fill && styles.fill, className)}
+          initial={{ opacity: 1, ...initial }}
+          animate={{ opacity: 1, ...animate }}
+          exit={{ opacity: 0, ...exit }}
+          {...rest}
+        >
+          <Lottie
+            play
+            loop
+            animationData={
+              resolvedTheme === 'dark' ? loadingDark : loadingLight
+            }
+            className={styles.loadingAnimation}
+          />
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   )
 }

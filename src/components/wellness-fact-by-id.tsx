@@ -1,8 +1,9 @@
+'use server'
+
 import { getWellnessFactById } from '@/lib/db/queries'
 
 import { WellnessFact } from './wellness-fact'
 
-// TODO: add suspense boundary and loading state
 export async function WellnessFactById({
   wellnessFactId,
   className
@@ -10,8 +11,7 @@ export async function WellnessFactById({
   wellnessFactId: string
   className?: string
 }) {
-  const wellnessFact = await getWellnessFactById(wellnessFactId)
-  if (!wellnessFact) return null // TODO
+  const wellnessFact = getWellnessFactById(wellnessFactId)
 
   return <WellnessFact wellnessFact={wellnessFact} className={className} />
 }

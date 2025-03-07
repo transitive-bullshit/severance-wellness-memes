@@ -10,7 +10,7 @@ export default async function Page() {
       </section>
 
       <section className='flex-auto justify-center p-16'>
-        <LoadingIndicator isLoading={true} />
+        <LoadingIndicator />
       </section>
     </>
   )

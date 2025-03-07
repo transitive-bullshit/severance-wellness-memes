@@ -93,12 +93,12 @@ I prefer public convos so the answers can help other people who might have simil
     - auto-refresh when wellness session goes from `pending` to `resolved`
     - test cache refreshing for the whole checkout flow
   - [ ] landing page hero section
-  - [ ] double check social images for all routes (need main og.jpg)
+  - [ ] double check social images for all routes
   - [ ] improve header section + mobile support
   - [ ] test across a few browsers
   - [ ] stress test database and connection limits...
-  - [ ] add basic pricing page w/ explanation for why I had to add the paywall
 - Post-MVP
+  - [ ] add basic pricing page w/ explanation for why I had to add the paywall
   - [ ] add url resolving to `resolveTwitterUser` to give more context
   - [ ] show generated date and model on fact detail page
   - [ ] consider switching from prisma to drizzle

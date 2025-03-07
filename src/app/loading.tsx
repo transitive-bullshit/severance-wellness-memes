@@ -3,7 +3,6 @@ import { LoadingIndicator } from '@/components/loading-indicator'
 import styles from './styles.module.css'
 
 export default async function Page() {
-  // TODO
   return (
     <>
       <section className={styles.intro}>
@@ -11,7 +10,7 @@ export default async function Page() {
       </section>
 
       <section className='flex-auto justify-center p-16'>
-        <LoadingIndicator isLoading={true} />
+        <LoadingIndicator />
       </section>
     </>
   )
