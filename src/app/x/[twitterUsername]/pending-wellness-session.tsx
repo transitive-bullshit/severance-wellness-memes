@@ -4,6 +4,7 @@ import type * as types from '@/lib/types'
 import { LoadingIndicator } from '@/components/loading-indicator'
 import { UserAvatar } from '@/components/user-avatar'
 
+import { CheckoutHandler } from './checkout-handler'
 import styles from './styles.module.css'
 
 export function PendingWellnessSession({
@@ -33,6 +34,8 @@ export function PendingWellnessSession({
       <section className='flex-auto justify-center p-16'>
         <LoadingIndicator isLoading={true} />
       </section>
+
+      <CheckoutHandler />
     </>
   )
 }

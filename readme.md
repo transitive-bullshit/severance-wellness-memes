@@ -99,16 +99,15 @@ I prefer public convos so the answers can help other people who might have simil
   - [ ] stress test database and connection limits...
   - [ ] add basic pricing page w/ explanation for why I had to add paywall
 - Post-MVP
-  - [ ] add url resolving to `ResolvedTwitterUser`
+  - [ ] add url resolving to `resolveTwitterUser` to give more context
   - [ ] show generated date and model on fact detail page
   - [ ] consider switching from prisma to drizzle
-  - [ ] consider switching from supabase
+  - [ ] consider switching from supabase postgres
   - [ ] allow paying for more tweets + generations
-  - [ ] update ref lazily on third-party fact url access for stats
+  - [ ] track third-party fact url access and image access for stats
 
 ## How it works
 
-To generate severance memes for a user, we:
 The workflow to generate memes for a user:
 
 - Fetch their twitter profile and 200 of their most recent tweets.

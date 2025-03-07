@@ -31,8 +31,8 @@ export async function createCheckoutSession({
   }
 
   // TODO: these urls don't exist yet
-  const successUrl = `${config.url}/x/${twitterUsername}/success`
-  const cancelUrl = `${config.url}/x/${twitterUsername}/cancel`
+  const successUrl = `${config.url}/x/${twitterUsername}?checkout=success`
+  const cancelUrl = `${config.url}/x/${twitterUsername}?checkout=cancelled`
 
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',

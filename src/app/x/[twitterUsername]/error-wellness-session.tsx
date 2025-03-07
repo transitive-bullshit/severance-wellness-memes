@@ -3,6 +3,7 @@ import cs from 'clsx'
 import type * as types from '@/lib/types'
 import { UserAvatar } from '@/components/user-avatar'
 
+import { CheckoutHandler } from './checkout-handler'
 import styles from './styles.module.css'
 
 export function ErrorWellnessSession({
@@ -28,6 +29,8 @@ export function ErrorWellnessSession({
           include this URL.
         </p>
       </section>
+
+      <CheckoutHandler />
     </>
   )
 }

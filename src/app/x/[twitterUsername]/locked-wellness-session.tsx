@@ -1,11 +1,10 @@
-'use client'
-
 import cs from 'clsx'
 
 import type * as types from '@/lib/types'
 import { UnlockWellnessSessionCTA } from '@/components/unlock-wellness-session-cta'
 import { UserAvatar } from '@/components/user-avatar'
 
+import { CheckoutHandler } from './checkout-handler'
 import styles from './styles.module.css'
 
 export function LockedWellnessSession({
@@ -29,6 +28,8 @@ export function LockedWellnessSession({
         </p>
 
         <UnlockWellnessSessionCTA wellnessSession={wellnessSession} />
+
+        <CheckoutHandler />
       </section>
     </>
   )
