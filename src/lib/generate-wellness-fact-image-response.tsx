@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
+import { notFound } from 'next/navigation'
 import { ImageResponse } from 'next/og'
 
 import { getWellnessFactById } from '@/lib/db/queries'
@@ -18,6 +19,11 @@ export async function generateWellnessFactImageResponse({
     readFile(path.join(process.cwd(), 'public/fonts/inter-light.ttf')),
     getWellnessFactById(wellnessFactId)
   ])
+
+  if (!wellnessFact) {
+    return notFound()
+  }
+
   const wellnessFactBgUrl = `data:image/jpeg;base64,${wellnessFactBg.toString('base64')}`
 
   return new ImageResponse(
