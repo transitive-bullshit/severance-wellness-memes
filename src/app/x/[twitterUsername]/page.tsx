@@ -107,7 +107,7 @@ export default async function Page({
         <WellnessFactGallery wellnessFacts={wellnessFacts} />
       </section>
 
-      <CheckoutHandler />
+      <CheckoutHandler status='pending' />
     </>
   )
 }

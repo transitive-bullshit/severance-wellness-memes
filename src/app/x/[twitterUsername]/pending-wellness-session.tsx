@@ -1,8 +1,13 @@
+'use client'
+
 import cs from 'clsx'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import type * as types from '@/lib/types'
 import { LoadingIndicator } from '@/components/loading-indicator'
 import { UserAvatar } from '@/components/user-avatar'
+import { revalidateWellnessSession } from '@/lib/revalidate-wellness-session'
 
 import { CheckoutHandler } from './checkout-handler'
 import styles from './styles.module.css'
@@ -12,7 +17,18 @@ export function PendingWellnessSession({
 }: {
   wellnessSession: types.WellnessSession
 }) {
+  const { twitterUsername } = wellnessSession
   const user = wellnessSession.twitterUser?.user
+  const router = useRouter()
+
+  // TODO: This is hacky...
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      await revalidateWellnessSession({ twitterUsername })
+      router.refresh()
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [router, twitterUsername])
 
   return (
     <>
@@ -35,7 +51,7 @@ export function PendingWellnessSession({
         <LoadingIndicator />
       </section>
 
-      <CheckoutHandler />
+      <CheckoutHandler status='pending' />
     </>
   )
 }

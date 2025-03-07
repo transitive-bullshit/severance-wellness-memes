@@ -30,7 +30,7 @@ export function ErrorWellnessSession({
         </p>
       </section>
 
-      <CheckoutHandler />
+      <CheckoutHandler status='error' />
     </>
   )
 }

@@ -24,7 +24,7 @@ export function LockedWellnessSession({
 
         <UnlockWellnessSessionCTA wellnessSession={wellnessSession} />
 
-        <CheckoutHandler />
+        <CheckoutHandler status='initial' />
       </section>
     </>
   )
