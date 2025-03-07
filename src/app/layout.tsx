@@ -27,7 +27,11 @@ export const metadata: Metadata = {
   keywords: [
     'severance',
     'memes',
+    'severance memes',
     'twitter',
+    'twitter roast',
+    'twitter memes',
+    'roast',
     'ai',
     'generative',
     'art',
@@ -35,6 +39,8 @@ export const metadata: Metadata = {
     'wellness',
     'wellness session',
     'meme generator',
+    'severance wellness memes',
+    'wellness memes',
     'meme maker',
     'meme creator',
     'severance meme maker'
@@ -42,7 +48,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: config.title,
     description: config.description,
-    images: config.ogImageUrl,
     siteName: config.title,
     locale: 'en_US',
     type: 'website',
@@ -51,7 +56,6 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     creator: '@transitive_bs',
-    images: config.ogImageUrl,
     title: config.title,
     description: config.description
   }

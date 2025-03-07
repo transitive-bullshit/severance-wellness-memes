@@ -60,6 +60,7 @@ export async function generateWellnessFactImageResponse({
           >
             {wellnessFact?.text?.replaceAll('@', '') ||
               'The work is mysterious and important.'}
+            {/* {'Your outie loves creating viral Severance memes.'} */}
           </div>
         </div>
       </div>
