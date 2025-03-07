@@ -38,8 +38,8 @@ export async function generateWellnessFactImageResponse({
           style={{
             position: 'absolute',
             top: '0',
-            left: '40%',
-            right: '0',
+            left: '38%',
+            right: '2%',
             bottom: '0',
             padding: '2% 4%',
             display: 'flex',
@@ -51,16 +51,15 @@ export async function generateWellnessFactImageResponse({
           <div
             style={{
               fontFamily: 'Inter',
-              fontSize: '86px',
+              fontSize: '96px',
               lineHeight: '1.35',
               color: '#eee',
               textAlign: 'center',
               textWrap: 'balance'
             }}
           >
-            {wellnessFact?.text?.replaceAll('@', '') ||
-              'The work is mysterious and important.'}
-            {/* {'Your outie loves creating viral Severance memes.'} */}
+            {/* {wellnessFact?.text?.replaceAll('@', '') || 'The work is mysterious and important.'} */}
+            {'Your outie loves creating viral Severance memes.'}
           </div>
         </div>
       </div>
