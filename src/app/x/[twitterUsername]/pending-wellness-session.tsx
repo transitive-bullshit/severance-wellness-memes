@@ -41,9 +41,9 @@ export function PendingWellnessSession({
           />
         </h1>
 
-        <p className={cs(styles.title, 'leading-none')}>
-          Your memes are being generated. This page will automatically refresh
-          once they&apos;re ready.
+        <p className={styles.title}>
+          Your memes are being generated which will take a few minutes. This
+          page will automatically refresh once they&apos;re ready. Praise Kier.
         </p>
       </section>
 

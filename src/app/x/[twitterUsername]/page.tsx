@@ -7,7 +7,6 @@ import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
 import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
-import { CheckoutHandler } from './checkout-handler'
 import { ErrorWellnessSession } from './error-wellness-session'
 import { LockedWellnessSession } from './locked-wellness-session'
 import { PendingWellnessSession } from './pending-wellness-session'
@@ -106,8 +105,6 @@ export default async function Page({
       <section className='flex-auto'>
         <WellnessFactGallery wellnessFacts={wellnessFacts} />
       </section>
-
-      <CheckoutHandler status='pending' />
     </>
   )
 }
