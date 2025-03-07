@@ -32,7 +32,7 @@ export function AnimatedTypewriter({
   }, [currentIndex, text, speed])
 
   return (
-    <h3 className={className}>
+    <h5 className={className}>
       {displayedText}
       {!isComplete && (
         <motion.span
@@ -43,6 +43,6 @@ export function AnimatedTypewriter({
           |
         </motion.span>
       )}
-    </h3>
+    </h5>
   )
 }

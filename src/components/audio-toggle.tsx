@@ -1,7 +1,7 @@
 'use client'
 
 import { Volume2, VolumeX } from 'lucide-react'
-import React from 'react'
+import { useState } from 'react'
 import { useEffectOnce } from 'react-use'
 
 import { Button } from '@/components/ui/button'
@@ -16,7 +16,7 @@ import { useAudio } from './audio-provider'
 
 export function AudioToggle() {
   const { isAudioEnabled, toggleAudio } = useAudio()
-  const [isMounted, setIsMounted] = React.useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffectOnce(() => {
     setIsMounted(true)

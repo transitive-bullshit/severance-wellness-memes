@@ -7,7 +7,7 @@ import { Suspense, use } from 'react'
 import type * as types from '@/lib/types'
 import { isPromiseLike } from '@/lib/utils'
 
-import { WellnessFact } from '../wellness-fact'
+import { WellnessFact, WellnessFactSkeleton } from '../wellness-fact'
 import styles from './styles.module.css'
 
 export function WellnessFactGallery({
@@ -60,7 +60,7 @@ function WellnessFactGalleryImpl({
 }) {
   return (
     <div className={cs(styles.wellnessFactGallery, className)}>
-      <AnimatePresence mode='wait'>
+      <AnimatePresence>
         {wellnessFacts.map((wellnessFact, index) => (
           <motion.div
             key={wellnessFact.id}
@@ -81,23 +81,18 @@ function WellnessFactGalleryImpl({
   )
 }
 
-function WellnessFactGallerySkeleton({ className }: { className?: string }) {
+function WellnessFactGallerySkeleton({
+  className,
+  numberOfItems = 4
+}: {
+  className?: string
+  numberOfItems?: number
+}) {
   return (
     <div className={cs(styles.wellnessFactGallery, className)}>
-      <AnimatePresence mode='wait'>
-        {Array.from({ length: 4 }).map((_, i) => (
-          <motion.div
-            key={`skeleton-${i}`}
-            className='h-[300px] w-full rounded-lg animate-pulse bg-muted'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: i * 0.1,
-              duration: 0.5
-            }}
-          />
-        ))}
-      </AnimatePresence>
+      {Array.from({ length: numberOfItems }).map((_, i) => (
+        <WellnessFactSkeleton key={`skeleton-${i}`} />
+      ))}
     </div>
   )
 }

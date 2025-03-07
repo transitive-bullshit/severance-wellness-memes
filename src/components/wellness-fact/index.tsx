@@ -1,3 +1,5 @@
+'use client'
+
 import cs from 'clsx'
 import Image from 'next/image'
 import { Suspense, use } from 'react'
@@ -5,7 +7,6 @@ import { Suspense, use } from 'react'
 import type * as types from '@/lib/types'
 import { isPromiseLike } from '@/lib/utils'
 
-import { LoadingIndicator } from '../loading-indicator'
 import styles from './styles.module.css'
 import { WellnessFactMenu } from './wellness-fact-menu'
 
@@ -20,7 +21,7 @@ export function WellnessFact({
   className?: string
 }) {
   return (
-    <Suspense fallback={<LoadingIndicator />}>
+    <Suspense fallback={<WellnessFactSkeleton />}>
       {isPromiseLike(wellnessFact) ? (
         <WellnessFactP wellnessFact={wellnessFact} className={className} />
       ) : (
@@ -64,5 +65,17 @@ function WellnessFactImpl({
 
       <WellnessFactMenu wellnessFact={wellnessFact} />
     </div>
+  )
+}
+
+export function WellnessFactSkeleton({ className }: { className?: string }) {
+  return (
+    <div
+      className={cs(
+        styles.wellnessFactContainer,
+        'rounded-lg animate-pulse bg-muted',
+        className
+      )}
+    />
   )
 }
