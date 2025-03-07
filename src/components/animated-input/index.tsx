@@ -37,7 +37,7 @@ export function AnimatedInput({
   const randomUsers = useRef(
     [...twitterUsers]
       .sort(() => 0.5 - Math.random())
-      .slice(0, 5)
+      .slice(0, 10)
       // Ensure we always have at least one default user if the array is empty
       .concat(twitterUsers.length === 0 ? ['transitive_bs'] : [])
   ).current
