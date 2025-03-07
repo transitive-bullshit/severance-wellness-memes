@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { ActiveLink } from '@/components/active-link'
+import { UserAvatar } from '@/components/user-avatar'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { GitHub, Twitter } from '@/icons'
 import { copyright, githubUrl, twitterUrl } from '@/lib/config'
@@ -41,21 +41,18 @@ export function Footer() {
               <h3 className='text-lg font-semibold'>Lumon Employees</h3>
               <div className='grid grid-cols-[repeat(auto-fill,_minmax(10em,_1fr))] gap-y-4 gap-x-8 w-full flex-auto'>
                 {featuredTwitterUsers.map((user) => (
-                  <ActiveLink
-                    href={`/x/${user.twitterUsername}`}
-                    key={user.twitterUsername}
+                  <UserAvatar
+                    user={{
+                      name: user.displayName,
+                      screen_name: user.twitterUsername,
+                      profile_image_url_https: user.profileImageUrl
+                    }}
+                    type='profile'
                     className='block'
+                    key={user.twitterUsername}
                   >
-                    <Image
-                      alt={user.displayName}
-                      src={user.profileImageUrl}
-                      width={48}
-                      height={48}
-                      className='inline-block size-8 rounded-full mr-3'
-                    />
-
-                    <span className='link'>{user.displayName}</span>
-                  </ActiveLink>
+                    <span className='link ml-3'>{user.displayName}</span>
+                  </UserAvatar>
                 ))}
               </div>
             </div>

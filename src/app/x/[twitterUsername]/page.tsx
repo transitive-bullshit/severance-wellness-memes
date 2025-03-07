@@ -1,13 +1,13 @@
 import cs from 'clsx'
 import { unstable_cache as cache } from 'next/cache'
-import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { UserAvatar } from '@/components/user-avatar'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
 import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
+import { ErrorWellnessSession } from './error-wellness-session'
 import { LockedWellnessSession } from './locked-wellness-session'
 import { PendingWellnessSession } from './pending-wellness-session'
 import styles from './styles.module.css'
@@ -44,15 +44,7 @@ export default async function Page({
   }
 
   if (status === 'error') {
-    return (
-      <>
-        <section className={cs(styles.intro)}>
-          <h1 className={cs(styles.title, 'leading-none')}>
-            There was an error processing this profile. Please contact support.
-          </h1>
-        </section>
-      </>
-    )
+    return <ErrorWellnessSession wellnessSession={wellnessSession} />
   }
 
   const user = twitterUser!.user!
@@ -88,22 +80,10 @@ export default async function Page({
       <section className={cs(styles.intro)}>
         <h1 className={cs(styles.title, 'leading-none')}>
           Hello, {userDisplayName}
-          {user.profile_image_url_https && (
-            <Link
-              href={`https://x.com/${user.screen_name}`}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='ml-4'
-            >
-              <Image
-                alt={user.name}
-                src={user.profile_image_url_https}
-                width={48}
-                height={48}
-                className='inline-block size-10 rounded-full ring-1 ring-accent-foreground'
-              />
-            </Link>
-          )}
+          <UserAvatar
+            user={wellnessSession.twitterUser?.user}
+            className='ml-4'
+          />
         </h1>
 
         <p

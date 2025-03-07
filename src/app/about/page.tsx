@@ -4,6 +4,7 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import { Markdown } from '@/components/markdown'
+import { UserAvatar } from '@/components/user-avatar'
 import { WellnessFactById } from '@/components/wellness-fact-by-id'
 import { WellnessFactGalleryByIds } from '@/components/wellness-fact-gallery-by-ids'
 import * as config from '@/lib/config'
@@ -39,20 +40,16 @@ export default async function Page() {
           <h2>
             Example memes roasting{' '}
             <Link href={`${config.url}/x/realDonaldTrump`}>Donald Trump</Link>
-            <Link
-              href={`${config.url}/x/realDonaldTrump`}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='ml-3 inline'
-            >
-              <Image
-                alt='Donald Trump'
-                src='https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_400x400.jpg'
-                width={400}
-                height={400}
-                className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
-              />
-            </Link>
+            <UserAvatar
+              user={{
+                screen_name: 'realDonaldTrump',
+                name: 'Donald Trump',
+                profile_image_url_https:
+                  'https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_400x400.jpg'
+              }}
+              type='profile'
+              className='ml-3'
+            />
           </h2>
 
           <p>
@@ -75,20 +72,16 @@ export default async function Page() {
           <h2>
             Example memes roasting{' '}
             <Link href={`${config.url}/x/sama`}>Sam Altman</Link>
-            <Link
-              href={`${config.url}/x/sama`}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='ml-3 inline'
-            >
-              <Image
-                alt='Sam Altman'
-                src='https://pbs.twimg.com/profile_images/804990434455887872/BG0Xh7Oa_400x400.jpg'
-                width={400}
-                height={400}
-                className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
-              />
-            </Link>
+            <UserAvatar
+              user={{
+                screen_name: 'sama',
+                name: 'Sam Altman',
+                profile_image_url_https:
+                  'https://pbs.twimg.com/profile_images/804990434455887872/BG0Xh7Oa_400x400.jpg'
+              }}
+              type='profile'
+              className='ml-3'
+            />
           </h2>
 
           <WellnessFactGalleryByIds
