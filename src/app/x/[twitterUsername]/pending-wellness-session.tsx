@@ -43,8 +43,10 @@ export function PendingWellnessSession({
 
         <p className={styles.title}>
           Your memes are being generated which will take a few minutes. This
-          page will automatically refresh once they&apos;re ready. Praise Kier.
+          page will automatically refresh once they&apos;re ready.
         </p>
+
+        <p className={styles.title}>Praise Kier.</p>
       </section>
 
       <section className='flex-auto justify-center p-16'>

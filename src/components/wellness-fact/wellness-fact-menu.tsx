@@ -69,9 +69,10 @@ export function WellnessFactMenu({
     setStatus('loading')
 
     try {
-      const blob = await ky
-        .get(`${config.url}/o/${wellnessFact.id}/image`)
-        .blob()
+      const blobP = ky.get(`${config.url}/o/${wellnessFact.id}/image`).blob()
+      // Workaround for weird Safari bug
+      // https://stackoverflow.com/questions/66312944/javascript-clipboard-api-write-does-not-work-in-safari
+      const blob = config.isSafari ? await blobP : blobP
       const item = new ClipboardItem({ 'image/png': blob })
       await navigator.clipboard.write([item])
 

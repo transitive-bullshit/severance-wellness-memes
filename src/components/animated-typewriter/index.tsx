@@ -1,18 +1,17 @@
 'use client'
 
+import cs from 'clsx'
 import { useEffect, useState } from 'react'
-
-interface AnimatedTypewriterProps {
-  text: string
-  speed?: number
-  className?: string
-}
 
 export function AnimatedTypewriter({
   text,
   speed = 40,
-  className = ''
-}: AnimatedTypewriterProps) {
+  className
+}: {
+  text: string
+  speed?: number
+  className?: string
+}) {
   const [displayedText, setDisplayedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -27,5 +26,5 @@ export function AnimatedTypewriter({
     }
   }, [currentIndex, text, speed])
 
-  return <h5 className={className}>{displayedText}</h5>
+  return <h5 className={cs(className)}>{displayedText}</h5>
 }

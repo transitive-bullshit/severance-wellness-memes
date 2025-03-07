@@ -1,5 +1,6 @@
 'use client'
 
+import cs from 'clsx'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
@@ -8,15 +9,13 @@ import { useAudio } from '@/components/audio-provider'
 
 import styles from './styles.module.css'
 
-interface AnimatedInputProps {
-  twitterUsers: string[]
-  className?: string
-}
-
 export function AnimatedInput({
   twitterUsers,
-  className = ''
-}: AnimatedInputProps) {
+  className
+}: {
+  twitterUsers: string[]
+  className?: string
+}) {
   const [placeholder, setPlaceholder] = useState('')
   const [currentUserIndex, setCurrentUserIndex] = useState(0)
   const [isTyping, setIsTyping] = useState(true)
@@ -111,7 +110,7 @@ export function AnimatedInput({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`${styles.inputWrapper} ${className}`}
+      className={cs(styles.inputWrapper, className)}
       autoComplete='off'
     >
       <input

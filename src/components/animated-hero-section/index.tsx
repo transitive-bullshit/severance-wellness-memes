@@ -14,6 +14,7 @@ export function AnimatedHeroSection() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
+        className='my-0!'
       >
         Severance Wellness Session
       </motion.h1>
@@ -22,6 +23,7 @@ export function AnimatedHeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.4 }}
+        className='my-4'
       >
         <AnimatedTypewriter text='Create custom severance memes based on your Twitter profile.' />
       </motion.div>
@@ -30,7 +32,7 @@ export function AnimatedHeroSection() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.6, duration: 0.3 }}
-        className='w-full max-w-md'
+        className='w-full max-w-lg'
       >
         <AnimatedInput
           twitterUsers={featuredTwitterUsers.map((u) => u.twitterUsername)}
