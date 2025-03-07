@@ -49,7 +49,7 @@ export default async function Image({
 
       return heroWellnessFactId
     },
-    [],
+    [`wellness-fact-${twitterUsername}`],
     {
       revalidate: 60 * 60 * 24 // 1 day in seconds
     }

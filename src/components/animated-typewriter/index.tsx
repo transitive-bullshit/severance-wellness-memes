@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 interface AnimatedTypewriterProps {
@@ -16,7 +15,6 @@ export function AnimatedTypewriter({
 }: AnimatedTypewriterProps) {
   const [displayedText, setDisplayedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isComplete, setIsComplete] = useState(false)
 
   useEffect(() => {
     if (currentIndex < text.length) {
@@ -26,23 +24,8 @@ export function AnimatedTypewriter({
       }, speed)
 
       return () => clearTimeout(timeout)
-    } else {
-      setIsComplete(true)
     }
   }, [currentIndex, text, speed])
 
-  return (
-    <h5 className={className}>
-      {displayedText}
-      {!isComplete && (
-        <motion.span
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{ repeat: Infinity, duration: 0.8 }}
-          className='inline-block ml-1'
-        >
-          |
-        </motion.span>
-      )}
-    </h5>
-  )
+  return <h5 className={className}>{displayedText}</h5>
 }
