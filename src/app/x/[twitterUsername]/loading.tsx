@@ -6,7 +6,7 @@ export default async function Page() {
   return (
     <>
       <section className={styles.intro}>
-        <h3 className={styles.title}>Loading profile...</h3>
+        <h3 className={styles.title}>Loading wellness session...</h3>
       </section>
 
       <section className='flex-auto justify-center p-16'>
