@@ -37,8 +37,8 @@ export function UnlockWellnessSessionCTA({
       {
         description: (
           <span>
-            Pack of custom memes based on <i>@{twitterUsername}</i>
-            twitter profile
+            Pack of custom memes based on <i>@{twitterUsername}</i> twitter
+            profile
           </span>
         )
       },

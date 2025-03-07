@@ -39,12 +39,7 @@ export async function unlockWellnessSession(opts: {
   })
   revalidateWellnessSession({ twitterUsername })
 
-  waitUntil(
-    (async () => {
-      await resolveWellnessSession({ twitterUsername })
-      revalidateWellnessSession({ twitterUsername })
-    })()
-  )
+  waitUntil(resolveWellnessSession({ twitterUsername }))
 }
 
 export async function initCheckoutSession({
