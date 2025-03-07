@@ -97,6 +97,7 @@ I prefer public convos so the answers can help other people who might have simil
   - [ ] improve header section + mobile support
   - [ ] test across a few browsers
   - [ ] stress test database and connection limits...
+  - [ ] add basic pricing page w/ explanation for why I had to add paywall
 - Post-MVP
   - [ ] add url resolving to `ResolvedTwitterUser`
   - [ ] show generated date and model on fact detail page
