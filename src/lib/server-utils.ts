@@ -1,5 +1,8 @@
+import 'server-only'
+
 import { assert as assertImpl } from '@agentic/core'
 import hashObjectImpl, { type Options as HashObjectOptions } from 'hash-object'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export {
   getEnv,
@@ -87,4 +90,14 @@ export function assert(
 export function clone<T extends object>(value: T): T {
   /* eslint-disable-next-line unicorn/prefer-structured-clone */
   return JSON.parse(JSON.stringify(value)) as T
+}
+
+export function revalidateWellnessSession({
+  twitterUsername
+}: {
+  twitterUsername: string
+}) {
+  if (!twitterUsername) return
+  revalidateTag(`wellness-session-${twitterUsername}`)
+  revalidatePath(`/x/${twitterUsername}`)
 }

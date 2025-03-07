@@ -13,14 +13,17 @@ import { LockedWellnessSession } from './locked-wellness-session'
 import { PendingWellnessSession } from './pending-wellness-session'
 import styles from './styles.module.css'
 
-const getWellnessSession = cache(getOrUpsertWellnessSession)
-
 export default async function Page({
   params
 }: {
   params: Promise<{ twitterUsername: string }>
 }) {
   const { twitterUsername } = await params
+
+  const getWellnessSession = cache(getOrUpsertWellnessSession, [
+    `wellness-session-${twitterUsername}`
+  ])
+
   const wellnessSession = await getWellnessSession({ twitterUsername })
   if (!wellnessSession) return notFound()
 

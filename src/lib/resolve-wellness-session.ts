@@ -9,6 +9,7 @@ import { extractUserFullName } from './extract-user-full-name'
 import { generateWellnessFacts } from './generate-wellness-facts'
 import { getOrUpsertWellnessSession } from './get-or-upsert-wellness-session'
 import { resolveTwitterUser } from './resolve-twitter-user'
+import { revalidateWellnessSession } from './server-utils'
 
 export async function resolveWellnessSession({
   twitterUsername,
@@ -97,6 +98,7 @@ export async function resolveWellnessSession({
       updateWellnessSession
     ])
     console.log('<<< transaction')
+    revalidateWellnessSession({ twitterUsername })
 
     return {
       ...wellnessSession,

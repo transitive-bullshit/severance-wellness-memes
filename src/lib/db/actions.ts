@@ -3,13 +3,12 @@ import 'server-only'
 
 import { pruneNullOrUndefined } from '@agentic/core'
 import { waitUntil } from '@vercel/functions'
-import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { prisma } from '@/lib/db'
 import { resolveWellnessSession } from '@/lib/resolve-wellness-session'
 import { stripeSuffix } from '@/lib/server-config'
-import { assert } from '@/lib/server-utils'
+import { assert, revalidateWellnessSession } from '@/lib/server-utils'
 import { createCheckoutSession } from '@/lib/stripe'
 
 export async function unlockWellnessSession(opts: {
@@ -38,13 +37,12 @@ export async function unlockWellnessSession(opts: {
       [`stripeSubscriptionId${stripeSuffix}`]: stripeSubscriptionId
     })
   })
-  revalidatePath(`/x/${twitterUsername}`)
+  revalidateWellnessSession({ twitterUsername })
 
   waitUntil(
     (async () => {
       await resolveWellnessSession({ twitterUsername })
-
-      revalidatePath(`/x/${twitterUsername}`)
+      revalidateWellnessSession({ twitterUsername })
     })()
   )
 }
