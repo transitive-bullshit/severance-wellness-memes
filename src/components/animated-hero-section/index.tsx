@@ -23,7 +23,7 @@ export function AnimatedHeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
       >
-        <AnimatedTypewriter text='Generate custom wellness facts based on your Twitter profile.' />
+        <AnimatedTypewriter text='Create custom severance memes based on your Twitter profile.' />
       </motion.div>
 
       <motion.div

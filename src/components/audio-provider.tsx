@@ -1,19 +1,32 @@
 'use client'
 
+import type * as React from 'react'
 import type { SetOptional } from 'type-fest'
-import React, { createContext, useCallback, useEffect, useState } from 'react'
-import { useAudio as useAudioHook } from 'react-use'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
+import { useAudio as useAudioHook, useLocalStorage } from 'react-use'
 
 const AudioContext = createContext({
-  isAudioEnabled: false,
-  toggleAudio: () => {}
+  isAudioEnabled: true,
+  isAudioAvailable: false,
+  toggleAudio: () => {},
+  refreshAudio: () => {}
 })
 
 export function AudioProvider({
   children,
   ...props
 }: SetOptional<React.ComponentProps<typeof AudioContext.Provider>, 'value'>) {
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false)
+  const [isAudioAvailable, setIsAudioAvailable] = useState(false)
+  const [isAudioEnabled = true, setIsAudioEnabled] = useLocalStorage(
+    'isAudioEnabled',
+    true
+  )
 
   const [audio, state, controls] = useAudioHook({
     src: '/music-of-wellness.mp3',
@@ -27,18 +40,32 @@ export function AudioProvider({
     setIsAudioEnabled(!isAudioEnabled)
   }, [isAudioEnabled, setIsAudioEnabled])
 
-  useEffect(() => {
+  const refreshAudio = useCallback(() => {
     if (isAudioEnabled) {
       if (!state.playing) {
         console.log('playing audio')
       }
-      controls.play()
+
+      controls
+        .play()
+        ?.then(() => {
+          setIsAudioAvailable(true)
+        })
+        .catch(() => {
+          setIsAudioAvailable(false)
+        })
     } else {
       if (state.playing) {
         console.log('pausing audio')
       }
+
       controls.pause()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAudioEnabled])
+
+  useEffect(() => {
+    refreshAudio()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAudioEnabled])
 
@@ -47,7 +74,9 @@ export function AudioProvider({
       {...props}
       value={{
         isAudioEnabled,
-        toggleAudio
+        isAudioAvailable,
+        toggleAudio,
+        refreshAudio
       }}
     >
       {/* Useful for debugging */}
@@ -60,5 +89,5 @@ export function AudioProvider({
 }
 
 export function useAudio() {
-  return React.useContext(AudioContext)
+  return useContext(AudioContext)
 }

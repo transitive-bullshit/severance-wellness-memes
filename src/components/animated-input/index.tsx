@@ -24,7 +24,7 @@ export function AnimatedInput({
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-  const { isAudioEnabled, toggleAudio } = useAudio()
+  const { isAudioEnabled, refreshAudio } = useAudio()
 
   // Focus the input field on mount
   useEffect(() => {
@@ -83,22 +83,30 @@ export function AnimatedInput({
     }
   }, [currentUserIndex, isTyping, typingIndex, randomUsers])
 
+  function getTwitterUsername() {
+    // Remove @ symbol from the beginning if present
+    const username = inputValue.trim().startsWith('@')
+      ? inputValue.trim().slice(1)
+      : inputValue.trim()
+
+    return username
+  }
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (inputValue.trim()) {
-      // Remove @ symbol from the beginning if present
-      const username = inputValue.trim().startsWith('@')
-        ? inputValue.trim().slice(1)
-        : inputValue.trim()
+      const username = getTwitterUsername()
 
-      // Start audio if it's not already playing
-      if (!isAudioEnabled) {
-        toggleAudio()
+      // Start audio if it's enabled and not already playing
+      if (isAudioEnabled) {
+        refreshAudio()
       }
 
       router.push(`/x/${username}`)
     }
   }
+
+  const twitterUsername = getTwitterUsername()
 
   return (
     <form
@@ -123,14 +131,15 @@ export function AnimatedInput({
         data-form-type='other'
         data-lpignore='true'
       />
+
       <motion.button
         type='submit'
         className={styles.submitButton}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        disabled={!inputValue.trim()}
+        whileHover={twitterUsername ? { scale: 1.05 } : {}}
+        whileTap={twitterUsername ? { scale: 0.95 } : {}}
+        disabled={!twitterUsername}
       >
-        Generate
+        Generate memes
       </motion.button>
     </form>
   )

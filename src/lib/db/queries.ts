@@ -16,16 +16,18 @@ export const getWellnessFactById = cache(
 
 export const getFeaturedWellnessFacts = cache(
   async (): Promise<types.WellnessFact[]> => {
+    // await new Promise((resolve) => setTimeout(resolve, 10_000))
+
     const wellnessFacts = await prisma.wellnessFact.findMany({
       where: {
         tags: {
           has: 'featured'
         }
       },
-      take: 100
+      take: 20
     })
 
-    return random.shuffle(wellnessFacts)
+    return random.shuffle(wellnessFacts).slice(0, 4)
   },
   ['featured-wellness-facts'],
   {
