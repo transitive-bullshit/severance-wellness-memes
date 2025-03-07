@@ -2,11 +2,14 @@ import type { SetRequired, SimplifyDeep } from 'type-fest'
 import { type Prisma, PrismaClient } from '@prisma/client'
 
 import { isStripeLive } from '@/lib/server-config'
-// import { asyncExitHook } from 'exit-hook'
+
+import { clone, omit } from '../server-utils'
 
 // This is intentionally left as a global singleton to avoid re-creating the
 // Prisma connection instance on successive calls in serverless environments.
 let _prisma: ReturnType<typeof createPrismaClient> | undefined
+
+export const prisma = _prisma ?? (_prisma = createPrismaClient())
 
 function createPrismaClient() {
   return new PrismaClient({
@@ -83,13 +86,36 @@ function createPrismaClient() {
               ? wellnessSession.stripeSubscriptionIdLive
               : wellnessSession.stripeSubscriptionIdTest
           }
+        },
+        toJSON: {
+          needs: {
+            id: true
+          },
+          compute: (wellnessSession) => {
+            return (): WellnessSession =>
+              clone(
+                omit(
+                  wellnessSession,
+                  'stripeCustomerId',
+                  'stripeCustomerIdLive',
+                  'stripeCustomerIdTest',
+                  'stripeCustomerEmail',
+                  'stripeCustomerEmailLive',
+                  'stripeCustomerEmailTest',
+                  'stripeCheckoutSessionId',
+                  'stripeCheckoutSessionIdLive',
+                  'stripeCheckoutSessionIdTest',
+                  'stripeSubscriptionId',
+                  'stripeSubscriptionIdLive',
+                  'stripeSubscriptionIdTest'
+                )
+              ) as WellnessSession
+          }
         }
       }
     }
   })
 }
-
-export const prisma = _prisma ?? (_prisma = createPrismaClient())
 
 export type { TwitterUser, WellnessFact } from '@prisma/client'
 
@@ -119,14 +145,3 @@ export type WellnessSession = SimplifyDeep<
     > | null
   }
 >
-
-// type d = WellnessSession['stripeCustomerEmail']
-
-// asyncExitHook(
-//   async () => {
-//     return prisma.$disconnect()
-//   },
-//   {
-//     wait: 2000
-//   }
-// )

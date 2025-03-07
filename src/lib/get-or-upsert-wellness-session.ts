@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid'
 import type * as types from './types'
 import { createContext } from './create-context'
 import { prisma } from './db'
-import { clone } from './server-utils'
 import { tryGetTwitterUserByUsername } from './twitter-utils'
 
 export async function getOrUpsertWellnessSession({
@@ -27,7 +26,7 @@ export async function getOrUpsertWellnessSession({
   })
 
   if (existingWellnessSession) {
-    return clone(existingWellnessSession)
+    return existingWellnessSession.toJSON()
   }
 
   const ctx = createContext()
@@ -59,5 +58,5 @@ export async function getOrUpsertWellnessSession({
     }
   })
 
-  return clone(wellnessSession)
+  return wellnessSession.toJSON()
 }
