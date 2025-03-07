@@ -89,15 +89,15 @@ I prefer public convos so the answers can help other people who might have simil
 ## TODO
 
 - MVP Launch
-  - [ ] fix stripe checkout paywall
-    - /success, /cancel
-    - UI for each case
+  - [ ] improve stripe checkout paywall
+    - auto-refresh when wellness session goes from `pending` to `resolved`
+    - test cache refreshing for the whole checkout flow
   - [ ] landing page hero section
   - [ ] double check social images for all routes (need main og.jpg)
   - [ ] improve header section + mobile support
   - [ ] test across a few browsers
   - [ ] stress test database and connection limits...
-  - [ ] add basic pricing page w/ explanation for why I had to add paywall
+  - [ ] add basic pricing page w/ explanation for why I had to add the paywall
 - Post-MVP
   - [ ] add url resolving to `resolveTwitterUser` to give more context
   - [ ] show generated date and model on fact detail page
