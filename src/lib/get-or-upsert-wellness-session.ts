@@ -1,5 +1,7 @@
 'use server'
 
+import { nanoid } from 'nanoid'
+
 import type * as types from './types'
 import { createContext } from './create-context'
 import { prisma } from './db'
@@ -37,7 +39,7 @@ export async function getOrUpsertWellnessSession({
 
   const wellnessSession = await prisma.wellnessSession.create({
     data: {
-      twitterUserId: user?.id_str,
+      twitterUserId: user?.id_str ?? `missing-${nanoid()}`,
       twitterUsername,
       status,
       twitterUser: {

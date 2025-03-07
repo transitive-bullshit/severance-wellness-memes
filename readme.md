@@ -109,6 +109,7 @@ I prefer public convos so the answers can help other people who might have simil
 ## How it works
 
 To generate severance memes for a user, we:
+The workflow to generate memes for a user:
 
 - Fetch their twitter profile and 200 of their most recent tweets.
 - Use \`gpt-4.5-preview\` to generate a list of text-based wellness facts based on a [long prompt](./src/lib/generate-wellness-facts.ts), some examples to guide the model, and the user's unfurled tweets as an array of plain text.

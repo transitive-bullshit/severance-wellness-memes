@@ -28,7 +28,7 @@ export default async function Page() {
 
           <p>
             It takes your Twitter profile and your most recent tweets, and it
-            uses an LLM to generate Severance memes like this:
+            uses an LLM to generate Severance memes like this one:
           </p>
 
           <WellnessFactById
