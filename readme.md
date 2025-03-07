@@ -92,7 +92,7 @@ I prefer public convos so the answers can help other people who might have simil
   - [ ] improve stripe checkout paywall
     - auto-refresh when wellness session goes from `pending` to `resolved`
     - test cache refreshing for the whole checkout flow
-  - [ ] landing page hero section
+  - [ ] improve landing page hero section
   - [ ] double check social images for all routes
   - [ ] improve header section + mobile support
   - [ ] test across a few browsers

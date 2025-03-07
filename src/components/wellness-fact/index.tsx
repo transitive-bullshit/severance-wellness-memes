@@ -1,5 +1,3 @@
-'use client'
-
 import cs from 'clsx'
 import Image from 'next/image'
 import { Suspense, use } from 'react'
@@ -15,17 +13,27 @@ const blurDataUrl =
 
 export function WellnessFact({
   wellnessFact,
+  priority,
   className
 }: {
   wellnessFact: Promise<types.WellnessFact | null> | types.WellnessFact
+  priority?: boolean
   className?: string
 }) {
   return (
     <Suspense fallback={<WellnessFactSkeleton />}>
       {isPromiseLike(wellnessFact) ? (
-        <WellnessFactP wellnessFact={wellnessFact} className={className} />
+        <WellnessFactP
+          wellnessFact={wellnessFact}
+          className={className}
+          priority={priority}
+        />
       ) : (
-        <WellnessFactImpl wellnessFact={wellnessFact} className={className} />
+        <WellnessFactImpl
+          wellnessFact={wellnessFact}
+          className={className}
+          priority={priority}
+        />
       )}
     </Suspense>
   )
@@ -33,22 +41,32 @@ export function WellnessFact({
 
 function WellnessFactP({
   wellnessFact: wellnessFactP,
+  priority,
   className
 }: {
   wellnessFact: Promise<types.WellnessFact | null>
+  priority?: boolean
   className?: string
 }) {
   const wellnessFact = use(wellnessFactP)
   if (!wellnessFact) return null
 
-  return <WellnessFactImpl wellnessFact={wellnessFact} className={className} />
+  return (
+    <WellnessFactImpl
+      wellnessFact={wellnessFact}
+      className={className}
+      priority={priority}
+    />
+  )
 }
 
 function WellnessFactImpl({
   wellnessFact,
+  priority,
   className
 }: {
   wellnessFact: types.WellnessFact
+  priority?: boolean
   className?: string
 }) {
   return (
@@ -61,6 +79,7 @@ function WellnessFactImpl({
         alt={wellnessFact.text}
         width={2048}
         height={1024}
+        priority={priority}
       />
 
       <WellnessFactMenu wellnessFact={wellnessFact} />

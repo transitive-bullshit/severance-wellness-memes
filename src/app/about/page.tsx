@@ -34,6 +34,7 @@ export default async function Page() {
 
           <WellnessFactById
             wellnessFactId='cm7uapehe000a2rk24aoebpnq'
+            priority={true}
             className={styles.embed}
           />
 

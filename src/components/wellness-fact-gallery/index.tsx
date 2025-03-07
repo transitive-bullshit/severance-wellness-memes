@@ -81,7 +81,7 @@ function WellnessFactGalleryImpl({
   )
 }
 
-function WellnessFactGallerySkeleton({
+export function WellnessFactGallerySkeleton({
   className,
   numberOfItems = 4
 }: {
