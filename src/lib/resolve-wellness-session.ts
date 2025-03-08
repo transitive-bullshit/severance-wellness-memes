@@ -42,6 +42,22 @@ export async function resolveWellnessSession({
 
     console.log('resolving wellness session...', { twitterUsername })
 
+    // eslint-disable-next-line no-lone-blocks
+    // {
+    //   await new Promise((resolve) => setTimeout(resolve, 5000))
+    //   await prisma.wellnessSession.update({
+    //     where: {
+    //       twitterUsername
+    //     },
+    //     data: {
+    //       status: 'resolved'
+    //     }
+    //   })
+
+    //   console.log('MOCK: resolved wellness session', { twitterUsername })
+    //   return { ...existingWellnessSession, existing: false }
+    // }
+
     const twitterUser = await resolveTwitterUser({
       twitterUsername,
       ctx,

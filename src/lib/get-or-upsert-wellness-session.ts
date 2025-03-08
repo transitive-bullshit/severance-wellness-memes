@@ -1,7 +1,7 @@
 'use server'
 
+import { pick } from '@agentic/core'
 import { nanoid } from 'nanoid'
-import { redirect } from 'next/navigation'
 
 import type * as types from './types'
 import { createContext } from './create-context'
@@ -13,17 +13,23 @@ export async function checkPendingWellnessSession({
   twitterUsername
 }: {
   twitterUsername: string
-}): Promise<void> {
+}): Promise<string | undefined> {
   const wellnessSession = await prisma.wellnessSession.findUnique({
     where: {
       twitterUsername
     }
   })
 
+  console.log(
+    'check pending wellness session',
+    pick(wellnessSession!, 'twitterUsername', 'status')
+  )
+
   if (wellnessSession?.status === 'resolved') {
     await revalidateWellnessSession({ twitterUsername })
-    redirect(`/x/${twitterUsername}`)
   }
+
+  return wellnessSession?.status
 }
 
 export async function getOrUpsertWellnessSession({

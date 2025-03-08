@@ -2,11 +2,13 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import type * as types from '@/lib/types'
 import { LoadingIndicator } from '@/components/loading-indicator'
 import { UserAvatar } from '@/components/user-avatar'
 import { checkPendingWellnessSession } from '@/lib/get-or-upsert-wellness-session'
+import { revalidateWellnessSession } from '@/lib/revalidate-wellness-session'
 
 import { CheckoutHandler } from './checkout-handler'
 
@@ -22,22 +24,21 @@ export function PendingWellnessSession({
   // TODO: This is hacky...
   useEffect(() => {
     const interval = setInterval(async () => {
-      await checkPendingWellnessSession({ twitterUsername })
+      try {
+        console.log('>>> client check pending')
+        const status = await checkPendingWellnessSession({ twitterUsername })
+        console.log('<<< client check pending', { status })
 
-      // try {
-      //   const wellnessSession = await getOrUpsertWellnessSession({
-      //     twitterUsername
-      //   })
-
-      //   if (wellnessSession.status === 'resolved') {
-      //     await revalidateWellnessSession({ twitterUsername })
-      //     toast.success('Your memes are ready! Please refresh the page.')
-      //     router.refresh()
-      //     router.replace(`/x/${twitterUsername}`)
-      //   }
-      // } catch (err: any) {
-      //   console.warn('error fetching wellness session', err.message)
-      // }
+        if (status === 'resolved') {
+          console.log('DONE: resolved wellness session', { twitterUsername })
+          await revalidateWellnessSession({ twitterUsername })
+          toast.success('Your memes are ready! Please refresh the page.')
+          // router.replace(`/x/${twitterUsername}`)
+          window.location.href = `/x/${twitterUsername}`
+        }
+      } catch (err: any) {
+        console.warn('error fetching wellness session', err.message)
+      }
     }, 2000)
     return () => clearInterval(interval)
   }, [router, twitterUsername])
