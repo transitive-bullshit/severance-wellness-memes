@@ -44,7 +44,12 @@ export async function unlockWellnessSession(opts: {
   // Asynchronously resolve the wellness session without blocking the HTTP
   // response, so stripe receives the 200 right away and redirects the user to
   // the pending wellness session page.
-  waitUntil(resolveWellnessSession({ twitterUsername }))
+  waitUntil(
+    (async () => {
+      await resolveWellnessSession({ twitterUsername })
+      await revalidateWellnessSession({ twitterUsername })
+    })()
+  )
 }
 
 export async function initCheckoutSession({

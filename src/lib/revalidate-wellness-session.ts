@@ -10,7 +10,11 @@ export async function revalidateWellnessSession({
   if (!twitterUsername) return
 
   // TODO: These don't seem to always be taking effect...
-  revalidateTag(`wellness-session-${twitterUsername}`)
-  revalidatePath(`/x/${twitterUsername}`)
-  revalidatePath(`/x/${twitterUsername}?checkout=success`)
+  try {
+    revalidateTag(`wellness-session-${twitterUsername}`)
+    revalidatePath(`/x/${twitterUsername}`)
+    revalidatePath(`/x/${twitterUsername}?checkout=success`)
+  } catch {
+    // Silently ignore errors if run outside of next.js context
+  }
 }

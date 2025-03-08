@@ -11,7 +11,7 @@ import { resolveWellnessSession } from '@/lib/resolve-wellness-session'
 async function main() {
   const ctx = createContext()
 
-  const twitterUsername = 'transitive_bs'
+  const twitterUsername = 'kozerafilip'
   const wellnessSession = await resolveWellnessSession({ twitterUsername, ctx })
   await fs.writeFile(
     `out/${twitterUsername}.wellness-session.json`,
