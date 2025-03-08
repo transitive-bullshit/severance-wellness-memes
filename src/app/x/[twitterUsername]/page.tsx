@@ -98,7 +98,7 @@ export default async function Page({
           to the facts. Try to enjoy each one equally.
         </p>
 
-        <WellnessFactGallery wellnessFacts={wellnessFacts} />
+        <WellnessFactGallery wellnessFacts={wellnessFacts} priority={true} />
       </section>
 
       <section>

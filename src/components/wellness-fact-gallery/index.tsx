@@ -13,11 +13,13 @@ import styles from './styles.module.css'
 export function WellnessFactGallery({
   wellnessFacts,
   className,
-  estimatedNumItems
+  estimatedNumItems,
+  priority
 }: {
   wellnessFacts: Promise<(types.WellnessFact | null)[]> | types.WellnessFact[]
   className?: string
   estimatedNumItems?: number
+  priority?: boolean
 }) {
   return (
     <Suspense
@@ -29,11 +31,13 @@ export function WellnessFactGallery({
         <WellnessFactGalleryP
           wellnessFacts={wellnessFacts}
           className={className}
+          priority={priority}
         />
       ) : (
         <WellnessFactGalleryImpl
           wellnessFacts={wellnessFacts}
           className={className}
+          priority={priority}
         />
       )}
     </Suspense>
@@ -42,10 +46,12 @@ export function WellnessFactGallery({
 
 function WellnessFactGalleryP({
   wellnessFacts: wellnessFactsP,
-  className
+  className,
+  priority
 }: {
   wellnessFacts: Promise<(types.WellnessFact | null)[]>
   className?: string
+  priority?: boolean
 }) {
   const wellnessFacts = use(wellnessFactsP).filter(Boolean)
 
@@ -53,16 +59,19 @@ function WellnessFactGalleryP({
     <WellnessFactGalleryImpl
       wellnessFacts={wellnessFacts}
       className={className}
+      priority={priority}
     />
   )
 }
 
 function WellnessFactGalleryImpl({
   wellnessFacts,
-  className
+  className,
+  priority
 }: {
   wellnessFacts: types.WellnessFact[]
   className?: string
+  priority?: boolean
 }) {
   return (
     <div className={cs(styles.wellnessFactGallery, className)}>
@@ -79,7 +88,10 @@ function WellnessFactGalleryImpl({
               ease: 'easeOut'
             }}
           >
-            <WellnessFact wellnessFact={wellnessFact} />
+            <WellnessFact
+              wellnessFact={wellnessFact}
+              priority={priority && index < 2}
+            />
           </motion.div>
         ))}
       </AnimatePresence>

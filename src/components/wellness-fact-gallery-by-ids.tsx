@@ -8,10 +8,12 @@ import { WellnessFactGallery } from './wellness-fact-gallery'
 
 export async function WellnessFactGalleryByIds({
   wellnessFactIds,
-  className
+  className,
+  priority
 }: {
   wellnessFactIds: string[]
   className?: string
+  priority?: boolean
 }) {
   const wellnessFacts = pMap(
     wellnessFactIds,
@@ -30,6 +32,7 @@ export async function WellnessFactGalleryByIds({
       wellnessFacts={wellnessFacts}
       className={className}
       estimatedNumItems={wellnessFactIds.length}
+      priority={priority}
     />
   )
 }

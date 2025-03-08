@@ -30,6 +30,7 @@ export default function Page() {
             'cm7sb9ea400022r4kmxnvohbk',
             'cm7sb9ea4000h2r4k69tva2fr'
           ]}
+          priority={true}
         />
       </section>
 
