@@ -166,7 +166,7 @@ interface WellnessFactsResult {
   // relevant to their wellness facts.
   explanation: string
 
-  // Wellness facts about the user.
+  // Wellness facts about the user (at least 10).
   wellnessFacts: string[]
 }
 \`\`\`
