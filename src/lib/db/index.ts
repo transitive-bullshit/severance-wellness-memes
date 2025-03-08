@@ -2,8 +2,7 @@ import type { SetRequired, SimplifyDeep } from 'type-fest'
 import { type Prisma, PrismaClient } from '@prisma/client'
 
 import { isStripeLive } from '@/lib/server-config'
-
-import { clone, omit } from '../server-utils'
+import { clone, omit } from '@/lib/server-utils'
 
 // This is intentionally left as a global singleton to avoid re-creating the
 // Prisma connection instance on successive calls in serverless environments.

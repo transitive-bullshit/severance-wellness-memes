@@ -46,9 +46,12 @@ export function UserAvatar({
     >
       <Image
         alt={user.name}
-        src={user.profile_image_url_https}
-        width={48}
-        height={48}
+        src={user.profile_image_url_https.replace(
+          '_normal.jpg',
+          '_400x400.jpg'
+        )}
+        width={400}
+        height={400}
         className='inline-block! size-10 rounded-full ring-2 md:ring-1 ring-accent-foreground'
       />
 

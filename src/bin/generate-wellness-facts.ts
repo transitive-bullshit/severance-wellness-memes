@@ -1,6 +1,5 @@
 import 'dotenv/config'
 
-// import fs from 'node:fs/promises'
 import { assert } from '@agentic/core'
 import { gracefulExit } from 'exit-hook'
 import restoreCursor from 'restore-cursor'
@@ -8,14 +7,14 @@ import restoreCursor from 'restore-cursor'
 import { createContext } from '@/lib/create-context'
 import { prisma } from '@/lib/db'
 import { generateWellnessFacts } from '@/lib/generate-wellness-facts'
+import { revalidateWellnessSession } from '@/lib/revalidate-wellness-session'
 
 async function main() {
   const ctx = createContext()
 
-  const twitterUsername = 'sama'
-  // const twitterUser = JSON.parse(
-  //   await fs.readFile(`out/${twitterUsername}.json`, 'utf8')
-  // ) as types.TwitterUser
+  const twitterUsername = 'andyydrawss'
+  await revalidateWellnessSession({ twitterUsername })
+
   const twitterUser = await prisma.twitterUser.findUnique({
     where: {
       twitterUsername

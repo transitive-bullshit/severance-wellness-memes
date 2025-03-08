@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { assert as assertImpl } from '@agentic/core'
 import hashObjectImpl, { type Options as HashObjectOptions } from 'hash-object'
 

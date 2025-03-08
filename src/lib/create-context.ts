@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { SocialDataClient } from '@agentic/social-data'
 import defaultKy from 'ky'
 import { OpenAIClient } from 'openai-fetch'

@@ -36,6 +36,11 @@ export async function getOrUpsertTwitterUser({
     })
   }
 
+  user.profile_image_url_https = user.profile_image_url_https.replace(
+    '_normal.jpg',
+    '_400x400.jpg'
+  )
+
   return prisma.twitterUser.create({
     data: {
       id: user.id_str,
