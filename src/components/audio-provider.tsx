@@ -33,7 +33,7 @@ export function AudioProvider({
     autoPlay: false,
     loop: true,
     controls: true,
-    preload: 'auto'
+    preload: 'metadata'
   })
 
   const toggleAudio = useCallback(() => {
