@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       <section>
-        <h1 className='my-0! text-center text-balance md:leading-none'>
+        <h1 className='my-0! text-center text-balance leading-snug md:leading-none'>
           Severance Wellness Session
         </h1>
 
@@ -23,7 +23,7 @@ export default function Page() {
       </section>
 
       <section className='flex-1'>
-        <h2 className='text-center text-balance'>Example Wellness Memes</h2>
+        <h2 className='text-center text-balance'>Example Memes</h2>
 
         <WellnessFactGalleryByIds
           wellnessFactIds={[

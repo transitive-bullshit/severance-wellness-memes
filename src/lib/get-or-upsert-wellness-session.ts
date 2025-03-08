@@ -1,11 +1,30 @@
 'use server'
 
 import { nanoid } from 'nanoid'
+import { redirect } from 'next/navigation'
 
 import type * as types from './types'
 import { createContext } from './create-context'
 import { prisma } from './db'
+import { revalidateWellnessSession } from './revalidate-wellness-session'
 import { tryGetTwitterUserByUsername } from './twitter-utils'
+
+export async function checkPendingWellnessSession({
+  twitterUsername
+}: {
+  twitterUsername: string
+}): Promise<void> {
+  const wellnessSession = await prisma.wellnessSession.findUnique({
+    where: {
+      twitterUsername
+    }
+  })
+
+  if (wellnessSession?.status === 'resolved') {
+    await revalidateWellnessSession({ twitterUsername })
+    redirect(`/x/${twitterUsername}`)
+  }
+}
 
 export async function getOrUpsertWellnessSession({
   twitterUsername

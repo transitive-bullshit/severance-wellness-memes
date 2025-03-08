@@ -7,7 +7,7 @@ export default async function Page() {
         <h3>Loading wellness session...</h3>
       </section>
 
-      <section className='flex-auto justify-center p-8'>
+      <section>
         <LoadingIndicator />
       </section>
     </>

@@ -64,7 +64,7 @@ export async function generateWellnessFactImageResponse({
               textWrap: 'balance'
             }}
           >
-            {wellnessFact?.text?.replaceAll('@', '') ||
+            {wellnessFact?.text?.replaceAll(/[#@]/g, '') ||
               'The work is mysterious and important.'}
             {/* {'Your outie loves creating viral Severance memes.'} */}
           </div>

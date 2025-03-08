@@ -80,9 +80,7 @@ export default function RootLayout({
               <div className={styles.root}>
                 <Header />
 
-                <main
-                  className={cs(styles.main, 'py-16 md:py-20 px-4 md:px-0')}
-                >
+                <main className={cs(styles.main, 'pt-8 pb-16 px-4 md:px-0')}>
                   {children}
                 </main>
 

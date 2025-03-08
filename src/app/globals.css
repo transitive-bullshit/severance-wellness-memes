@@ -113,7 +113,7 @@ main section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  @apply mb-16 md:mb-20;
+  @apply mb-16;
 }
 
 main section:last-of-type {
