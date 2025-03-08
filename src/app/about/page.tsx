@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
-import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-session-cta'
 import { Markdown } from '@/components/markdown'
 import { UserAvatar } from '@/components/user-avatar'
 import { WellnessFactById } from '@/components/wellness-fact-by-id'
@@ -11,6 +10,7 @@ import { WellnessFactGalleryByIds } from '@/components/wellness-fact-gallery-by-
 import * as config from '@/lib/config'
 
 import styles from './styles.module.css'
+import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-session-cta'
 
 export const dynamic = 'force-static'
 
