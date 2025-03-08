@@ -1,6 +1,7 @@
 'use client'
 
 import cs from 'clsx'
+import { Loader2 } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import random from 'random'
@@ -9,6 +10,7 @@ import { type FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useAudio } from '@/components/audio-provider'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 
+import { Button } from '../ui/button'
 import styles from './styles.module.css'
 
 const twitterUsers = random
@@ -30,6 +32,7 @@ export function AnimatedInput({
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const { isAudioEnabled, refreshAudio } = useAudio()
+  const [isLoading, setIsLoading] = useState(false)
 
   // Focus the input field on mount
   useEffect(() => {
@@ -94,6 +97,8 @@ export function AnimatedInput({
       const username = getTwitterUsername()
 
       if (username) {
+        setIsLoading(true)
+
         // Start audio if it's enabled and not already playing
         if (isAudioEnabled) {
           refreshAudio()
@@ -119,14 +124,14 @@ export function AnimatedInput({
     >
       <input
         ref={inputRef}
-        data-1p-ignore
         type='text'
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder={`@${placeholder}`}
         className={styles.input}
         aria-label='Twitter username'
-        autoFocus
+        autoFocus={!!focused}
+        data-1p-ignore
         autoComplete='off'
         autoCorrect='off'
         autoCapitalize='off'
@@ -135,15 +140,24 @@ export function AnimatedInput({
         data-lpignore='true'
       />
 
-      <motion.button
-        type='submit'
-        className={styles.submitButton}
-        whileHover={twitterUsername ? { scale: 1.05 } : {}}
-        whileTap={twitterUsername ? { scale: 0.95 } : {}}
-        disabled={!twitterUsername}
-      >
-        Generate memes
-      </motion.button>
+      <Button asChild>
+        <motion.button
+          type='submit'
+          className={cs(styles.submitButton, 'h-full')}
+          whileHover={twitterUsername ? { scale: 1.05 } : {}}
+          whileTap={twitterUsername ? { scale: 0.95 } : {}}
+          disabled={!twitterUsername || isLoading}
+        >
+          {isLoading ? (
+            <span>
+              <Loader2 className='inline-block animate-spin mr-2' />
+              Loading...
+            </span>
+          ) : (
+            <span>Generate memes</span>
+          )}
+        </motion.button>
+      </Button>
     </form>
   )
 }

@@ -49,7 +49,7 @@ export function UserAvatar({
         src={user.profile_image_url_https}
         width={48}
         height={48}
-        className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
+        className='inline-block! size-10 rounded-full ring-2 md:ring-1 ring-accent-foreground'
       />
 
       {children}

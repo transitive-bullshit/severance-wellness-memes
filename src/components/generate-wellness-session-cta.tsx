@@ -1,4 +1,5 @@
 import cs from 'clsx'
+import * as motion from 'motion/react-client'
 
 import { AnimatedInput } from './animated-input'
 
@@ -8,11 +9,14 @@ export function GenerateWellnessSessionCTA({
   className?: string
 }) {
   return (
-    <div
+    <motion.div
       className={cs(
         'grid grid-cols-1 rounded-[2rem] shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md max-w-lg',
         className
       )}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <div className='grid grid-cols-1 rounded-[2rem] p-2 shadow-md shadow-black/5'>
         <div className='rounded-3xl bg-white p-6 shadow-2xl ring-1 ring-black/5'>
@@ -30,6 +34,6 @@ export function GenerateWellnessSessionCTA({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
