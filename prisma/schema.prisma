@@ -52,7 +52,7 @@ model WellnessSession {
 }
 
 model TwitterUser {
-  id        String   @id @default(cuid())
+  id        String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

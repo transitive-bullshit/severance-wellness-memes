@@ -1,5 +1,7 @@
 'use server'
 
+import { nanoid } from 'nanoid'
+
 import type * as types from './types'
 import { createContext } from './create-context'
 import { prisma } from './db'
@@ -28,8 +30,11 @@ export async function getOrUpsertTwitterUser({
 
   console.log('twitter user', user)
   if (!user) {
+    const twitterUserId = `missing-${nanoid()}`
+
     return prisma.twitterUser.create({
       data: {
+        id: twitterUserId,
         twitterUsername,
         status: 'missing'
       }
