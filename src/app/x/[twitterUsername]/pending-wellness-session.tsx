@@ -40,7 +40,7 @@ export function PendingWellnessSession({
           />
         </h1>
 
-        <p className='max-w-xl'>
+        <p className='max-w-2xl'>
           Your memes are being generated. This will take a few minutes. This
           page should automatically refresh once they&apos;re ready, but if it
           doesn&apos;t, try refreshing after a few minutes.

@@ -36,6 +36,12 @@ export function WellnessFactMenu({
 }) {
   const [status, setStatus] = useState<Status>('idle')
   const wellnessFactUrl = `${config.prodUrl}/x/${wellnessFact.twitterUsername}/o/${wellnessFact.id}`
+  const twitterShareUrl = new URL('https://x.com/intent/tweet')
+  twitterShareUrl.searchParams.set(
+    'text',
+    'This severance meme was created from my twitter profile using AI by @transitive_bs.\n\nPraise Kier.'
+  )
+  twitterShareUrl.searchParams.set('url', wellnessFactUrl)
 
   const onCopyText = useCallback(async () => {
     setStatus('loading')
@@ -191,10 +197,7 @@ export function WellnessFactMenu({
 
         <DropdownMenuGroup>
           <DropdownMenuItem className='cursor-pointer' asChild>
-            <Link
-              href={`https://x.com/intent/tweet?text=${'Praise Kier.'}&url=${wellnessFactUrl}`}
-              target='_blank'
-            >
+            <Link href={twitterShareUrl.toString()} target='_blank'>
               Share on X / Twitter <ExternalLink />
             </Link>
           </DropdownMenuItem>
