@@ -12,7 +12,7 @@ import * as config from '@/lib/config'
 
 import { Footer } from './footer'
 import { Header } from './header'
-import { PostHogProvider } from './providers'
+import { PostHogProvider } from './posthog-provider'
 import styles from './styles.module.css'
 
 const inter = Inter({

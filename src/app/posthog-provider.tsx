@@ -3,7 +3,7 @@
 import { usePathname, useSearchParams } from 'next/navigation'
 import posthog from 'posthog-js'
 import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import { posthogHost, posthogKey } from '@/lib/config'
 
@@ -35,6 +35,7 @@ function PostHogPageView() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const posthog = usePostHog()
+  const [prevPathname, setPrevPathname] = useState<string | null>(null)
 
   // Track pageviews
   useEffect(() => {
@@ -44,9 +45,14 @@ function PostHogPageView() {
         url = url + '?' + searchParams.toString()
       }
 
+      if (prevPathname && prevPathname !== pathname) {
+        posthog.capture('$pageleave', { $pathname: prevPathname })
+      }
+
       posthog.capture('$pageview', { $current_url: url })
+      setPrevPathname(pathname)
     }
-  }, [pathname, searchParams, posthog])
+  }, [pathname, prevPathname, searchParams, posthog])
 
   return null
 }

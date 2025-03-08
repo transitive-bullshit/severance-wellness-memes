@@ -89,10 +89,10 @@ I prefer public convos so the answers can help other people who might have simil
 ## TODO
 
 - MVP Launch
-  - [ ] improve landing page hero section
   - [ ] stress test database and connection limits...
   - [ ] launch twitter thread
 - Post-MVP
+  - [ ] improve landing page hero section
   - [ ] improve header section + mobile support
   - [ ] add basic pricing page w/ explanation for why I had to add the paywall
   - [ ] add url resolving to `resolveTwitterUser` to give more context
