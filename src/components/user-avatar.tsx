@@ -45,7 +45,7 @@ export function UserAvatar({
       )}
     >
       <Image
-        alt={user.name}
+        alt={user.screen_name}
         src={user.profile_image_url_https.replace(
           '_normal.jpg',
           '_400x400.jpg'

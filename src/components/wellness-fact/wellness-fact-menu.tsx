@@ -144,7 +144,7 @@ export function WellnessFactMenu({
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild className={styles.dropdownMenu}>
-        <Button variant='secondary' size='icon'>
+        <Button variant='secondary' size='icon' aria-label='Actions'>
           {status === 'success' ? (
             <Check />
           ) : status === 'loading' ? (
