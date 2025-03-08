@@ -2,10 +2,12 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import type * as types from '@/lib/types'
 import { LoadingIndicator } from '@/components/loading-indicator'
 import { UserAvatar } from '@/components/user-avatar'
+import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 import { revalidateWellnessSession } from '@/lib/revalidate-wellness-session'
 
 import { CheckoutHandler } from './checkout-handler'
@@ -20,11 +22,22 @@ export function PendingWellnessSession({
   const router = useRouter()
 
   // TODO: This is hacky...
-  // TODO: This isn't even working on prod...
   useEffect(() => {
     const interval = setInterval(async () => {
-      await revalidateWellnessSession({ twitterUsername })
-      router.refresh()
+      try {
+        const wellnessSession = await getOrUpsertWellnessSession({
+          twitterUsername
+        })
+
+        if (wellnessSession.status === 'resolved') {
+          await revalidateWellnessSession({ twitterUsername })
+          toast.success('Your memes are ready! Please refresh the page.')
+          router.refresh()
+          router.replace(`/x/${twitterUsername}`)
+        }
+      } catch (err: any) {
+        console.warn('error fetching wellness session', err.message)
+      }
     }, 1000)
     return () => clearInterval(interval)
   }, [router, twitterUsername])
