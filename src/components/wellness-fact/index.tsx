@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Suspense, use } from 'react'
 
 import type * as types from '@/lib/types'
+import * as config from '@/lib/config'
 import { isPromiseLike } from '@/lib/utils'
 
 import styles from './styles.module.css'
@@ -73,7 +74,7 @@ function WellnessFactImpl({
     <div className={cs(styles.wellnessFactContainer, className)}>
       <Image
         className={styles.wellnessFact}
-        src={`/o/${wellnessFact.id}/image`}
+        src={`${config.isDev ? '' : config.prodUrl}/o/${wellnessFact.id}/image`}
         placeholder='blur'
         blurDataURL={blurDataUrl}
         alt={wellnessFact.text}
