@@ -1,8 +1,8 @@
 import { unstable_cache as cache } from 'next/cache'
-import random from 'random'
+import { notFound } from 'next/navigation'
 
-import { prisma } from '@/lib/db'
 import { generateWellnessFactImageResponse } from '@/lib/generate-wellness-fact-image-response'
+import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
 // Image metadata
 export const size = {
@@ -19,43 +19,67 @@ export default async function Image({
 }) {
   const { twitterUsername } = await params
 
-  const getHeroWellnessFactId = cache(
-    async ({
-      twitterUsername
-    }: {
-      twitterUsername: string
-    }): Promise<string> => {
-      let heroWellnessFactId = 'cm7sb9ea400022r4kmxnvohbk'
+  const getWellnessSession = cache(getOrUpsertWellnessSession, [
+    `wellness-session-${twitterUsername}`
+  ])
 
-      try {
-        const wellnessSession = await prisma.wellnessSession.findUnique({
-          where: { twitterUsername },
-          select: { pinnedWellnessFactId: true, wellnessFacts: true }
-        })
+  const wellnessSession = await getWellnessSession({ twitterUsername })
+  if (!wellnessSession) return notFound()
 
-        heroWellnessFactId =
-          wellnessSession?.pinnedWellnessFactId ??
-          wellnessSession?.wellnessFacts[0]?.id ??
-          random.choice(
-            await prisma.wellnessFact.findMany({
-              where: { tags: { has: 'featured' } },
-              select: { id: true }
-            })
-          )?.id ??
-          heroWellnessFactId
-      } catch (err) {
-        console.error('open-graph image error', err)
-      }
+  const { userFullName, twitterUser } = wellnessSession
 
-      return heroWellnessFactId
-    },
-    [`wellness-fact-${twitterUsername}`],
-    {
-      revalidate: 60 * 60 * 24 // 1 day in seconds
-    }
-  )
+  const user = twitterUser!.user!
+  const userFullNameParts = userFullName
+    ?.split(' ')
+    .map((s: string) => s.trim())
+    .filter(Boolean)
+  const userDisplayName =
+    userFullName && userFullNameParts!.length === 2
+      ? `${userFullNameParts![0]} ${userFullNameParts![1]![0]}.`
+      : userFullName || user.name || user.screen_name || 'Mysterious Guest'
 
-  const wellnessFactId = await getHeroWellnessFactId({ twitterUsername })
+  return generateWellnessFactImageResponse({
+    content: (
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          gap: '0.5em'
+        }}
+      >
+        <p
+          style={{
+            margin: '0',
+            padding: '0',
+            textAlign: 'center'
+          }}
+        >
+          Hello, {userDisplayName}
+        </p>
 
-  return generateWellnessFactImageResponse({ wellnessFactId })
+        <p
+          style={{
+            margin: '0',
+            padding: '0',
+            textAlign: 'center'
+          }}
+        >
+          These wellness facts are based on your outie&apos;s Twitter profile.
+        </p>
+
+        <p
+          style={{
+            margin: '0',
+            padding: '0',
+            textAlign: 'center'
+          }}
+        >
+          Try to enjoy each one equally.
+        </p>
+      </div>
+    )
+  })
 }

@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
+import type { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 import { ImageResponse } from 'next/og'
 
@@ -10,17 +11,19 @@ import { getWellnessFactById } from '@/lib/db/queries'
 // 'Your outie’s favorite form of self-care is releasing pricing update tweets for @vercel several times a month.'
 
 export async function generateWellnessFactImageResponse({
-  wellnessFactId
+  wellnessFactId,
+  content
 }: {
-  wellnessFactId: string
+  wellnessFactId?: string
+  content?: ReactNode
 }): Promise<ImageResponse> {
   const [wellnessFactBg, inter, wellnessFact] = await Promise.all([
     readFile(path.join(process.cwd(), 'public/wellness-fact-bg.jpg')),
     readFile(path.join(process.cwd(), 'public/fonts/inter-light.ttf')),
-    getWellnessFactById(wellnessFactId)
+    wellnessFactId ? getWellnessFactById(wellnessFactId) : Promise.resolve(null)
   ])
 
-  if (!wellnessFact) {
+  if (!wellnessFact && !content) {
     return notFound()
   }
 
@@ -61,11 +64,15 @@ export async function generateWellnessFactImageResponse({
               lineHeight: '1.35',
               color: '#eee',
               textAlign: 'center',
-              textWrap: 'balance'
+              textWrap: 'balance',
+              display: content ? 'flex' : 'block'
             }}
           >
-            {wellnessFact?.text?.replaceAll(/[#@]/g, '') ||
-              'The work is mysterious and important.'}
+            {wellnessFact
+              ? wellnessFact.text?.replaceAll(/[#@]/g, '') ||
+                'The work is mysterious and important.'
+              : content}
+
             {/* {'Your outie loves creating viral Severance memes.'} */}
           </div>
         </div>

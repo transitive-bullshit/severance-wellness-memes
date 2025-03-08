@@ -1,3 +1,5 @@
+import type { Metadata, ResolvingMetadata } from 'next'
+import { pruneNullOrUndefined } from '@agentic/core'
 import { unstable_cache as cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 
@@ -10,6 +12,55 @@ import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session
 import { ErrorWellnessSession } from './error-wellness-session'
 import { LockedWellnessSession } from './locked-wellness-session'
 import { PendingWellnessSession } from './pending-wellness-session'
+
+export async function generateMetadata(
+  {
+    params
+  }: {
+    params: Promise<{ twitterUsername: string }>
+  },
+  parentP: ResolvingMetadata
+): Promise<Metadata> {
+  const { twitterUsername } = await params
+
+  const getWellnessSession = cache(getOrUpsertWellnessSession, [
+    `wellness-session-${twitterUsername}`
+  ])
+
+  const wellnessSession = await getWellnessSession({ twitterUsername })
+  if (!wellnessSession) return notFound()
+
+  if (wellnessSession.status !== 'resolved') {
+    return {}
+  }
+
+  const { userFullName, twitterUser } = wellnessSession
+
+  const user = twitterUser!.user!
+  const userFullNameParts = userFullName
+    ?.split(' ')
+    .map((s: string) => s.trim())
+    .filter(Boolean)
+  const userDisplayName =
+    userFullName && userFullNameParts!.length === 2
+      ? `${userFullNameParts![0]} ${userFullNameParts![1]![0]}.`
+      : userFullName || user.name || user.screen_name || 'Mysterious Guest'
+
+  const title = `Severance Wellness Session for ${userDisplayName}`
+  const parent = await parentP
+
+  return {
+    title,
+    openGraph: pruneNullOrUndefined({
+      ...parent.openGraph,
+      title
+    }),
+    twitter: pruneNullOrUndefined({
+      ...parent.twitter,
+      title
+    })
+  }
+}
 
 export default async function Page({
   params
