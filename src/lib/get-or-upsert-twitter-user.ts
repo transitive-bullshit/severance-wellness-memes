@@ -12,14 +12,14 @@ export async function getOrUpsertTwitterUser({
   twitterUsername: string
   ctx?: types.AgenticContext
 }): Promise<types.TwitterUser> {
-  const twitterUser = await prisma.twitterUser.findUnique({
+  const existingTwitterUser = await prisma.twitterUser.findUnique({
     where: {
       twitterUsername
     }
   })
 
-  if (twitterUser) {
-    return twitterUser
+  if (existingTwitterUser) {
+    return existingTwitterUser
   }
 
   const user = await tryGetTwitterUserByUsername(twitterUsername, ctx, {
@@ -41,18 +41,34 @@ export async function getOrUpsertTwitterUser({
     '_400x400.jpg'
   )
 
-  return prisma.twitterUser.upsert({
-    where: {
-      twitterUsername
-    },
-    update: {
-      user
-    },
-    create: {
-      id: user.id_str,
-      twitterUsername,
-      status: 'initial',
-      user
+  try {
+    const twitterUser = await prisma.twitterUser.upsert({
+      where: {
+        twitterUsername
+      },
+      update: {
+        user
+      },
+      create: {
+        id: user.id_str,
+        twitterUsername,
+        status: 'initial',
+        user
+      }
+    })
+
+    return twitterUser
+  } catch (err) {
+    const existingTwitterUser = await prisma.twitterUser.findUnique({
+      where: {
+        twitterUsername
+      }
+    })
+
+    if (existingTwitterUser) {
+      return existingTwitterUser
     }
-  })
+
+    throw err
+  }
 }

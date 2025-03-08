@@ -61,33 +61,54 @@ export async function getOrUpsertWellnessSession({
   console.log('twitter user', user)
   const status = user ? 'initial' : 'missing'
 
-  const wellnessSession = await prisma.wellnessSession.upsert({
-    where: {
-      twitterUsername
-    },
-    update: {
-      status
-    },
-    create: {
-      twitterUserId: user?.id_str ?? `missing-${nanoid()}`,
-      twitterUsername,
-      status,
-      twitterUser: {
-        create: {
-          twitterUsername,
-          user,
-          status
+  try {
+    const wellnessSession = await prisma.wellnessSession.upsert({
+      where: {
+        twitterUsername
+      },
+      update: {
+        status
+      },
+      create: {
+        twitterUserId: user?.id_str ?? `missing-${nanoid()}`,
+        twitterUsername,
+        status,
+        twitterUser: {
+          create: {
+            twitterUsername,
+            user,
+            status
+          }
+        }
+      },
+      include: {
+        wellnessFacts: true,
+        pinnedWellnessFact: true,
+        twitterUser: {
+          select: { user: true, status: true }
         }
       }
-    },
-    include: {
-      wellnessFacts: true,
-      pinnedWellnessFact: true,
-      twitterUser: {
-        select: { user: true, status: true }
-      }
-    }
-  })
+    })
 
-  return wellnessSession.toJSON()
+    return wellnessSession.toJSON()
+  } catch (err) {
+    const existingWellnessSession = await prisma.wellnessSession.findUnique({
+      where: {
+        twitterUsername
+      },
+      include: {
+        wellnessFacts: true,
+        pinnedWellnessFact: true,
+        twitterUser: {
+          select: { user: true, status: true }
+        }
+      }
+    })
+
+    if (existingWellnessSession) {
+      return existingWellnessSession.toJSON()
+    }
+
+    throw err
+  }
 }
