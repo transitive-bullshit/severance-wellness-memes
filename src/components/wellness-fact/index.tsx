@@ -77,9 +77,8 @@ function WellnessFactImpl({
         placeholder='blur'
         blurDataURL={blurDataUrl}
         alt={wellnessFact.text}
-        width={2048}
-        height={1024}
         priority={priority}
+        fill
       />
 
       <WellnessFactMenu wellnessFact={wellnessFact} />
