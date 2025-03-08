@@ -544,10 +544,11 @@ async function main() {
           .map((s: string) => s.trim())
           .filter(Boolean)
         const userFirstName =
-          userFullName &&
-          (userFullNameParts!.length === 2 || userFullNameParts!.length === 1)
+          userFullName && userFullNameParts!.length === 2
             ? userFullNameParts![0]
-            : undefined
+            : userFullNameParts!.length === 1
+              ? userFullNameParts![0]?.toLowerCase()
+              : undefined
 
         const name = userFirstName ? userFirstName + ',' : '👋'
         const url = `${config.prodUrl}/x/${twitterUsername}`
@@ -556,16 +557,16 @@ async function main() {
 
         if (category === 'g') {
           texts = [
-            `Hey ${name} I created some fun Severance memes based on your twitter profile + tweets.\n\nYou can check them out here ${url}\n\nLemme know what you think :)`
+            `Hey ${name} I created some fun Severance memes using GPT-4.5 based on your twitter profile + tweets. ${url} \n\nLemme know what you think :)`
           ]
         } else if (category === 'f') {
           texts = [
             `Hey ${name} I created some fun AI-generated Severance memes based on your twitter profile + tweets. ${url}`,
-            `This project is open source and purely for fun, so no worries if Severance isn't your thing, but if you vibe w/ the memes, lemme know your favorite ones by responding to or retweeting this launch thread 🙏 ${config.twitterLaunchThreadUrl}`
+            `This project is open source and purely for fun, so no worries if Severance isn't your thing, but if you vibe w/ the memes, lemme know in the launch thread 🙏 ${config.twitterLaunchThreadUrl}`
           ]
         } else if (category === 's') {
           texts = [
-            `Hey ${name} I noticed you're into Severance memes, so I created some wellness memes based on your twitter profile + tweets. ${url}`,
+            `Hey ${name} I saw that you're into Severance memes, so I created some wellness memes based on your twitter profile + tweets. ${url}`,
             `If you vibe w/ the memes, lemme know your favorite ones by responding to or retweeting this launch thread. ${config.twitterLaunchThreadUrl}\n\nThanks && Praise Kier 🙏`
           ]
         } else {

@@ -11,7 +11,7 @@ import { generateWellnessFacts } from '@/lib/generate-wellness-facts'
 async function main() {
   const ctx = createContext()
 
-  const twitterUsername = 'realDonaldTrump'
+  const twitterUsername = 'rauchg'
 
   const twitterUser = await prisma.twitterUser.findUnique({
     where: {

@@ -15,7 +15,7 @@ async function main() {
   })
 
   const featuredUsers = new Set<string>(
-    featuredTwitterUsers.map((t) => t.twitterUsername)
+    featuredTwitterUsers.map((t) => t.twitterUsername.toLowerCase())
   )
 
   const wellnessSessions = (
@@ -25,7 +25,7 @@ async function main() {
       }
     })
   ).filter((wellnessSession) =>
-    featuredUsers.has(wellnessSession.twitterUsername)
+    featuredUsers.has(wellnessSession.twitterUsername.toLowerCase())
   )
 
   await pMap(
