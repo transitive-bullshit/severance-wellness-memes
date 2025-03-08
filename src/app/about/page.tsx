@@ -301,10 +301,29 @@ export default async function Page() {
 
           <h1>
             Credits
-            <Link href='/x/transitive_bs' className='ml-3 inline'>
+            <Link
+              href='https://x.com/transitive_bs'
+              className='ml-3 inline'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               <Image
                 alt='Travis Fischer'
                 src='https://pbs.twimg.com/profile_images/1347656662463766529/igIs8izN_400x400.png'
+                width={400}
+                height={400}
+                className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
+              />
+            </Link>
+            <Link
+              href='https://x.com/habazzi'
+              className='ml-3 inline'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <Image
+                alt='Hassan Bazzi'
+                src='https://pbs.twimg.com/profile_images/1372069160944070657/e0IrzuFh_400x400.jpg'
                 width={400}
                 height={400}
                 className='inline-block! size-10 rounded-full ring-1 ring-accent-foreground'
@@ -328,6 +347,14 @@ export default async function Page() {
               rel='noopener noreferrer'
             >
               {config.author}
+            </Link>{' '}
+            and{' '}
+            <Link
+              href='https://x.com/habazzi'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Hassan Bazzi
             </Link>
             . The{' '}
             <Link

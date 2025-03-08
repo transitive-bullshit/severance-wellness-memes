@@ -88,10 +88,8 @@ I prefer public convos so the answers can help other people who might have simil
 
 ## TODO
 
-- MVP Launch
-  - [ ] stress test database and connection limits...
-  - [ ] launch twitter thread
 - Post-MVP
+  - [ ] add sitemap
   - [ ] improve landing page hero section
   - [ ] improve header section + mobile support
   - [ ] add basic pricing page w/ explanation for why I had to add the paywall
