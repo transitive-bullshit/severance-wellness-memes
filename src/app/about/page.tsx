@@ -41,7 +41,7 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2 className='text-balance'>
+          <h1 className='text-balance leading-normal!'>
             Examples Roasting <Link href='x/realDonaldTrump'>Donald Trump</Link>
             <UserAvatar
               user={{
@@ -53,7 +53,7 @@ export default async function Page() {
               type='profile'
               className='ml-3'
             />
-          </h2>
+          </h1>
 
           <p>
             <b>All memes are personalized</b> to the user's profile and most
@@ -71,7 +71,7 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2 className='text-balance'>
+          <h1 className='text-balance leading-normal!'>
             Examples Roasting{' '}
             <Link href={`${config.url}/x/sama`}>Sam Altman</Link>
             <UserAvatar
@@ -84,7 +84,7 @@ export default async function Page() {
               type='profile'
               className='ml-3'
             />
-          </h2>
+          </h1>
 
           <WellnessFactGalleryByIds
             wellnessFactIds={[

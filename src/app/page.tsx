@@ -23,10 +23,13 @@ export default function Page() {
       </section>
 
       <section className='flex-1'>
-        <h2 className='text-center text-balance'>Example Memes</h2>
+        <h2 className='text-center text-balance'>Example Wellness Memes</h2>
 
         <WellnessFactGalleryByIds
-          wellnessFactIds={['cm7sb9ea400022r4kmxnvohbk']}
+          wellnessFactIds={[
+            'cm7sb9ea400022r4kmxnvohbk',
+            'cm7sb9ea4000h2r4k69tva2fr'
+          ]}
         />
       </section>
 
@@ -51,9 +54,10 @@ export default function Page() {
         <WellnessFactGalleryByIds
           wellnessFactIds={[
             'cm7u6r0jw002a2r6o5kn6tdr4',
-            // 'cm7u6r0jw00262r6oglz3jqyc',
-            'cm7u6r0jw002b2r6opuvsacd4'
-            // 'cm7u6r0jw002f2r6oazj0a9bs'
+            // 'cm7u6r0jw002i2r6oy2l2qgdn'
+            // 'cm7u6r0jw00262r6oglz3jqyc'
+            // 'cm7u6r0jw002b2r6opuvsacd4'
+            'cm7u6r0jw002f2r6oazj0a9bs'
           ]}
         />
       </section>
