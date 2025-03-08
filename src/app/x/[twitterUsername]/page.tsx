@@ -83,7 +83,7 @@ export default async function Page({
   return (
     <>
       <section>
-        <h1 className='mb-0!'>
+        <h1 className='mb-0! items-center flex flex-col md:flex-row justify-center'>
           Hello, {userDisplayName}
           <UserAvatar
             user={wellnessSession.twitterUser?.user}
