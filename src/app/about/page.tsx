@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
+import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-session-cta'
 import { Markdown } from '@/components/markdown'
 import { UserAvatar } from '@/components/user-avatar'
 import { WellnessFactById } from '@/components/wellness-fact-by-id'
@@ -390,6 +391,10 @@ export default async function Page() {
             See the <Link href='/legal'>legal docs</Link> for more details.
           </p>
         </Markdown>
+      </section>
+
+      <section>
+        <GenerateWellnessSessionCTA />
       </section>
     </>
   )
