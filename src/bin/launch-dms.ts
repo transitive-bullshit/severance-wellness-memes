@@ -490,7 +490,7 @@ const tu = [
   { twitterUsername: 'deepbluestrips', category: 's' },
   { twitterUsername: 'mikesmicYT', category: 's' },
   { twitterUsername: 'Gizmodo', category: 's' },
-  { twitterUsername: 'treenalee1202', category: 's' },
+  { twitterUsername: 'treenalee1202', category: 'f' },
   { twitterUsername: 'drchuck', category: 's' },
   { twitterUsername: 'severanceclips', category: 's' },
   { twitterUsername: 'SeveranceTVSHOW', category: 's' },
@@ -552,14 +552,22 @@ async function main() {
         const name = userFirstName ? userFirstName + ',' : '👋'
         const url = `${config.prodUrl}/x/${twitterUsername}`
         const category = tuToC[twitterUsername]
-        let text: string
+        let texts: string[]
 
         if (category === 'g') {
-          text = `Hey ${name} I created some fun Severance memes based on your twitter profile + tweets.\n\nYou can check them out here ${url}\n\nLemme know what you think :)`
+          texts = [
+            `Hey ${name} I created some fun Severance memes based on your twitter profile + tweets.\n\nYou can check them out here ${url}\n\nLemme know what you think :)`
+          ]
         } else if (category === 'f') {
-          text = `Hey ${name} I created some fun AI-generated Severance memes based on your twitter profile + tweets. ${url}\n\nThis project is open source and purely for fun, so no worries if Severance isn't your thing, but if you vibe w/ the memes, lemme know your favorite ones by responding to or retweeting this launch thread 🙏 ${config.twitterLaunchThreadUrl}`
+          texts = [
+            `Hey ${name} I created some fun AI-generated Severance memes based on your twitter profile + tweets. ${url}`,
+            `This project is open source and purely for fun, so no worries if Severance isn't your thing, but if you vibe w/ the memes, lemme know your favorite ones by responding to or retweeting this launch thread 🙏 ${config.twitterLaunchThreadUrl}`
+          ]
         } else if (category === 's') {
-          text = `Hey ${name} I noticed you're into Severance memes, so I created some wellness memes based on your twitter profile + tweets. ${url}\n\nIf you vibe w/ the memes, lemme know your favorite ones by responding to or retweeting this launch thread: ${config.twitterLaunchThreadUrl}\n\nThanks && Praise Kier 🙏`
+          texts = [
+            `Hey ${name} I noticed you're into Severance memes, so I created some wellness memes based on your twitter profile + tweets. ${url}`,
+            `If you vibe w/ the memes, lemme know your favorite ones by responding to or retweeting this launch thread. ${config.twitterLaunchThreadUrl}\n\nThanks && Praise Kier 🙏`
+          ]
         } else {
           return
         }
@@ -567,7 +575,7 @@ async function main() {
         return {
           twitterUsername,
           category,
-          text
+          texts
         }
       },
       {
@@ -578,12 +586,7 @@ async function main() {
     .filter(Boolean)
     .sort((a, b) => a.category.localeCompare(b.category))
 
-  // console.log(JSON.stringify(results, null, 2))
-  console.log(
-    results
-      .map((r) => `${r.twitterUsername}\t${r.category}\t${r.text}`)
-      .join('\n')
-  )
+  console.log(JSON.stringify(results, null, 2))
 }
 
 try {

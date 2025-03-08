@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { WellnessFact } from '@/components/wellness-fact'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
+import * as config from '@/lib/config'
 import { prisma } from '@/lib/db'
 import { getWellnessFactById } from '@/lib/db/queries'
 import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
@@ -157,12 +158,14 @@ export async function generateMetadata(
     openGraph: pruneNullOrUndefined({
       ...parent.openGraph,
       title,
-      description
+      description,
+      images: `${config.prodUrl}/x/${twitterUsername}/o/${wellnessFactId}/opengraph-image`
     }),
     twitter: pruneNullOrUndefined({
       ...parent.twitter,
       title,
-      description
+      description,
+      images: `${config.prodUrl}/x/${twitterUsername}/o/${wellnessFactId}/twitter-image`
     })
   }
 }

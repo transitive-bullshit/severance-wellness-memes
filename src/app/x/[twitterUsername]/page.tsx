@@ -7,6 +7,7 @@ import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-sessi
 import { UserAvatar } from '@/components/user-avatar'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
+import * as config from '@/lib/config'
 import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
 import { ErrorWellnessSession } from './error-wellness-session'
@@ -151,10 +152,12 @@ export async function generateMetadata(
     title,
     openGraph: pruneNullOrUndefined({
       ...parent.openGraph,
+      images: `${config.prodUrl}/x/${twitterUsername}/opengraph-image`,
       title
     }),
     twitter: pruneNullOrUndefined({
       ...parent.twitter,
+      images: `${config.prodUrl}/x/${twitterUsername}/twitter-image`,
       title
     })
   }
