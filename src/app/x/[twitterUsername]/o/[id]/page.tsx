@@ -1,3 +1,6 @@
+import type { Metadata, ResolvingMetadata } from 'next'
+import { pruneNullOrUndefined } from '@agentic/core'
+import { unstable_cache as cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 
 import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-session-cta'
@@ -13,6 +16,7 @@ import { WellnessFact } from '@/components/wellness-fact'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { prisma } from '@/lib/db'
 import { getWellnessFactById } from '@/lib/db/queries'
+import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session'
 
 export default async function Page({
   params
@@ -106,4 +110,59 @@ export async function generateStaticParams() {
       ])
     )
   )
+}
+
+export async function generateMetadata(
+  {
+    params
+  }: {
+    params: Promise<{ id: string; twitterUsername: string }>
+  },
+  parentP: ResolvingMetadata
+): Promise<Metadata> {
+  const { id: wellnessFactId, twitterUsername } = await params
+  const wellnessFact = await getWellnessFactById(wellnessFactId)
+  if (!wellnessFact) return {}
+
+  const getWellnessSession = cache(getOrUpsertWellnessSession, [
+    `wellness-session-${twitterUsername}`
+  ])
+
+  const wellnessSession = await getWellnessSession({ twitterUsername })
+  if (!wellnessSession) return {}
+
+  if (wellnessSession.status !== 'resolved') {
+    return {}
+  }
+
+  const { userFullName, twitterUser } = wellnessSession
+
+  const user = twitterUser!.user!
+  const userFullNameParts = userFullName
+    ?.split(' ')
+    .map((s: string) => s.trim())
+    .filter(Boolean)
+  const userDisplayName =
+    userFullName && userFullNameParts!.length === 2
+      ? `${userFullNameParts![0]} ${userFullNameParts![1]![0]}.`
+      : userFullName || user.name || user.screen_name || 'Mysterious Guest'
+
+  const title = `Severance Wellness Fact for ${userDisplayName}`
+  const description = wellnessFact.text
+  const parent = await parentP
+
+  return {
+    title,
+    description,
+    openGraph: pruneNullOrUndefined({
+      ...parent.openGraph,
+      title,
+      description
+    }),
+    twitter: pruneNullOrUndefined({
+      ...parent.twitter,
+      title,
+      description
+    })
+  }
 }
