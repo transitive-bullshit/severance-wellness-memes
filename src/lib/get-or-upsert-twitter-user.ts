@@ -41,8 +41,14 @@ export async function getOrUpsertTwitterUser({
     '_400x400.jpg'
   )
 
-  return prisma.twitterUser.create({
-    data: {
+  return prisma.twitterUser.upsert({
+    where: {
+      twitterUsername
+    },
+    update: {
+      user
+    },
+    create: {
       id: user.id_str,
       twitterUsername,
       status: 'initial',

@@ -61,8 +61,14 @@ export async function getOrUpsertWellnessSession({
   console.log('twitter user', user)
   const status = user ? 'initial' : 'missing'
 
-  const wellnessSession = await prisma.wellnessSession.create({
-    data: {
+  const wellnessSession = await prisma.wellnessSession.upsert({
+    where: {
+      twitterUsername
+    },
+    update: {
+      status
+    },
+    create: {
       twitterUserId: user?.id_str ?? `missing-${nanoid()}`,
       twitterUsername,
       status,
