@@ -7,13 +7,11 @@ import restoreCursor from 'restore-cursor'
 import { createContext } from '@/lib/create-context'
 import { prisma } from '@/lib/db'
 import { generateWellnessFacts } from '@/lib/generate-wellness-facts'
-import { revalidateWellnessSession } from '@/lib/revalidate-wellness-session'
 
 async function main() {
   const ctx = createContext()
 
-  const twitterUsername = 'andyydrawss'
-  await revalidateWellnessSession({ twitterUsername })
+  const twitterUsername = 'realDonaldTrump'
 
   const twitterUser = await prisma.twitterUser.findUnique({
     where: {
