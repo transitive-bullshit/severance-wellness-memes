@@ -11,7 +11,8 @@ export function UserAvatar({
   user,
   type = 'twitter',
   className,
-  children
+  children,
+  fill = false
 }: {
   user?: Pick<
     types.SocialDataTwitterUser,
@@ -20,6 +21,7 @@ export function UserAvatar({
   type?: 'twitter' | 'profile'
   className?: string
   children?: React.ReactNode
+  fill?: boolean
 }) {
   if (!user?.profile_image_url_https) {
     return null
@@ -40,7 +42,7 @@ export function UserAvatar({
     <ActiveLink
       {...linkProps}
       className={cs(
-        children ? 'inline-flex flex-row items-center gap-3' : 'inline',
+        children ? 'inline-flex flex-row items-center gap-3' : '',
         className
       )}
     >
@@ -50,8 +52,9 @@ export function UserAvatar({
           '_normal.jpg',
           '_400x400.jpg'
         )}
-        width={400}
-        height={400}
+        width={fill ? undefined : 400}
+        height={fill ? undefined : 400}
+        fill={fill}
         className='inline-block! size-10 rounded-full ring-2 md:ring-1 ring-accent-foreground'
       />
 

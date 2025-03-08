@@ -79,7 +79,7 @@ function WellnessFactGalleryImpl({
         {wellnessFacts.map((wellnessFact, index) => (
           <motion.div
             key={wellnessFact.id}
-            className='w-full'
+            className='w-full flex justify-center items-center'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{

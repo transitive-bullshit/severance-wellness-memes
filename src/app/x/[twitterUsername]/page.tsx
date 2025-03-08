@@ -87,11 +87,11 @@ export default async function Page({
           Hello, {userDisplayName}
           <UserAvatar
             user={wellnessSession.twitterUser?.user}
-            className='ml-4'
+            className='ml-4 flex mt-4 md:mt-0'
           />
         </h1>
 
-        <p className='text-muted-foreground py-8 mb-8 border-b border-border text-sm text-balance text-center max-w-2xl'>
+        <p className='text-muted-foreground pt-6 pb-8 mb-8 border-b border-border text-sm text-balance text-center max-w-2xl'>
           All right, {userFirstName}. What I’d like to do is share with you some
           facts about your outie. Because your outie is an exemplary person,
           these facts should be very pleasing. Just relax your body and be open
