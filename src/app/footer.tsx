@@ -4,7 +4,7 @@ import { ActiveLink } from '@/components/active-link'
 import { UserAvatar } from '@/components/user-avatar'
 import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 import { GitHub, Twitter } from '@/icons'
-import { copyright, githubUrl, twitterUrl } from '@/lib/config'
+import { copyright, githubUrl, twitterLaunchThreadUrl } from '@/lib/config'
 
 export function Footer() {
   return (
@@ -63,7 +63,7 @@ export function Footer() {
               <h3 className='text-lg font-semibold'>Social</h3>
               <nav className='flex flex-col space-y-2'>
                 <Link
-                  href={twitterUrl}
+                  href={twitterLaunchThreadUrl}
                   className='flex items-center space-x-2'
                   target='_blank'
                   rel='noopener noreferrer'
