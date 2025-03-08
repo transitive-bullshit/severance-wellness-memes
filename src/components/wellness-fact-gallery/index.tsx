@@ -1,7 +1,7 @@
 'use client'
 
 import cs from 'clsx'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { Suspense, use } from 'react'
 
 import type * as types from '@/lib/types'
@@ -12,13 +12,19 @@ import styles from './styles.module.css'
 
 export function WellnessFactGallery({
   wellnessFacts,
-  className
+  className,
+  estimatedNumItems
 }: {
   wellnessFacts: Promise<(types.WellnessFact | null)[]> | types.WellnessFact[]
   className?: string
+  estimatedNumItems?: number
 }) {
   return (
-    <Suspense fallback={<WellnessFactGallerySkeleton />}>
+    <Suspense
+      fallback={
+        <WellnessFactGallerySkeleton estimatedNumItems={estimatedNumItems} />
+      }
+    >
       {isPromiseLike(wellnessFacts) ? (
         <WellnessFactGalleryP
           wellnessFacts={wellnessFacts}
@@ -69,7 +75,7 @@ function WellnessFactGalleryImpl({
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: index * 0.1,
-              duration: 0.5,
+              duration: 0.3,
               ease: 'easeOut'
             }}
           >
@@ -83,14 +89,14 @@ function WellnessFactGalleryImpl({
 
 export function WellnessFactGallerySkeleton({
   className,
-  numberOfItems = 4
+  estimatedNumItems = 4
 }: {
   className?: string
-  numberOfItems?: number
+  estimatedNumItems?: number
 }) {
   return (
     <div className={cs(styles.wellnessFactGallery, className)}>
-      {Array.from({ length: numberOfItems }).map((_, i) => (
+      {Array.from({ length: estimatedNumItems }).map((_, i) => (
         <WellnessFactSkeleton key={`skeleton-${i}`} />
       ))}
     </div>

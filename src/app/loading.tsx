@@ -9,7 +9,7 @@ export default async function Page() {
         <h3 className={styles.title}>Loading...</h3>
       </section>
 
-      <section className='flex-auto justify-center p-16'>
+      <section className='flex-auto justify-center p-8'>
         <LoadingIndicator />
       </section>
     </>

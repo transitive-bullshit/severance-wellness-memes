@@ -8,6 +8,9 @@ export async function revalidateWellnessSession({
   twitterUsername: string
 }) {
   if (!twitterUsername) return
+
+  // TODO: These don't seem to always be taking effect...
   revalidateTag(`wellness-session-${twitterUsername}`)
   revalidatePath(`/x/${twitterUsername}`)
+  revalidatePath(`/x/${twitterUsername}?checkout=success`)
 }

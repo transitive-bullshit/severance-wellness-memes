@@ -113,14 +113,15 @@ main section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  @apply mb-16;
+  @apply mb-16 md:mb-20;
 }
 
 main section:last-of-type {
   margin-bottom: 0;
 }
 
-:root {
+:root,
+.light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
   --card: oklch(1 0 0);

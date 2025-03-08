@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   title: config.title,
   description: config.description,
   authors: [{ name: config.author, url: config.twitterUrl }],
+  metadataBase: new URL(config.prodUrl),
   keywords: [
     'severance',
     'memes',
@@ -79,7 +80,9 @@ export default function RootLayout({
               <div className={styles.root}>
                 <Header />
 
-                <main className={cs(styles.main, 'py-12 px-4 md:px-0')}>
+                <main
+                  className={cs(styles.main, 'py-16 md:py-20 px-4 md:px-0')}
+                >
                   {children}
                 </main>
 

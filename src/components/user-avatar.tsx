@@ -37,7 +37,13 @@ export function UserAvatar({
         }
 
   return (
-    <ActiveLink {...linkProps} className={cs('inline', className)}>
+    <ActiveLink
+      {...linkProps}
+      className={cs(
+        children ? 'inline-flex flex-row items-center gap-3' : 'inline',
+        className
+      )}
+    >
       <Image
         alt={user.name}
         src={user.profile_image_url_https}

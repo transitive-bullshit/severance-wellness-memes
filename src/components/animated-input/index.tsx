@@ -1,19 +1,25 @@
 'use client'
 
 import cs from 'clsx'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { type FormEvent, useEffect, useRef, useState } from 'react'
+import random from 'random'
+import { type FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useAudio } from '@/components/audio-provider'
+import { featuredTwitterUsers } from '@/data/featured-twitter-users'
 
 import styles from './styles.module.css'
 
+const twitterUsers = random
+  .shuffle(featuredTwitterUsers.map((u) => u.twitterUsername.toLowerCase()))
+  .slice(0, 10)
+
 export function AnimatedInput({
-  twitterUsers,
+  focused = false,
   className
 }: {
-  twitterUsers: string[]
+  focused?: boolean
   className?: string
 }) {
   const [placeholder, setPlaceholder] = useState('')
@@ -27,22 +33,13 @@ export function AnimatedInput({
 
   // Focus the input field on mount
   useEffect(() => {
-    if (inputRef.current) {
+    if (focused && inputRef.current) {
       inputRef.current.focus()
     }
-  }, [])
-
-  // Get a random subset of Twitter users to cycle through
-  const randomUsers = useRef(
-    [...twitterUsers]
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 10)
-      // Ensure we always have at least one default user if the array is empty
-      .concat(twitterUsers.length === 0 ? ['transitive_bs'] : [])
-  ).current
+  }, [focused])
 
   useEffect(() => {
-    const currentUser = randomUsers[currentUserIndex] || 'username'
+    const currentUser = twitterUsers[currentUserIndex] || 'username'
 
     if (isTyping) {
       // Typing animation
@@ -67,50 +64,57 @@ export function AnimatedInput({
         const timeout = setTimeout(() => {
           setPlaceholder(currentUser.slice(0, Math.max(0, typingIndex - 1)))
           setTypingIndex(typingIndex - 1)
-        }, 50)
+        }, 10)
 
         return () => clearTimeout(timeout)
       } else {
         // Move to next user
         const timeout = setTimeout(() => {
-          setCurrentUserIndex((currentUserIndex + 1) % randomUsers.length)
+          setCurrentUserIndex((currentUserIndex + 1) % twitterUsers.length)
           setIsTyping(true)
         }, 500)
 
         return () => clearTimeout(timeout)
       }
     }
-  }, [currentUserIndex, isTyping, typingIndex, randomUsers])
+  }, [currentUserIndex, isTyping, typingIndex])
 
-  function getTwitterUsername() {
+  const getTwitterUsername = useCallback(() => {
     // Remove @ symbol from the beginning if present
     const username = inputValue.trim().startsWith('@')
       ? inputValue.trim().slice(1)
       : inputValue.trim()
 
     return username
-  }
+  }, [inputValue])
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (inputValue.trim()) {
+  const handleSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault()
       const username = getTwitterUsername()
 
-      // Start audio if it's enabled and not already playing
-      if (isAudioEnabled) {
-        refreshAudio()
-      }
+      if (username) {
+        // Start audio if it's enabled and not already playing
+        if (isAudioEnabled) {
+          refreshAudio()
+        }
 
-      router.push(`/x/${username}`)
-    }
-  }
+        router.push(`/x/${username}`)
+      }
+    },
+    [isAudioEnabled, router, refreshAudio, getTwitterUsername]
+  )
 
   const twitterUsername = getTwitterUsername()
 
   return (
     <form
       onSubmit={handleSubmit}
-      className={cs(styles.inputWrapper, className)}
+      className={cs(
+        styles.inputWrapper,
+        'flex gap-4 flex-col md:flex-row',
+        className
+      )}
       autoComplete='off'
     >
       <input

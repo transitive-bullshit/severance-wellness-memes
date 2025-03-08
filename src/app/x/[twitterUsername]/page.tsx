@@ -1,7 +1,7 @@
-import cs from 'clsx'
 import { unstable_cache as cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 
+import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-session-cta'
 import { UserAvatar } from '@/components/user-avatar'
 import { WellnessFactGallery } from '@/components/wellness-fact-gallery'
 import { seedTwitterUsers } from '@/data/seed-twitter-users'
@@ -10,7 +10,6 @@ import { getOrUpsertWellnessSession } from '@/lib/get-or-upsert-wellness-session
 import { ErrorWellnessSession } from './error-wellness-session'
 import { LockedWellnessSession } from './locked-wellness-session'
 import { PendingWellnessSession } from './pending-wellness-session'
-import styles from './styles.module.css'
 
 export default async function Page({
   params
@@ -80,8 +79,8 @@ export default async function Page({
 
   return (
     <>
-      <section className={cs(styles.intro)}>
-        <h1 className={cs(styles.title, 'leading-none')}>
+      <section>
+        <h1 className='mb-0!'>
           Hello, {userDisplayName}
           <UserAvatar
             user={wellnessSession.twitterUser?.user}
@@ -89,21 +88,18 @@ export default async function Page({
           />
         </h1>
 
-        <p
-          className={cs(
-            styles.desc,
-            'text-muted-foreground pb-8 border-b border-border text-sm text-balance text-center'
-          )}
-        >
+        <p className='text-muted-foreground py-8 mb-8 border-b border-border text-sm text-balance text-center max-w-2xl'>
           All right, {userFirstName}. What I’d like to do is share with you some
           facts about your outie. Because your outie is an exemplary person,
           these facts should be very pleasing. Just relax your body and be open
           to the facts. Try to enjoy each one equally.
         </p>
+
+        <WellnessFactGallery wellnessFacts={wellnessFacts} />
       </section>
 
-      <section className='flex-auto'>
-        <WellnessFactGallery wellnessFacts={wellnessFacts} />
+      <section>
+        <GenerateWellnessSessionCTA />
       </section>
     </>
   )

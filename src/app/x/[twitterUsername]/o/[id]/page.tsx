@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 
+import { GenerateWellnessSessionCTA } from '@/components/generate-wellness-session-cta'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -50,8 +51,12 @@ export default async function Page({
         </Breadcrumb>
       </section>
 
-      <section className='flex-auto flex flex-col items-center justify-center'>
+      <section className='flex flex-col items-center justify-center'>
         <WellnessFact wellnessFact={wellnessFact} />
+      </section>
+
+      <section>
+        <GenerateWellnessSessionCTA />
       </section>
     </>
   )

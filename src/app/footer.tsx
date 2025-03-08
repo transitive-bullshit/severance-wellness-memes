@@ -51,7 +51,7 @@ export function Footer() {
                     className='block'
                     key={user.twitterUsername}
                   >
-                    <span className='link ml-3'>{user.displayName}</span>
+                    <div className='link'>{user.displayName}</div>
                   </UserAvatar>
                 ))}
               </div>

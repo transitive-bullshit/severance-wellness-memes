@@ -1,8 +1,7 @@
 .inputWrapper {
   position: relative;
-  display: flex;
   width: 100%;
-  z-index: 100;
+  z-index: 1;
 }
 
 .input {
@@ -15,7 +14,8 @@
   color: var(--foreground);
   font-size: 1rem;
   outline: none;
-  transition: all 0.2s ease;
+  transition-property: box-shadow, color, opacity;
+  transition: 0.2s ease;
   box-shadow: 0 4px 4px 0 #00000010;
 
   /* Gradient border effect */
@@ -35,7 +35,6 @@
 
 .submitButton {
   position: relative;
-  margin-left: 10px;
   padding: 12px 24px;
   border-radius: 5px;
   border: none;

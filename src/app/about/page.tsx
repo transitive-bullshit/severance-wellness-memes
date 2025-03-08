@@ -11,6 +11,8 @@ import * as config from '@/lib/config'
 
 import styles from './styles.module.css'
 
+export const dynamic = 'force-static'
+
 export default async function Page() {
   return (
     <>
@@ -38,9 +40,8 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>
-            Example memes roasting{' '}
-            <Link href={`${config.url}/x/realDonaldTrump`}>Donald Trump</Link>
+          <h2 className='text-balance'>
+            Examples Roasting <Link href='x/realDonaldTrump'>Donald Trump</Link>
             <UserAvatar
               user={{
                 screen_name: 'realDonaldTrump',
@@ -56,8 +57,7 @@ export default async function Page() {
           <p>
             <b>All memes are personalized</b> to the user's profile and most
             recent tweets. Take{' '}
-            <Link href={`${config.url}/x/realDonaldTrump`}>Donald Trump</Link>{' '}
-            for example:
+            <Link href='/x/realDonaldTrump'>Donald Trump</Link> for example:
           </p>
 
           <WellnessFactGalleryByIds
@@ -70,8 +70,8 @@ export default async function Page() {
             className={styles.embed}
           />
 
-          <h2>
-            Example memes roasting{' '}
+          <h2 className='text-balance'>
+            Examples Roasting{' '}
             <Link href={`${config.url}/x/sama`}>Sam Altman</Link>
             <UserAvatar
               user={{
@@ -300,12 +300,7 @@ export default async function Page() {
 
           <h1>
             Credits
-            <Link
-              href={`${config.url}/x/transitive_bs`}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='ml-3 inline'
-            >
+            <Link href='/x/transitive_bs' className='ml-3 inline'>
               <Image
                 alt='Travis Fischer'
                 src='https://pbs.twimg.com/profile_images/1347656662463766529/igIs8izN_400x400.png'

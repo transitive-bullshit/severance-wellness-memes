@@ -20,8 +20,16 @@ export async function WellnessFactGalleryByIds({
       concurrency: 8
     }
   )
+  // .then(async (f) => {
+  //   await new Promise((resolve) => setTimeout(resolve, 10_000))
+  //   return f
+  // })
 
   return (
-    <WellnessFactGallery wellnessFacts={wellnessFacts} className={className} />
+    <WellnessFactGallery
+      wellnessFacts={wellnessFacts}
+      className={className}
+      estimatedNumItems={wellnessFactIds.length}
+    />
   )
 }

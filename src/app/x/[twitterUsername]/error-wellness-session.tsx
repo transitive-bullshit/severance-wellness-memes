@@ -1,10 +1,7 @@
-import cs from 'clsx'
-
 import type * as types from '@/lib/types'
 import { UserAvatar } from '@/components/user-avatar'
 
 import { CheckoutHandler } from './checkout-handler'
-import styles from './styles.module.css'
 
 export function ErrorWellnessSession({
   wellnessSession
@@ -15,8 +12,8 @@ export function ErrorWellnessSession({
 
   return (
     <>
-      <section className={cs(styles.intro)}>
-        <h1 className={cs(styles.title, 'leading-none')}>
+      <section>
+        <h1>
           {user?.name ?? user?.screen_name}
           <UserAvatar
             user={wellnessSession.twitterUser?.user}
@@ -24,7 +21,7 @@ export function ErrorWellnessSession({
           />
         </h1>
 
-        <p>
+        <p className='max-w-xl'>
           There was an error processing this profile. Please contact support and
           include this URL.
         </p>
