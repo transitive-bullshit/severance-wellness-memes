@@ -1,3 +1,5 @@
+import { LoadingIndicator } from '@/components/loading-indicator'
+
 import { RefreshPage } from './refresh'
 
 export default async function Page({
@@ -7,5 +9,17 @@ export default async function Page({
 }) {
   const { twitterUsername } = await params
 
-  return <RefreshPage twitterUsername={twitterUsername} />
+  return (
+    <>
+      <section>
+        <h3>Refreshing wellness session...</h3>
+      </section>
+
+      <section>
+        <LoadingIndicator />
+      </section>
+
+      <RefreshPage twitterUsername={twitterUsername} />
+    </>
+  )
 }
