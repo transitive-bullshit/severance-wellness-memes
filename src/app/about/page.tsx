@@ -88,8 +88,10 @@ export default async function Page() {
 
           <WellnessFactGalleryByIds
             wellnessFactIds={[
-              'cm7u2o5mo000d2ra2alzzend7',
-              'cm7vv9he300002r5gfoem2ulj',
+              'cm8099nse00062rnjc3nvhnvr',
+              // 'cm7u2o5mo000d2ra2alzzend7',
+              // 'cm7vv9he300002r5gfoem2ulj',
+              'cm8099nse000b2rnj4b9tt2r0',
               'cm7vv9he300042r5gfki2cd8p',
               'cm7vv9he300032r5gewc4ik1n'
             ]}
