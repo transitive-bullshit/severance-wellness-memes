@@ -82,7 +82,7 @@ After a lot of iterating and testing with every frontier LLM, **the results were
 
 ## Feedback
 
-Feel free to send feedback by replying publicly to this [Twitter/X thread](TODO). You can also [DM me](https://x.com/transitive_bs), but I am more likely to reply if you are following me and the conversation is public.
+Feel free to send feedback by replying publicly to this [Twitter/X thread](https://x.com/transitive_bs/status/1898379925155156203). You can also [DM me](https://x.com/transitive_bs), but I am more likely to reply if you are following me and the conversation is public.
 
 I prefer public convos so the answers can help other people who might have similar questions, but if it's related to billing, please [DM me](https://x.com/transitive_bs).
 

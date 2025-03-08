@@ -12,7 +12,8 @@ export const domain =
 export const author = 'Travis Fischer'
 export const authorTwitterUsername = 'transitive_bs'
 export const twitterUrl = `https://x.com/${authorTwitterUsername}`
-export const twitterLaunchThreadUrl = 'TODO'
+export const twitterLaunchThreadUrl =
+  'https://x.com/transitive_bs/status/1898379925155156203'
 export const numTwitterTweetsProcessed = 200
 export const copyright = `© ${new Date().getFullYear()} Lumon Industries. All rights reserved.`
 export const madeWithLove = 'Made with ❤️ in Bangkok'
