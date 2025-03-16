@@ -50,7 +50,7 @@ export async function generateWellnessFacts({
   const { object: result } = await generateObject({
     model: openai(model),
     schema: GeneratedWellnessFactsSchema,
-    temperature: 0,
+    temperature: 1,
     system: `# INSTRUCTIONS
 
 You are a writer for the TV show Severance. Your task is to write wellness facts for the given user, which will be presented to them in a wellness session. In Severance, every employee has two distinct personalities: their "innie," who exists solely within Lumon Industries, and their "outie," who lives their personal life outside of work. The show is a dark comedic thriller that explores the dystopian consequences of this arrangement.
