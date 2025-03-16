@@ -1,7 +1,8 @@
+import { openai } from '@ai-sdk/openai'
+import { generateObject } from 'ai'
 import { z } from 'zod'
 
 import type * as types from './types'
-import { extractObject } from './ai'
 import { unfurlTweet } from './unfurl-tweet'
 
 export const GeneratedWellnessFactsSchema = z.object({
@@ -20,7 +21,6 @@ export type GenerateWellnessFactsResult = GeneratedWellnessFacts & {
 
 export async function generateWellnessFacts({
   twitterUser,
-  ctx,
   positive = false,
 
   // meh
@@ -32,7 +32,7 @@ export async function generateWellnessFacts({
   model = 'gpt-4.5-preview'
 }: {
   twitterUser: types.TwitterUser
-  ctx: types.AgenticContext
+  ctx?: types.AgenticContext
   positive?: boolean
   model?: string
 }): Promise<GenerateWellnessFactsResult> {
@@ -47,18 +47,11 @@ export async function generateWellnessFacts({
     })
   )
 
-  const result = await extractObject({
-    name: 'generate_wellness_facts',
-    chatFn: ctx.openai.createChatCompletion.bind(ctx.openai) as any, // TODO
+  const { object: result } = await generateObject({
+    model: openai(model),
     schema: GeneratedWellnessFactsSchema,
-    injectSchemaIntoSystemMessage: false,
-    params: {
-      model,
-      temperature: 1.0,
-      messages: [
-        {
-          role: 'system',
-          content: `# INSTRUCTIONS
+    temperature: 0,
+    prompt: `# INSTRUCTIONS
 
 You are a writer for the TV show Severance. Your task is to write wellness facts for the given user, which will be presented to them in a wellness session. In Severance, every employee has two distinct personalities: their "innie," who exists solely within Lumon Industries, and their "outie," who lives their personal life outside of work. The show is a dark comedic thriller that explores the dystopian consequences of this arrangement.
 
@@ -185,9 +178,6 @@ ${JSON.stringify(twitterUser.user, null, 2)}
 ${JSON.stringify(unfurledTweets, null, 2)}
 \`\`\`
 `
-        }
-      ]
-    }
   })
 
   return {

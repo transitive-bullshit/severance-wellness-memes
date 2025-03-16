@@ -1,7 +1,8 @@
+import { openai } from '@ai-sdk/openai'
+import { generateObject } from 'ai'
 import { z } from 'zod'
 
 import type * as types from './types'
-import { extractObject } from './ai'
 
 export const UserFullNameSchema = z.object({
   // We want `explanation` to come first to give the model time to reason in CoT.
@@ -15,26 +16,18 @@ export const UserFullNameSchema = z.object({
 export type UserFullName = z.infer<typeof UserFullNameSchema>
 
 export async function extractUserFullName({
-  twitterUser,
-  ctx
+  twitterUser
 }: {
   twitterUser: types.TwitterUser
-  ctx: types.AgenticContext
+  ctx?: types.AgenticContext
 }): Promise<string | undefined> {
   const { user } = twitterUser
 
-  const result = await extractObject({
-    name: 'extract_user_full_name',
-    chatFn: ctx.openai.createChatCompletion.bind(ctx.openai) as any, // TODO
+  const { object: result } = await generateObject({
+    model: openai('gpt-4o-mini'),
     schema: UserFullNameSchema,
-    injectSchemaIntoSystemMessage: false,
-    params: {
-      model: 'gpt-4o-mini',
-      temperature: 0,
-      messages: [
-        {
-          role: 'system',
-          content: `# INSTRUCTIONS
+    temperature: 0,
+    prompt: `# INSTRUCTIONS
 
 You are an experienced data analyst. You will be given JSON data containing a user's twitter profile, and your task is to extract their most likely full name from a combination of the "screen_name" and "name" (which is their display name).
 
@@ -107,9 +100,6 @@ Output: "" (not enough info, so confidence "low")
 ${JSON.stringify(user, null, 2)}
 \`\`\`
 `
-        }
-      ]
-    }
   })
 
   if (
