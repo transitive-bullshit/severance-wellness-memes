@@ -27,7 +27,7 @@ export async function extractUserFullName({
     model: openai('gpt-4o-mini'),
     schema: UserFullNameSchema,
     temperature: 0,
-    prompt: `# INSTRUCTIONS
+    system: `# INSTRUCTIONS
 
 You are an experienced data analyst. You will be given JSON data containing a user's twitter profile, and your task is to extract their most likely full name from a combination of the "screen_name" and "name" (which is their display name).
 
