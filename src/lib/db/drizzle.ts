@@ -1,4 +1,4 @@
-import { drizzle } from 'drizzle-orm/postgres-js'
+import { drizzle } from 'drizzle-orm/node-postgres'
 import postgres from 'postgres'
 
 let _db: ReturnType<typeof drizzle> | undefined
