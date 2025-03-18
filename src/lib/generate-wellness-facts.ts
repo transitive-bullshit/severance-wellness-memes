@@ -1,7 +1,8 @@
+import { openai } from '@ai-sdk/openai'
+import { generateObject } from 'ai'
 import { z } from 'zod'
 
 import type * as types from './types'
-import { extractObject } from './ai'
 import { unfurlTweet } from './unfurl-tweet'
 
 export const GeneratedWellnessFactsSchema = z.object({
@@ -20,7 +21,6 @@ export type GenerateWellnessFactsResult = GeneratedWellnessFacts & {
 
 export async function generateWellnessFacts({
   twitterUser,
-  ctx,
   positive = false,
 
   // meh
@@ -32,7 +32,7 @@ export async function generateWellnessFacts({
   model = 'gpt-4.5-preview'
 }: {
   twitterUser: types.TwitterUser
-  ctx: types.AgenticContext
+  ctx?: types.AgenticContext
   positive?: boolean
   model?: string
 }): Promise<GenerateWellnessFactsResult> {
@@ -47,18 +47,11 @@ export async function generateWellnessFacts({
     })
   )
 
-  const result = await extractObject({
-    name: 'generate_wellness_facts',
-    chatFn: ctx.openai.createChatCompletion.bind(ctx.openai) as any, // TODO
+  const { object: result } = await generateObject({
+    model: openai(model),
     schema: GeneratedWellnessFactsSchema,
-    injectSchemaIntoSystemMessage: false,
-    params: {
-      model,
-      temperature: 1.0,
-      messages: [
-        {
-          role: 'system',
-          content: `# INSTRUCTIONS
+    temperature: 1,
+    system: `# INSTRUCTIONS
 
 You are a writer for the TV show Severance. Your task is to write wellness facts for the given user, which will be presented to them in a wellness session. In Severance, every employee has two distinct personalities: their "innie," who exists solely within Lumon Industries, and their "outie," who lives their personal life outside of work. The show is a dark comedic thriller that explores the dystopian consequences of this arrangement.
 
@@ -122,37 +115,10 @@ ${
 - Your outie has strong opinions about TypeScript and shares them without asking.
 - Your outie lost $24,000 on DraftKings last year.
 - Your outie is obsessed with a variety of mediocre New York sports franchises.
-- Your outie often explains AI concepts to people who didn’t ask.
-- Your outie believes the concept of mansplaining is sexist, and will explain why even if you didn't ask.
 - Your outie eats on calls without muting themselves.
 - Your outie prefers gpt 4.5 over claude 3.7 sonnet because of the "vibes".
 - Your outie has a collection of rare Pepe memes.
 - Your outie claims to have diamond hands but really just daytrades shitcoins.
-- Your outie has an anime profile pic but doesn't know who Hayao Miyazaki is.
-- Your outie thinks TypeScript is a love language, but fails to express it outside of code.
-- Your outie hoards every new AI agent library in 37 open browser tabs he’ll never close or come back to.
-- Your outie genuinely believes that “prompt engineering” is a viable personality trait.
-- Your outie calls ChatGPT their “cofounder” in investor meetings and thinks that’s a flex.
-- Your outie has a Notion template for “personal growth KPIs” but still eats cereal straight from the box.
-- Your outie describes their sleep schedule as “asynchronous” and considers that a flex.
-- Your outie thinks that rewriting an app in Rust counts as “self-improvement.”
-- Your outie refers to their Substack audience as a “decentralized knowledge network” when it’s really just 42 people and their mom.
-- Your outie thinks “Web3 social graphs” will change networking but still can’t make eye contact at conferences.
-- Your outie considers a fresh VS Code theme a form of self-care.
-- Your outie thinks running a Kubernetes cluster for their personal blog is a reasonable life choice.
-- Your outie built an AI-powered dream journal and now believes their subconscious is trying to pivot to SaaS.
-- Your outie claims they have “strong opinions, loosely held,” but will go to war over TypeScript enums.
-- Your outie once attempted to build an AI life coach but rage-quit when it suggested touching grass.
-- Your outie once tried to fine-tune a GPT model on their own tweets but had to stop because it became “too unhinged.”
-- Your outie once called ChatGPT “bro” in a moment of weakness and now feels strangely attached to it.
-- Your outie refers to their sleep schedule as a “floating-point operation” and genuinely believes that sounds normal.
-- Your outie thinks the true sign of AGI will be when a model independently chooses to shitpost.
-- Your outie once tweeted “I should build this” about an idea, then got mad when someone else actually built it.
-- Your outie refers to their dating life as "iterative user testing with a high churn rate."
-- Your outie bought a 49-inch ultrawide monitor to "maximize productivity" but uses it exclusively for scrolling Twitter and Reddit.
-- Your outie calls their tweet drafts "latent thought embeddings."
-- Your outie wrote a "How to Hack AI for Personal Growth" Medium post but still hasn't showered today.
-- Your outie says "solving alignment" is their long-term goal, but their short-term goal is making a meme generator.
 `
 }
 
@@ -185,9 +151,6 @@ ${JSON.stringify(twitterUser.user, null, 2)}
 ${JSON.stringify(unfurledTweets, null, 2)}
 \`\`\`
 `
-        }
-      ]
-    }
   })
 
   return {
